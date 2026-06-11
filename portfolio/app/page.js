@@ -1,13 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Terminal as TermIcon, Server, Cpu, Monitor, Zap, Shield } from "lucide-react";
 import StatusBar from "./components/StatusBar";
-import ProfileCard from "./components/ProfileCard";
-import ServerMonitor from "./components/ServerMonitor";
+import SidebarLeft from "./components/SidebarLeft";
 import Console from "./components/Console";
-import StatsStrip from "./components/StatsStrip";
+import ServerMonitor from "./components/ServerMonitor";
+import ProfileCard from "./components/ProfileCard";
+import ServerControl from "./components/ServerControl";
 import ProjectsList from "./components/ProjectsList";
 
 export default function Home() {
@@ -26,12 +25,7 @@ export default function Home() {
 
   return (
     <>
-      {/* Ambient Gradient Mesh */}
-      <div className="gradient-mesh">
-        <div className="orb orb-1" />
-        <div className="orb orb-2" />
-        <div className="orb orb-3" />
-      </div>
+      {/* Noise Overlay */}
       <div className="noise-overlay" />
 
       {/* Dashboard Viewport */}
@@ -39,88 +33,22 @@ export default function Home() {
         <StatusBar />
 
         <div className="dashboard-grid">
-          {/* ═══ LEFT PANEL ═══ */}
-          <div className="left-panel">
-            <ProfileCard profile={data?.profile} />
+          {/* Lajur 1: Sidebar Kiri (Hijau Hutan Gelap) */}
+          <SidebarLeft activeUser={data?.profile?.name || "moonwiraja"} />
 
-            {/* Real-time Server Resource Monitor */}
-            <ServerMonitor />
-
-            {/* SysInfo Widget */}
-            <motion.div
-              className="info-widget glass-card"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <div className="widget-header">
-                <span className="header-dot" />
-                SYS_INFO
-              </div>
-              <div className="info-row">
-                <span className="info-label"><TermIcon size={10} style={{ verticalAlign: "-1px", marginRight: 4 }} />Shell</span>
-                <span className="info-value text-cyan">zsh</span>
-              </div>
-              <div className="info-row">
-                <span className="info-label"><Monitor size={10} style={{ verticalAlign: "-1px", marginRight: 4 }} />Theme</span>
-                <span className="info-value text-accent">Cherry Dark</span>
-              </div>
-              <div className="info-row">
-                <span className="info-label"><Zap size={10} style={{ verticalAlign: "-1px", marginRight: 4 }} />Status</span>
-                <span className="info-value text-green">● ACTIVE</span>
-              </div>
-              <div className="info-row">
-                <span className="info-label"><Server size={10} style={{ verticalAlign: "-1px", marginRight: 4 }} />Mode</span>
-                <span className="info-value text-yellow">Solo Core</span>
-              </div>
-              <div className="info-row">
-                <span className="info-label"><Cpu size={10} style={{ verticalAlign: "-1px", marginRight: 4 }} />Engine</span>
-                <span className="info-value text-violet">Next.js 16</span>
-              </div>
-              <div className="info-row">
-                <span className="info-label"><Shield size={10} style={{ verticalAlign: "-1px", marginRight: 4 }} />Uptime</span>
-                <span className="info-value text-green">99.9%</span>
-              </div>
-            </motion.div>
-
-            {/* Quick Commands */}
-            <motion.div
-              className="cmd-section glass-card"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <div className="widget-header" style={{ padding: "12px 14px 0" }}>
-                <span className="header-dot" />
-                QUICK_CMDS
-              </div>
-              <div className="cmd-grid">
-                {["about", "repos", "skills", "contact", "neofetch"].map((cmd) => (
-                  <button
-                    key={cmd}
-                    className="cmd-chip"
-                    onClick={() => window.__consoleExec?.(cmd)}
-                  >
-                    {cmd}
-                  </button>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-
-          {/* ═══ CENTER PANEL ═══ */}
+          {/* Lajur 2: Panel Tengah (Live Console + Server Statistics) */}
           <div className="center-panel">
             <Console />
-            <StatsStrip stats={data?.stats} />
+            <ServerMonitor />
           </div>
 
-          {/* ═══ RIGHT PANEL ═══ */}
-          <ProjectsList repos={data?.repos} loading={loading} />
+          {/* Lajur 3: Panel Kanan (Profile + Control Panel + Active Processes) */}
+          <div className="right-panel-wrapper">
+            <ProfileCard profile={data?.profile} />
+            <ServerControl />
+            <ProjectsList repos={data?.repos} loading={loading} />
+          </div>
         </div>
-
-        <span className="micro-footer">
-          © 2026 MOONWIRAJA — POWERED BY MEMORYOFPLANET
-        </span>
       </div>
     </>
   );

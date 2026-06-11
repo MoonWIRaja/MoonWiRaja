@@ -1,15 +1,13 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Terminal } from "lucide-react";
+import { motion } from "framer-motion";
+import { Send } from "lucide-react";
 
 const COMMANDS = {
   help: () => [
     { type: "response", text: "" },
     { type: "response", html: '<span class="text-accent">┌──────────────────────────────────────────┐</span>' },
-    { type: "response", html: '<span class="text-accent">│</span>  <span class="text-secondary">COMMAND</span>     <span class="text-muted">│</span>  <span class="text-secondary">DESCRIPTION</span>              <span class="text-accent">│</span>' },
-    { type: "response", html: '<span class="text-accent">├──────────────────────────────────────────┤</span>' },
     { type: "response", html: '<span class="text-accent">│</span>  <span class="text-green">about</span>       <span class="text-muted">│</span>  Tentang saya              <span class="text-accent">│</span>' },
     { type: "response", html: '<span class="text-accent">│</span>  <span class="text-green">skills</span>      <span class="text-muted">│</span>  Tech stack & kemahiran    <span class="text-accent">│</span>' },
     { type: "response", html: '<span class="text-accent">│</span>  <span class="text-green">repos</span>       <span class="text-muted">│</span>  Senarai projek utama      <span class="text-accent">│</span>' },
@@ -76,12 +74,27 @@ export default function Console() {
     { type: "response", text: "" },
   ]);
   const [input, setInput] = useState("");
-  const [isMinimized, setIsMinimized] = useState(false);
-  const [isMaximized, setIsMaximized] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const [utcTime, setUtcTime] = useState("00:00");
 
   const outputRef = useRef(null);
   const inputRef = useRef(null);
+
+  // UTC clock tick
+  useEffect(() => {
+    const tick = () => {
+      const f = new Intl.DateTimeFormat("en-GB", {
+        timeZone: "UTC",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      });
+      setUtcTime(f.format(new Date()));
+    };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, []);
 
   useEffect(() => {
     if (outputRef.current) {
@@ -130,7 +143,7 @@ export default function Console() {
           setIsTyping(false);
         }, 150);
       }
-    }, 50);
+    }, 40);
   };
 
   useEffect(() => {
@@ -151,97 +164,60 @@ export default function Console() {
 
   return (
     <motion.div
-      className={`console-card crt-effect crt-screen-flicker`}
-      style={isMaximized ? {
-        position: "fixed",
-        inset: "12px",
-        zIndex: 999,
-        height: "calc(100vh - 24px)",
-        width: "calc(100vw - 24px)"
-      } : {}}
+      className="console-card crt-effect"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
     >
       {/* Title bar */}
       <div className="console-titlebar">
-        <div className="titlebar-dots">
-          <button 
-            type="button"
-            className="titlebar-dot red" 
-            title="Clear output"
-            onClick={() => setLines([])}
-            aria-label="Clear Console"
-          />
-          <button 
-            type="button"
-            className="titlebar-dot yellow" 
-            title="Collapse / Minimize"
-            onClick={() => setIsMinimized(!isMinimized)}
-            aria-label="Minimize Console"
-          />
-          <button 
-            type="button"
-            className="titlebar-dot green" 
-            title="Toggle Fullscreen"
-            onClick={() => setIsMaximized(!isMaximized)}
-            aria-label="Maximize Console"
-          />
+        <div className="console-title-text">
+          <span className="ping-dot" style={{ display: "inline-block", position: "relative" }} />
+          <span>LIVE CONSOLE</span>
         </div>
-        <div className="titlebar-center">
-          <Terminal className="titlebar-icon" />
-          <span>moon@wiraja ~ console</span>
-        </div>
-        <span className="titlebar-center" style={{ color: "var(--text-ghost)" }}>v3.0</span>
+        <span className="mono" style={{ fontSize: "0.6rem", color: "var(--text-light-secondary)" }}>
+          UTC Time: {utcTime}
+        </span>
       </div>
 
       {/* Console Body */}
-      <AnimatePresence initial={false}>
-        {!isMinimized && (
-          <motion.div 
-            className="console-body console-scroll"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            onClick={() => inputRef.current?.focus()}
-            style={{ flex: 1, display: "flex", flexDirection: "column", minHeight: 0 }}
-          >
-            <div className="console-output" ref={outputRef}>
-              {lines.map((line, i) => (
-                <div key={i} className={`console-line ${line.type}`}>
-                  {line.type === "cmd" ? (
-                    <>
-                      <span className="prompt-symbol">❯</span>
-                      <span className="cmd-text">{line.text}</span>
-                    </>
-                  ) : line.html ? (
-                    <span dangerouslySetInnerHTML={{ __html: line.html }} />
-                  ) : (
-                    <span>{line.text}</span>
-                  )}
-                </div>
-              ))}
+      <div className="console-body console-scroll" onClick={() => inputRef.current?.focus()}>
+        <div className="console-output" ref={outputRef}>
+          {lines.map((line, i) => (
+            <div key={i} className={`console-line ${line.type}`}>
+              {line.type === "cmd" ? (
+                <>
+                  <span className="prompt-symbol">❯</span>
+                  <span className="cmd-text">{line.text}</span>
+                </>
+              ) : line.html ? (
+                <span dangerouslySetInnerHTML={{ __html: line.html }} />
+              ) : (
+                <span>{line.text}</span>
+              )}
             </div>
+          ))}
+        </div>
 
-            <form className="console-input-row" onSubmit={handleSubmit}>
-              <span className="prompt-symbol">❯</span>
-              <input
-                ref={inputRef}
-                type="text"
-                className="console-input"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder={isTyping ? "" : "taip help..."}
-                disabled={isTyping}
-                autoFocus
-                autoComplete="off"
-                spellCheck="false"
-              />
-            </form>
-          </motion.div>
-        )}
-      </AnimatePresence>
+        <form className="console-input-row" onSubmit={handleSubmit}>
+          <span className="prompt-symbol">❯</span>
+          <input
+            ref={inputRef}
+            type="text"
+            className="console-input"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder={isTyping ? "" : "Type a command..."}
+            disabled={isTyping}
+            autoFocus
+            autoComplete="off"
+            spellCheck="false"
+          />
+          <button type="submit" disabled={isTyping} style={{ opacity: isTyping ? 0.3 : 1 }}>
+            <Send size={11} className="text-green" />
+          </button>
+        </form>
+      </div>
     </motion.div>
   );
 }

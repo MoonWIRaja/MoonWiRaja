@@ -2,131 +2,86 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Cpu, HardDrive, Activity, Thermometer } from "lucide-react";
 
 export default function ServerMonitor() {
-  const [cpu, setCpu] = useState(24);
+  const [cpu, setCpu] = useState(24.5);
   const [ram, setRam] = useState(4.12); // GB
-  const [network, setNetwork] = useState({ rx: 45.2, tx: 12.8 });
+  const [disk] = useState(26.44); // GB static mock
+  const [network, setNetwork] = useState({ rx: 45.21, tx: 12.83 });
   const [temp, setTemp] = useState(47);
 
   useEffect(() => {
     const interval = setInterval(() => {
       // Simulate real-time server activity fluctuations
       setCpu((prev) => {
-        const delta = Math.floor(Math.random() * 15) - 7;
+        const delta = (Math.random() * 10) - 5;
         const next = prev + delta;
-        return Math.max(10, Math.min(95, next));
+        return parseFloat(Math.max(12.0, Math.min(88.0, next)).toFixed(1));
       });
 
       setNetwork(() => ({
-        rx: parseFloat((Math.random() * 80 + 10).toFixed(1)),
-        tx: parseFloat((Math.random() * 30 + 5).toFixed(1)),
+        rx: parseFloat((Math.random() * 50 + 15).toFixed(2)),
+        tx: parseFloat((Math.random() * 20 + 5).toFixed(2)),
       }));
 
       setTemp((prev) => {
         const delta = Math.floor(Math.random() * 3) - 1.5;
         const next = Math.round(prev + delta);
-        return Math.max(42, Math.min(68, next));
+        return Math.max(42, Math.min(62, next));
       });
 
       setRam((prev) => {
-        const delta = (Math.random() * 0.08) - 0.04;
+        const delta = (Math.random() * 0.04) - 0.02;
         const next = prev + delta;
-        return parseFloat(Math.max(3.9, Math.min(4.8, next)).toFixed(2));
+        return parseFloat(Math.max(3.9, Math.min(4.5, next)).toFixed(2));
       });
-    }, 2500);
+    }, 2000);
 
     return () => clearInterval(interval);
   }, []);
 
-  const ramPercentage = ((ram / 8.0) * 100).toFixed(1);
-
   return (
     <motion.div
-      className="info-widget glass-card server-monitor-widget"
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
+      className="glass-card server-stats-card"
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
     >
-      <div className="widget-header">
-        <span className="header-dot" />
-        SRV_MONITOR
+      <div className="server-stats-card .widget-header" style={{ padding: "0 0 6px 0", fontSize: "0.6rem", fontFamily: "var(--font-mono)", fontWeight: 700, textTransform: "uppercase", display: "flex", alignItems: "center", gap: 6, color: "var(--text-secondary)", borderBottom: "1px solid var(--border-subtle)", marginBottom: 8 }}>
+        <span className="header-dot" style={{ width: 4, height: 4, borderRadius: "50%", background: "var(--accent-green)" }} />
+        SERVER STATISTICS
       </div>
 
-      {/* CPU Section */}
-      <div className="monitor-section">
-        <div className="monitor-header">
-          <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
-            <Cpu size={11} className="text-accent" />
-            CPU LOAD
-          </span>
-          <span className="mono" style={{ color: cpu > 80 ? "var(--accent-red)" : cpu > 60 ? "var(--accent-amber)" : "var(--accent-green)" }}>
-            {cpu}%
-          </span>
-        </div>
-        <div className="monitor-bar-bg">
-          <motion.div
-            className="monitor-bar-fill"
-            style={{
-              width: `${cpu}%`,
-              backgroundColor: cpu > 80 ? "var(--accent-red)" : cpu > 60 ? "var(--accent-amber)" : "var(--accent-green)",
-            }}
-            animate={{ width: `${cpu}%` }}
-            transition={{ type: "spring", stiffness: 60, damping: 12 }}
-          />
-        </div>
-      </div>
-
-      {/* RAM Section */}
-      <div className="monitor-section">
-        <div className="monitor-header">
-          <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
-            <HardDrive size={11} className="text-cyan" />
-            RAM USAGE
-          </span>
-          <span className="mono text-cyan">
-            {ram} / 8.0 GB ({ramPercentage}%)
-          </span>
-        </div>
-        <div className="monitor-bar-bg">
-          <motion.div
-            className="monitor-bar-fill"
-            style={{
-              width: `${ramPercentage}%`,
-              backgroundColor: "var(--accent-cyan)",
-            }}
-            animate={{ width: `${ramPercentage}%` }}
-            transition={{ type: "spring", stiffness: 60, damping: 12 }}
-          />
-        </div>
-      </div>
-
-      {/* Network & Temp Grid */}
-      <div className="monitor-grid">
-        <div className="mini-monitor-card">
-          <span className="mini-monitor-label" style={{ display: "flex", alignItems: "center", gap: 3 }}>
-            <Activity size={9} className="text-yellow" />
-            NETWORK
-          </span>
-          <span className="mini-monitor-val text-yellow" style={{ fontSize: "0.6rem" }}>
-            ↓{network.rx} KB/s
-          </span>
-          <span className="mini-monitor-val text-yellow" style={{ fontSize: "0.6rem", opacity: 0.7 }}>
-            ↑{network.tx} KB/s
-          </span>
+      <div className="server-stats-grid">
+        {/* CPU Load */}
+        <div className="stat-monitor-tile">
+          <span className="stat-monitor-label">CPU LOAD</span>
+          <span className="stat-monitor-val text-accent">{cpu}%</span>
+          <span className="stat-monitor-sub">TEMP: {temp}°C</span>
         </div>
 
-        <div className="mini-monitor-card">
-          <span className="mini-monitor-label" style={{ display: "flex", alignItems: "center", gap: 3 }}>
-            <Thermometer size={9} style={{ color: temp > 60 ? "var(--accent-rose)" : "var(--accent-green)" }} />
-            CORE TEMP
+        {/* Memory */}
+        <div className="stat-monitor-tile">
+          <span className="stat-monitor-label">MEMORY</span>
+          <span className="stat-monitor-val text-green">{ram} GiB</span>
+          <span className="stat-monitor-sub">OF 8.00 GiB</span>
+        </div>
+
+        {/* Disk */}
+        <div className="stat-monitor-tile">
+          <span className="stat-monitor-label">DISK</span>
+          <span className="stat-monitor-val text-cyan">{disk} GiB</span>
+          <span className="stat-monitor-sub">OF 100 GiB</span>
+        </div>
+
+        {/* Network */}
+        <div className="stat-monitor-tile">
+          <span className="stat-monitor-label">NETWORK</span>
+          <span className="stat-monitor-val text-yellow" style={{ fontSize: "0.85rem" }}>
+            ↓ {network.rx} KB/s
           </span>
-          <span className="mini-monitor-val" style={{ color: temp > 60 ? "var(--accent-rose)" : "var(--text-primary)" }}>
-            {temp}°C
-          </span>
-          <span className="mini-monitor-val text-muted" style={{ fontSize: "0.5rem", textTransform: "uppercase" }}>
-            {temp > 60 ? "WARNING" : temp > 50 ? "WARM" : "STABLE"}
+          <span className="stat-monitor-val text-yellow" style={{ fontSize: "0.85rem", opacity: 0.8 }}>
+            ↑ {network.tx} KB/s
           </span>
         </div>
       </div>
