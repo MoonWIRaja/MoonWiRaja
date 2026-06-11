@@ -60,6 +60,12 @@ function ProjectCard({ repo, index }) {
         </div>
       )}
       
+      <div className="project-meta-date">
+        <span className="update-date" title="Tarikh push/komit terakhir">
+          UP: {formatDate(repo.pushed_at || repo.updated_at)}
+        </span>
+      </div>
+      
       <div className="project-meta">
         <div className="meta-left">
           <span className="lang-indicator">
@@ -77,11 +83,6 @@ function ProjectCard({ repo, index }) {
           <span className="meta-stat" title="Watching">
             <Eye size={11} className="stat-icon watch-icon" />
             <span className="stat-value">{repo.watchers_count ?? 0}</span>
-          </span>
-        </div>
-        <div className="meta-right">
-          <span className="update-date" title="Tarikh push/komit terakhir">
-            UP: {formatDate(repo.pushed_at || repo.updated_at)}
           </span>
         </div>
       </div>

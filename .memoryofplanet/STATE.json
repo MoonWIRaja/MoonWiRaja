@@ -235,6 +235,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Betulkan isu kad bertindih dan sembunyikan scrollbar bagi senarai repositori"
+    },
+    {
+      "at": "2026-06-11T07:00:23.374Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Buang .MemoryOfPlanet.core dari fallback dan susun semula tarikh kemas kini di bawah komit dan di atas statistik"
     }
   ]
 }

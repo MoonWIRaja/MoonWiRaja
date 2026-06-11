@@ -1115,9 +1115,15 @@ ul, ol { list-style: none; }
   gap: 8px;
 }
 
-.glass-card .meta-right {
+.glass-card .project-meta-date {
   display: flex;
-  align-items: center;
+  justify-content: flex-end;
+  font-family: var(--font-mono) !important;
+  font-size: 0.6rem !important;
+  color: var(--text-light-secondary) !important;
+  opacity: 0.8 !important;
+  margin-top: 2px;
+  margin-bottom: 2px;
 }
 
 .glass-card .meta-stat {

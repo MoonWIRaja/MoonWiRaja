@@ -197,19 +197,7 @@ export async function GET() {
             latest_commit_message: "Add watch-icon color inside glass-card overrides",
             latest_commit_sha: "8ac0e70",
           },
-          {
-            name: ".MemoryOfPlanet.core",
-            description: "Core pengurusan ejen AI mudah-alih dengan autosync",
-            html_url: `https://github.com/${GITHUB_USERNAME}/.MemoryOfPlanet.core`,
-            language: "JavaScript",
-            stargazers_count: 0,
-            forks_count: 0,
-            watchers_count: 0,
-            updated_at: new Date().toISOString(),
-            pushed_at: new Date().toISOString(),
-            latest_commit_message: "Sync member state protocol and agent ledger",
-            latest_commit_sha: "3138031",
-          },
+
           {
             name: "Kracked_Skills",
             description: "Python utilities and skills extension pack",
