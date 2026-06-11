@@ -115,6 +115,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Build interactive 3D console/dashboard portfolio"
+    },
+    {
+      "at": "2026-06-11T05:00:25.560Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Migrate to Next.js fullstack portfolio with fullscreen 100vh dark dashboard layout"
     }
   ]
 }
