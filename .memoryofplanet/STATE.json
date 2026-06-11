@@ -247,6 +247,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Buang deskripsi kosong, letak tarikh kemas kini dalam kotak project-date-box ke kiri"
+    },
+    {
+      "at": "2026-06-11T07:08:39.799Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Tambah kesan scroll-behavior smooth pada senarai repositori"
     }
   ]
 }
