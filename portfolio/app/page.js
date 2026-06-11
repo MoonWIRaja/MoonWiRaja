@@ -35,7 +35,7 @@ export default function Home() {
         <div className="dashboard-grid">
           {/* ═══ LEFT PANEL ═══ */}
           <div className="left-panel">
-            <ProfileCard profile={data?.profile} />
+            <ProfileCard profile={data?.profile} stats={data?.stats} />
 
             {/* SysInfo Widget */}
             <motion.div

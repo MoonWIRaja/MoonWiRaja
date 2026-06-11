@@ -28,10 +28,21 @@ export async function GET() {
     // Calculate totals across all repositories (including forks as requested)
     let totalStars = 0;
     let totalForks = 0;
+    let totalWatching = 0;
+    let latestUpdate = null;
+    let latestRepoName = "";
+
     const publicRepos = repos; // Include forks and original repositories
     publicRepos.forEach((repo) => {
       totalStars += repo.stargazers_count || 0;
       totalForks += repo.forks_count || 0;
+      totalWatching += repo.watchers_count || 0;
+      
+      const repoTime = repo.pushed_at ? new Date(repo.pushed_at).getTime() : new Date(repo.updated_at).getTime();
+      if (!latestUpdate || repoTime > latestUpdate) {
+        latestUpdate = repoTime;
+        latestRepoName = repo.name;
+      }
     });
 
     return NextResponse.json({
@@ -46,8 +57,11 @@ export async function GET() {
       stats: {
         stars: totalStars,
         forks: totalForks,
+        watching: totalWatching,
         repos: profile.public_repos || 0,
         followers: profile.followers || 0,
+        latestUpdate: latestUpdate ? new Date(latestUpdate).toISOString() : null,
+        latestRepo: latestRepoName,
       },
       repos: publicRepos.map((repo) => ({
         name: repo.name,
@@ -71,7 +85,15 @@ export async function GET() {
           public_repos: 5,
           followers: 10,
         },
-        stats: { stars: 12, forks: 4, repos: 5, followers: 10 },
+        stats: { 
+          stars: 12, 
+          forks: 4, 
+          watching: 8, 
+          repos: 5, 
+          followers: 10,
+          latestUpdate: new Date().toISOString(),
+          latestRepo: "MoonWiRaja"
+        },
         repos: [
           {
             name: "MoonWiRaja",

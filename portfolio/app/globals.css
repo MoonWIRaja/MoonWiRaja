@@ -394,6 +394,72 @@ ul, ol { list-style: none; }
   z-index: 1;
 }
 
+/* GitHub Stats Grid inside Profile Card */
+.profile-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-top: 12px;
+  margin-bottom: 8px;
+  text-align: left;
+  position: relative;
+  z-index: 1;
+}
+
+.profile-stat-tile {
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  padding: 6px;
+  border-radius: var(--r-xs);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-fast) var(--ease-out-expo);
+}
+
+.profile-stat-tile:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.profile-stat-tile.full-width {
+  grid-column: span 3;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+}
+
+.profile-stat-tile.full-width:hover {
+  border-color: var(--border-accent);
+}
+
+.profile-stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  display: flex;
+  align-items: center;
+}
+
+.profile-stat-val {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-top: 2px;
+}
+
+.profile-stat-val-small {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
 /* SysInfo Widget */
 .info-widget {
   padding: 14px;
@@ -1140,4 +1206,29 @@ ul, ol { list-style: none; }
 
 .glass-card .text-green {
   color: var(--terminal-green) !important;
+}
+
+/* Glass card overrides for Profile Stats Grid */
+.glass-card .profile-stat-tile {
+  background: rgba(255, 248, 247, 0.04) !important;
+  border: 1px solid rgba(255, 248, 247, 0.08) !important;
+}
+
+.glass-card .profile-stat-tile:hover {
+  background: rgba(255, 248, 247, 0.08) !important;
+  border-color: var(--highlight-yellow) !important;
+}
+
+.glass-card .profile-stat-label {
+  color: var(--text-light-secondary) !important;
+  opacity: 0.8;
+}
+
+.glass-card .profile-stat-val {
+  color: var(--text-light) !important;
+}
+
+.glass-card .profile-stat-val-small {
+  color: var(--text-light) !important;
+  opacity: 0.95;
 }
