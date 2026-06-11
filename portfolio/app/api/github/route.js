@@ -48,6 +48,13 @@ export async function GET() {
     const profile = await profileRes.json();
     const repos = await reposRes.json();
 
+    // Sort all repos by push time (latest push first) so we prioritize the most active repositories
+    repos.sort((a, b) => {
+      const timeA = new Date(a.pushed_at || a.updated_at).getTime();
+      const timeB = new Date(b.pushed_at || b.updated_at).getTime();
+      return timeB - timeA;
+    });
+
     // Limit commit fetching to a maximum of 8 repositories to prevent rate limits
     const reposToFetchCommits = repos.slice(0, 8);
     const otherRepos = repos.slice(8);

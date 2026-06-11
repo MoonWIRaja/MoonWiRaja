@@ -217,6 +217,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Betulkan fallback komit static supaya kesemua kad repositori sentiasa memaparkan bahagian komit, bintang, fork dan watch walaupun nilai 0"
+    },
+    {
+      "at": "2026-06-11T06:46:34.388Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Isih repositori mengikut push time di backend untuk mengutamakan komit bagi repositori terbaru"
     }
   ]
 }
