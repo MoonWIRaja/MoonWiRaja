@@ -1,0 +1,102 @@
+{
+  "schemaVersion": "0.1.0",
+  "initialized": true,
+  "projectName": "Test",
+  "projectNameDefault": ".MemoryOfPlanet.core",
+  "ownerCodename": "moon",
+  "activeMember": "moon",
+  "mode": "solo",
+  "joinMode": "owner-approved",
+  "githubUrl": "true",
+  "autosync": {
+    "enabled": true,
+    "targetMainBranch": "main",
+    "syncBranchPrefix": "sync",
+    "requireUserGitEmail": true,
+    "verifyGhUserWhenConfigured": true
+  },
+  "members": {
+    "moon": {
+      "codename": "moon",
+      "displayName": "MoonWiRaja",
+      "role": "owner",
+      "passwordHash": "49ac140a6faa57a4c3c85c3458cd7ed5d16e73d659a81e87f240ad6804589669cf473229406669e98c098119dbdbee27ad481671e0998fe49f49b8f35ecb311f",
+      "passwordSalt": "8246897270ccfa5cd4ba5db77f91832b",
+      "languagePreferences": {
+        "conversation": "Melayu",
+        "coding": "English"
+      },
+      "gitIdentity": {
+        "name": "MoonWiRaja",
+        "email": "hakimmikah191@gmail.com",
+        "githubUsername": "MoonWiRaja"
+      },
+      "joinedAt": "2026-06-11T04:38:36.138Z"
+    }
+  },
+  "installedSkills": [
+    {
+      "name": "autosycn",
+      "purpose": "Identity-safe memory + git autosync flow. Commits and merges as the active user, never as the AI tool."
+    }
+  ],
+  "agentRoster": [],
+  "agentCatalog": [
+    {
+      "role": "researcher",
+      "title": "Researcher"
+    },
+    {
+      "role": "architect",
+      "title": "System Architect"
+    },
+    {
+      "role": "coder",
+      "title": "Coder"
+    },
+    {
+      "role": "tester",
+      "title": "Tester"
+    },
+    {
+      "role": "reviewer",
+      "title": "Reviewer"
+    },
+    {
+      "role": "security",
+      "title": "Security Specialist"
+    },
+    {
+      "role": "performance",
+      "title": "Performance Engineer"
+    },
+    {
+      "role": "github",
+      "title": "GitHub Coordinator"
+    },
+    {
+      "role": "memory",
+      "title": "Memory Keeper"
+    }
+  ],
+  "ledger": [
+    {
+      "at": "2026-06-11T00:00:00.000Z",
+      "actor": "system",
+      "kind": "state-created",
+      "summary": "MemoryOfPlanet state scaffold created; setup pending."
+    },
+    {
+      "at": "2026-06-11T04:38:36.140Z",
+      "actor": "moon",
+      "kind": "setup",
+      "summary": "Initialized Test in solo mode."
+    },
+    {
+      "at": "2026-06-11T04:38:42.227Z",
+      "actor": "moon",
+      "kind": "autosycn-init",
+      "summary": "Initialized autosycn remote true."
+    }
+  ]
+}
