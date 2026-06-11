@@ -4,7 +4,7 @@
   "projectName": "MoonWiRaja",
   "projectNameDefault": ".MemoryOfPlanet.core",
   "ownerCodename": "moon",
-  "activeMember": "moon",
+  "activeMember": "",
   "mode": "solo",
   "joinMode": "owner-approved",
   "githubUrl": "https://github.com/MoonWIRaja/MoonWiRaja.git",
@@ -253,6 +253,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Tambah kesan scroll-behavior smooth pada senarai repositori"
+    },
+    {
+      "at": "2026-06-11T07:16:06.496Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Log keluar ahli moon"
     }
   ]
 }
