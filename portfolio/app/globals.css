@@ -1236,3 +1236,42 @@ ul, ol { list-style: none; }
   color: var(--text-light) !important;
   opacity: 0.95;
 }
+
+/* Glass Card Project Commit Details */
+.glass-card .project-commit {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 248, 247, 0.04);
+  border: 1px dashed rgba(255, 248, 247, 0.1);
+  padding: 4px 8px;
+  border-radius: var(--r-xs);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  margin-bottom: 4px;
+}
+
+.glass-card .commit-prefix {
+  color: var(--terminal-green);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.glass-card .commit-text {
+  color: var(--text-light-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.glass-card .commit-sha {
+  background: rgba(255, 248, 247, 0.08);
+  color: var(--highlight-yellow);
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-size: 0.55rem;
+  border: 1px solid rgba(255, 248, 247, 0.1);
+  flex-shrink: 0;
+}
+

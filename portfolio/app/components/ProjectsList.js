@@ -47,6 +47,18 @@ function ProjectCard({ repo, index }) {
       ) : (
         <p className="project-desc no-desc">Tiada penerangan disediakan.</p>
       )}
+
+      {repo.latest_commit_message && (
+        <div className="project-commit">
+          <span className="commit-prefix">≫ commit:</span>
+          <span className="commit-text" title={repo.latest_commit_message}>
+            {repo.latest_commit_message.split('\n')[0]}
+          </span>
+          {repo.latest_commit_sha && (
+            <span className="commit-sha">{repo.latest_commit_sha}</span>
+          )}
+        </div>
+      )}
       
       <div className="project-meta">
         <div className="meta-left">

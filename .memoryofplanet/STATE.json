@@ -181,6 +181,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Tambah bintang, fork, watchers, dan tarikh push commit terbaru ke setiap kad repositori secara dinamik"
+    },
+    {
+      "at": "2026-06-11T06:16:05.543Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Betulkan paparan statistik & komit terakhir pada kad repositori (bukan kad profil), padam stats grid dari ProfileCard"
     }
   ]
 }

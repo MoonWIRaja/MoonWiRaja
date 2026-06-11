@@ -25,6 +25,45 @@ export async function GET() {
     const profile = await profileRes.json();
     const repos = await reposRes.json();
 
+    // Limit commit fetching to a maximum of 15 repositories to prevent rate limits
+    const reposToFetchCommits = repos.slice(0, 15);
+    const otherRepos = repos.slice(15);
+
+    const reposWithCommits = await Promise.all(
+      reposToFetchCommits.map(async (repo) => {
+        let latestCommitMessage = null;
+        let latestCommitSha = null;
+        try {
+          const commitsRes = await fetch(
+            `https://api.github.com/repos/${GITHUB_USERNAME}/${repo.name}/commits?per_page=1`,
+            {
+              headers: { Accept: "application/vnd.github+json" },
+              next: { revalidate: 300 }, // Cache for 5 minutes
+            }
+          );
+          if (commitsRes.ok) {
+            const commits = await commitsRes.json();
+            if (commits && commits.length > 0) {
+              latestCommitMessage = commits[0].commit?.message || null;
+              latestCommitSha = commits[0].sha ? commits[0].sha.substring(0, 7) : null;
+            }
+          }
+        } catch (e) {
+          console.error(`Error fetching commits for ${repo.name}:`, e);
+        }
+        return {
+          ...repo,
+          latestCommitMessage,
+          latestCommitSha,
+        };
+      })
+    );
+
+    const allReposWithCommits = [
+      ...reposWithCommits,
+      ...otherRepos.map(r => ({ ...r, latestCommitMessage: null, latestCommitSha: null }))
+    ];
+
     // Calculate totals across all repositories (including forks as requested)
     let totalStars = 0;
     let totalForks = 0;
@@ -32,8 +71,7 @@ export async function GET() {
     let latestUpdate = null;
     let latestRepoName = "";
 
-    const publicRepos = repos; // Include forks and original repositories
-    publicRepos.forEach((repo) => {
+    allReposWithCommits.forEach((repo) => {
       totalStars += repo.stargazers_count || 0;
       totalForks += repo.forks_count || 0;
       totalWatching += repo.watchers_count || 0;
@@ -63,7 +101,7 @@ export async function GET() {
         latestUpdate: latestUpdate ? new Date(latestUpdate).toISOString() : null,
         latestRepo: latestRepoName,
       },
-      repos: publicRepos.map((repo) => ({
+      repos: allReposWithCommits.map((repo) => ({
         name: repo.name,
         description: repo.description,
         html_url: repo.html_url,
@@ -73,6 +111,8 @@ export async function GET() {
         watchers_count: repo.watchers_count || 0,
         updated_at: repo.updated_at,
         pushed_at: repo.pushed_at,
+        latest_commit_message: repo.latestCommitMessage,
+        latest_commit_sha: repo.latestCommitSha,
       })),
     });
   } catch (error) {
@@ -107,6 +147,8 @@ export async function GET() {
             watchers_count: 2,
             updated_at: new Date().toISOString(),
             pushed_at: new Date().toISOString(),
+            latest_commit_message: "Add watch-icon color inside glass-card overrides",
+            latest_commit_sha: "8ac0e70",
           },
           {
             name: ".MemoryOfPlanet.core",
@@ -118,6 +160,8 @@ export async function GET() {
             watchers_count: 3,
             updated_at: new Date().toISOString(),
             pushed_at: new Date().toISOString(),
+            latest_commit_message: "Sync member state protocol and agent ledger",
+            latest_commit_sha: "3138031",
           },
           {
             name: "myney.core",
@@ -129,6 +173,8 @@ export async function GET() {
             watchers_count: 1,
             updated_at: new Date().toISOString(),
             pushed_at: new Date().toISOString(),
+            latest_commit_message: "Initial release commit of financial app",
+            latest_commit_sha: "a1c2d3e",
           },
         ],
       },

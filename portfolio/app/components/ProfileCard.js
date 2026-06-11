@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MapPin, ShieldCheck, Mail, Star, GitFork, Eye, Clock } from "lucide-react";
+import { MapPin, ShieldCheck, Mail } from "lucide-react";
 
 // Local Github icon SVG since Lucide v1 removed brand icons
 const GithubIcon = ({ size = 13, className = "" }) => (
@@ -83,44 +83,6 @@ export default function ProfileCard({ profile, stats }) {
         <MapPin size={11} style={{ display: "inline", verticalAlign: "-1px", marginRight: 4 }} />
         {profile?.location || "Malaysia"}
       </p>
-
-      {/* GitHub Statistics Grid */}
-      <div className="profile-stats-grid">
-        <div className="profile-stat-tile" title="Total Stars across public repositories">
-          <span className="profile-stat-label">
-            <Star size={11} className="text-yellow" style={{ marginRight: 3 }} />
-            Stars
-          </span>
-          <span className="profile-stat-val">{stats?.stars ?? 0}</span>
-        </div>
-        <div className="profile-stat-tile" title="Total Forks across public repositories">
-          <span className="profile-stat-label">
-            <GitFork size={11} className="text-cyan" style={{ marginRight: 3 }} />
-            Forks
-          </span>
-          <span className="profile-stat-val">{stats?.forks ?? 0}</span>
-        </div>
-        <div className="profile-stat-tile" title="Total Watchers across public repositories">
-          <span className="profile-stat-label">
-            <Eye size={11} className="text-green" style={{ marginRight: 3 }} />
-            Watchers
-          </span>
-          <span className="profile-stat-val">{stats?.watching ?? 0}</span>
-        </div>
-        <div className="profile-stat-tile full-width" title={`Latest commit/update in ${stats?.latestRepo || 'repositories'}`}>
-          <span className="profile-stat-label">
-            <Clock size={11} className="text-accent" style={{ marginRight: 4 }} />
-            Latest Push
-          </span>
-          <span className="profile-stat-val-small">
-            {stats?.latestUpdate ? (
-              `${formatDate(stats.latestUpdate)} (${stats.latestRepo})`
-            ) : (
-              "No recent updates"
-            )}
-          </span>
-        </div>
-      </div>
 
       {/* Integrated Social Links */}
       <div className="social-row" style={{ padding: 0, marginTop: 10 }}>
