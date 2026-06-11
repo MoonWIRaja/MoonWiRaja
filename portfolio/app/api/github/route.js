@@ -146,7 +146,7 @@ export async function GET() {
         latestUpdate: latestUpdate ? new Date(latestUpdate).toISOString() : null,
         latestRepo: latestRepoName,
       },
-      repos: allReposWithCommits.map((repo) => {
+      repos: reposWithCommits.map((repo) => {
         return {
           name: repo.name,
           description: repo.description,
@@ -444,7 +444,7 @@ export async function GET() {
             latest_commit_message: "Optimize GPU memory driver",
             latest_commit_sha: "5a6b7c8",
           }
-        ],
+        ].slice(0, 8),
       },
       { status: 200 }
     );

@@ -223,6 +223,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Isih repositori mengikut push time di backend untuk mengutamakan komit bagi repositori terbaru"
+    },
+    {
+      "at": "2026-06-11T06:52:15.847Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Hadkan output API github kepada 8 repositori teratas bagi mengelakkan limpahan list dan selaraskan komit"
     }
   ]
 }
