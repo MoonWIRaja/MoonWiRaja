@@ -10,7 +10,7 @@ export async function GET() {
         next: { revalidate: 300 }, // Cache for 5 minutes
       }),
       fetch(
-        `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=8`,
+        `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=100`,
         {
           headers: { Accept: "application/vnd.github+json" },
           next: { revalidate: 300 },
@@ -25,10 +25,10 @@ export async function GET() {
     const profile = await profileRes.json();
     const repos = await reposRes.json();
 
-    // Calculate totals
+    // Calculate totals across all repositories (including forks as requested)
     let totalStars = 0;
     let totalForks = 0;
-    const publicRepos = repos.filter((r) => !r.fork);
+    const publicRepos = repos; // Include forks and original repositories
     publicRepos.forEach((repo) => {
       totalStars += repo.stargazers_count || 0;
       totalForks += repo.forks_count || 0;
@@ -49,7 +49,7 @@ export async function GET() {
         repos: profile.public_repos || 0,
         followers: profile.followers || 0,
       },
-      repos: publicRepos.slice(0, 6).map((repo) => ({
+      repos: publicRepos.map((repo) => ({
         name: repo.name,
         description: repo.description,
         html_url: repo.html_url,
