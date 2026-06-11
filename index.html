@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ms" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MoonWiRaja | Console Portfolio Dashboard</title>
+  <meta name="description" content="Portfolio interaktif MoonWiRaja dalam bentuk konsol & dashboard moden dengan integrasi GitHub API.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-primary text-secondary antialiased overflow-x-hidden">
+  
+  <!-- Grain Overlay for texture -->
+  <div class="grain-overlay"></div>
+
+  <!-- Top Status Bar -->
+  <header class="status-bar">
+    <div class="status-left">
+      <span class="status-indicator">
+        <span class="ping-circle"></span>
+        <span class="ping-pulse"></span>
+      </span>
+      <span class="status-text text-mono uppercase font-bold">Console Active // MoonWiRaja.dev</span>
+    </div>
+    <div class="status-right text-mono font-bold">
+      <span id="local-time" class="mr-4"><i class="fa-regular fa-clock"></i> 00:00:00 MYT</span>
+      <span id="github-api-status"><i class="fa-brands fa-github"></i> API: <span class="api-ok text-green">ONLINE</span></span>
+    </div>
+  </header>
+
+  <!-- Shell Container -->
+  <main class="dashboard-shell">
+    
+    <!-- Sidebar: Profile & Actions -->
+    <aside class="sidebar">
+      <div class="profile-card-3d" id="profile-card">
+        <div class="profile-inner">
+          <div class="avatar-container">
+            <img id="user-avatar" src="https://github.com/MoonWIRaja.png" alt="MoonWiRaja" class="avatar-img">
+            <div class="avatar-glow"></div>
+          </div>
+          <h1 id="user-name">MoonWiRaja</h1>
+          <p class="role-badge text-mono">Full-Stack Creator</p>
+          <p class="location-badge"><i class="fa-solid fa-location-dot"></i> Malaysia</p>
+        </div>
+      </div>
+
+      <!-- Quick Info / Metrics widget -->
+      <div class="widget shadow-box text-mono">
+        <h3 class="widget-title"><i class="fa-solid fa-circle-info"></i> SYS_INFO</h3>
+        <ul class="info-list">
+          <li><span>SHELL:</span> <span class="text-accent">zsh/bash</span></li>
+          <li><span>THEME:</span> <span class="text-accent">Cherry Cream</span></li>
+          <li><span>STATUS:</span> <span class="text-green font-bold">ACTIVE</span></li>
+          <li><span>MEMBERSHIP:</span> <span class="text-accent">Solo Core</span></li>
+        </ul>
+      </div>
+
+      <!-- Quick Commands Short-cut -->
+      <div class="widget shadow-box text-mono">
+        <h3 class="widget-title"><i class="fa-solid fa-terminal"></i> QUICK_CMDS</h3>
+        <div class="cmd-buttons">
+          <button class="cmd-btn" onclick="executeQuickCommand('about')">about</button>
+          <button class="cmd-btn" onclick="executeQuickCommand('repos')">repos</button>
+          <button class="cmd-btn" onclick="executeQuickCommand('skills')">skills</button>
+          <button class="cmd-btn" onclick="executeQuickCommand('contact')">contact</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <section class="main-content">
+      
+      <!-- Interactive Console / Terminal Widget -->
+      <article class="console-widget shadow-box">
+        <div class="console-header">
+          <div class="window-controls">
+            <span class="control-dot close"></span>
+            <span class="control-dot minimize"></span>
+            <span class="control-dot maximize"></span>
+          </div>
+          <div class="console-title text-mono uppercase"><i class="fa-solid fa-code"></i> moon@wiraja:~</div>
+          <div class="console-action">
+            <span class="text-mono text-xs">v2.0.0</span>
+          </div>
+        </div>
+        
+        <div class="console-body" id="console-body">
+          <div class="console-output">
+            <p class="welcome-msg">Selamat datang ke Portfolio MoonWiRaja. Sistem sedia untuk arahan anda.</p>
+            <p class="welcome-hint text-mono">Taip <span class="text-accent font-bold">help</span> untuk melihat senarai arahan yang disokong.</p>
+            <br>
+          </div>
+          <div class="console-input-row">
+            <span class="console-prompt text-mono font-bold">moon@wiraja:~$</span>
+            <input type="text" id="console-input" autofocus autocomplete="off" spellcheck="false" placeholder="taip help...">
+          </div>
+        </div>
+      </article>
+
+      <!-- GitHub Stat Overview Cards -->
+      <section class="stats-row">
+        <div class="stat-card shadow-box text-mono">
+          <div class="stat-icon"><i class="fa-solid fa-star text-yellow"></i></div>
+          <div class="stat-val" id="stat-stars">-</div>
+          <div class="stat-label">Stars</div>
+        </div>
+        <div class="stat-card shadow-box text-mono">
+          <div class="stat-icon"><i class="fa-solid fa-code-fork text-blue"></i></div>
+          <div class="stat-val" id="stat-forks">-</div>
+          <div class="stat-label">Forks</div>
+        </div>
+        <div class="stat-card shadow-box text-mono">
+          <div class="stat-icon"><i class="fa-solid fa-book-bookmark text-accent"></i></div>
+          <div class="stat-val" id="stat-repos">-</div>
+          <div class="stat-label">Public Repos</div>
+        </div>
+        <div class="stat-card shadow-box text-mono">
+          <div class="stat-icon"><i class="fa-solid fa-users text-green"></i></div>
+          <div class="stat-val" id="stat-followers">-</div>
+          <div class="stat-label">Followers</div>
+        </div>
+      </section>
+
+      <!-- Projects / Repos Grid Section -->
+      <section class="projects-section">
+        <h2 class="section-title"><i class="fa-solid fa-layer-group text-accent"></i> Projek & Repositori</h2>
+        <div class="repos-grid" id="repos-grid">
+          <!-- Dynamically populated by app.js -->
+          <div class="loading-spinner">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+            <span>Memuatkan data dari GitHub...</span>
+          </div>
+        </div>
+      </section>
+
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer text-mono">
+    <p>&copy; 2026 MoonWiRaja. Dikuasakan oleh <span class="text-accent">MemoryOfPlanet</span>.</p>
+  </footer>
+
+  <!-- Core Scripts -->
+  <script src="app.js"></script>
+</body>
+</html>
