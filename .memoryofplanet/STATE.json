@@ -151,6 +151,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Apply bold solid Forest Green borders to card layouts for stronger visual contrast"
+    },
+    {
+      "at": "2026-06-11T05:52:36.971Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Update glass cards to use solid forest green backgrounds with charcoal borders to match original reference colors"
     }
   ]
 }

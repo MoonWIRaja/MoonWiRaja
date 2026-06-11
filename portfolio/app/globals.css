@@ -6,14 +6,14 @@
 
 /* ── Design Tokens ── */
 :root {
-  /* BurhanDev-inspired warm light beige color system with premium forest green borders */
+  /* BurhanDev-inspired warm light beige color system with solid forest green cards */
   --bg-base: #ede6db;
-  --bg-surface: rgba(243, 247, 235, 0.45); /* Subtle Olive-Cream blend background */
-  --bg-elevated: rgba(243, 247, 235, 0.65);
-  --bg-card: rgba(243, 247, 235, 0.55);
-  --bg-glass: rgba(243, 247, 235, 0.45);
-  --bg-glass-hover: rgba(243, 247, 235, 0.65);
-  --bg-input: rgba(29, 48, 44, 0.03); /* Soft forest green overlay */
+  --bg-surface: #1d302c; /* Solid Forest Green background for cards */
+  --bg-elevated: rgba(255, 248, 247, 0.05); /* Soft overlay within green cards */
+  --bg-card: #1d302c;
+  --bg-glass: rgba(29, 48, 44, 0.96); /* Premium Forest Green with opacity & blur */
+  --bg-glass-hover: rgba(38, 62, 57, 0.96);
+  --bg-input: rgba(255, 248, 247, 0.06); /* Light input overlay for dark card backgrounds */
 
   /* Headers / Dark Accents */
   --bg-statusbar: #7a2021; /* Dark Cherry Red */
@@ -38,17 +38,18 @@
 
   /* Text Hierarchy (Dark Charcoal on Beige) */
   --text-primary: #231918;
-  --text-secondary: rgba(35, 25, 24, 0.7);
+  --text-secondary: rgba(35, 25, 24, 0.75);
   --text-muted: rgba(35, 25, 24, 0.45);
-  --text-ghost: rgba(35, 25, 24, 0.12);
+  --text-ghost: rgba(35, 25, 24, 0.15);
 
-  /* Text on Dark Status Bar */
+  /* Text on Dark Backgrounds (Status Bar and Forest Green Cards) */
   --text-light: #fff8f7;
-  --text-light-secondary: rgba(255, 248, 247, 0.75);
+  --text-light-secondary: rgba(255, 248, 247, 0.7);
+  --text-light-muted: rgba(255, 248, 247, 0.45);
 
-  /* Borders (Using Strong Forest Green for solid layout boundaries) */
-  --border-subtle: rgba(29, 48, 44, 0.22);
-  --border-default: #1d302c; /* Deep Forest Green */
+  /* Borders (Using Solid Retro Tech Dark Border) */
+  --border-subtle: rgba(61, 49, 46, 0.15);
+  --border-default: #3d312e; /* Solid Dark Charcoal/Brown */
   --border-hover: #7a2021; /* Cherry Red Accent on hover */
   --border-accent: rgba(122, 32, 33, 0.2);
 
@@ -874,4 +875,130 @@ ul, ol { list-style: none; }
   background: radial-gradient(circle, rgba(255, 255, 255, 0.02) 0%, rgba(0, 0, 0, 0.25) 100%);
   z-index: 10;
   pointer-events: none;
+}
+
+/* ── Forest Green Card Text & Border Overrides ── */
+.glass-card {
+  color: var(--text-light) !important;
+}
+
+.glass-card .widget-header {
+  color: var(--text-light-secondary) !important;
+  border-bottom: 1px solid rgba(255, 248, 247, 0.15) !important;
+}
+
+.glass-card .widget-header .header-dot {
+  background: var(--terminal-green) !important;
+  box-shadow: 0 0 4px var(--terminal-green) !important;
+}
+
+.glass-card .info-row {
+  border-bottom: 1px solid rgba(255, 248, 247, 0.08) !important;
+}
+
+.glass-card .info-label {
+  color: var(--text-light-secondary) !important;
+  opacity: 0.8;
+}
+
+.glass-card .info-value {
+  color: var(--text-light) !important;
+}
+
+.glass-card .cmd-chip {
+  background: rgba(255, 248, 247, 0.06) !important;
+  border: 1px solid rgba(255, 248, 247, 0.12) !important;
+  color: var(--text-light-secondary) !important;
+}
+
+.glass-card .cmd-chip:hover {
+  border-color: var(--highlight-yellow) !important;
+  color: var(--highlight-yellow) !important;
+  background: rgba(255, 248, 247, 0.12) !important;
+}
+
+.glass-card .social-btn {
+  background: rgba(255, 248, 247, 0.06) !important;
+  border: 1px solid rgba(255, 248, 247, 0.12) !important;
+  color: var(--text-light-secondary) !important;
+}
+
+.glass-card .social-btn:hover {
+  color: var(--text-light) !important;
+  border-color: rgba(255, 248, 247, 0.3) !important;
+  background: rgba(255, 248, 247, 0.12) !important;
+}
+
+.glass-card .profile-name {
+  color: var(--text-light) !important;
+}
+
+.glass-card .profile-role {
+  color: var(--terminal-green) !important;
+  border-color: rgba(167, 201, 87, 0.3) !important;
+  background-color: rgba(167, 201, 87, 0.1) !important;
+}
+
+.glass-card .profile-bio {
+  color: var(--text-light-secondary) !important;
+}
+
+.glass-card .projects-header {
+  color: var(--text-light-secondary) !important;
+  border-bottom: 1px solid rgba(255, 248, 247, 0.15) !important;
+}
+
+.glass-card .projects-count {
+  background: rgba(255, 248, 247, 0.1) !important;
+  color: var(--text-light) !important;
+}
+
+.glass-card .project-card {
+  background: rgba(255, 248, 247, 0.04) !important;
+  border: 1px solid rgba(255, 248, 247, 0.1) !important;
+}
+
+.glass-card .project-card:hover {
+  border-color: var(--border-hover) !important;
+  background: rgba(255, 248, 247, 0.08) !important;
+}
+
+.glass-card .project-name {
+  color: var(--text-light) !important;
+}
+
+.glass-card .project-desc {
+  color: var(--text-light-secondary) !important;
+}
+
+.glass-card .project-meta {
+  color: var(--text-light-secondary) !important;
+  opacity: 0.8;
+}
+
+.glass-card .stat-monitor-tile {
+  background: rgba(255, 248, 247, 0.04) !important;
+  border: 1px solid rgba(255, 248, 247, 0.12) !important;
+}
+
+.glass-card .stat-monitor-label {
+  color: var(--text-light-secondary) !important;
+  opacity: 0.8;
+}
+
+.glass-card .stat-monitor-val {
+  color: var(--text-light) !important;
+}
+
+.glass-card .stat-monitor-sub {
+  color: var(--text-light-secondary) !important;
+  opacity: 0.6;
+}
+
+.glass-card .text-accent {
+  color: var(--accent-rose) !important;
+}
+
+.glass-card .text-green {
+  color: var(--terminal-green) !important;
 }

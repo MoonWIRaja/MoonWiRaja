@@ -36,7 +36,7 @@ export default function ProfileCard({ profile }) {
         <motion.div
           className="avatar-ring"
           style={{
-            background: "conic-gradient(var(--accent-green), var(--accent-cyan), var(--accent-cherry), var(--accent-green))"
+            background: "conic-gradient(var(--terminal-green), var(--accent-cyan), var(--accent-cherry), var(--terminal-green))"
           }}
           animate={{ rotate: 360 }}
           transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
@@ -58,9 +58,9 @@ export default function ProfileCard({ profile }) {
       <motion.span
         className="profile-role"
         style={{
-          color: "var(--accent-green)",
-          borderColor: "rgba(167, 201, 87, 0.25)",
-          backgroundColor: "rgba(167, 201, 87, 0.08)"
+          color: "var(--terminal-green)",
+          borderColor: "rgba(167, 201, 87, 0.4)",
+          backgroundColor: "rgba(167, 201, 87, 0.12)"
         }}
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
