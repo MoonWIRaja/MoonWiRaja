@@ -229,6 +229,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Hadkan output API github kepada 8 repositori teratas bagi mengelakkan limpahan list dan selaraskan komit"
+    },
+    {
+      "at": "2026-06-11T06:56:21.201Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Betulkan isu kad bertindih dan sembunyikan scrollbar bagi senarai repositori"
     }
   ]
 }

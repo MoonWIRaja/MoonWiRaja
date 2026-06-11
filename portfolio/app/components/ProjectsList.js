@@ -126,7 +126,7 @@ export default function ProjectsList({ repos, loading }) {
         )}
       </div>
       
-      <div className="projects-list console-scroll">
+      <div className="projects-list">
         {loading ? (
           <>
             <SkeletonCard />

@@ -780,6 +780,12 @@ ul, ol { list-style: none; }
   flex-direction: column;
   gap: 6px;
   min-height: 0;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.projects-list::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 .project-card {
@@ -791,6 +797,7 @@ ul, ol { list-style: none; }
   display: block;
   position: relative;
   overflow: hidden;
+  flex-shrink: 0 !important;
 }
 
 .project-card::before {
@@ -1036,6 +1043,7 @@ ul, ol { list-style: none; }
   flex-direction: column;
   gap: 8px;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  flex-shrink: 0 !important;
 }
 
 .glass-card .project-card:hover {
