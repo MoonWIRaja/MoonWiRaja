@@ -1,102 +1,85 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Terminal } from "lucide-react";
 
 const COMMANDS = {
   help: () => [
-    { type: "response", text: "╔══════════════════════════════════════╗" },
-    { type: "response", text: "║  Available Commands                  ║" },
-    { type: "response", text: "╠══════════════════════════════════════╣" },
-    { type: "response", text: "║  about    → Tentang saya             ║" },
-    { type: "response", text: "║  skills   → Kemahiran & tech stack   ║" },
-    { type: "response", text: "║  repos    → Senarai projek utama     ║" },
-    { type: "response", text: "║  contact  → Cara menghubungi saya    ║" },
-    { type: "response", text: "║  clear    → Bersihkan terminal       ║" },
-    { type: "response", text: "╚══════════════════════════════════════╝" },
+    { type: "response", text: "" },
+    { type: "response", html: '<span class="text-accent">┌──────────────────────────────────────────┐</span>' },
+    { type: "response", html: '<span class="text-accent">│</span>  <span class="text-secondary">COMMAND</span>     <span class="text-muted">│</span>  <span class="text-secondary">DESCRIPTION</span>              <span class="text-accent">│</span>' },
+    { type: "response", html: '<span class="text-accent">├──────────────────────────────────────────┤</span>' },
+    { type: "response", html: '<span class="text-accent">│</span>  <span class="text-green">about</span>       <span class="text-muted">│</span>  Tentang saya              <span class="text-accent">│</span>' },
+    { type: "response", html: '<span class="text-accent">│</span>  <span class="text-green">skills</span>      <span class="text-muted">│</span>  Tech stack & kemahiran    <span class="text-accent">│</span>' },
+    { type: "response", html: '<span class="text-accent">│</span>  <span class="text-green">repos</span>       <span class="text-muted">│</span>  Senarai projek utama      <span class="text-accent">│</span>' },
+    { type: "response", html: '<span class="text-accent">│</span>  <span class="text-green">neofetch</span>    <span class="text-muted">│</span>  Sistem info & logo ASCII  <span class="text-accent">│</span>' },
+    { type: "response", html: '<span class="text-accent">│</span>  <span class="text-green">contact</span>     <span class="text-muted">│</span>  Cara menghubungi saya     <span class="text-accent">│</span>' },
+    { type: "response", html: '<span class="text-accent">│</span>  <span class="text-green">clear</span>       <span class="text-muted">│</span>  Bersihkan terminal        <span class="text-accent">│</span>' },
+    { type: "response", html: '<span class="text-accent">└──────────────────────────────────────────┘</span>' },
+    { type: "response", text: "" },
   ],
   about: () => [
     { type: "response", text: "" },
-    {
-      type: "response",
-      html: '<span class="text-accent">⟐ MoonWiRaja</span> — Full-Stack Creator dari Malaysia',
-    },
-    {
-      type: "response",
-      text: "  Saya membina aplikasi web moden, alat automasi pintar,",
-    },
-    {
-      type: "response",
-      text: "  dan reka bentuk visual premium dengan fokus kepada",
-    },
-    {
-      type: "response",
-      text: "  pengalaman pengguna yang kemas dan responsif.",
-    },
+    { type: "response", html: '<span class="text-accent">◆</span> <span style="font-weight:600">MoonWiRaja</span> — Full-Stack Creator' },
+    { type: "response", html: '  <span class="text-muted">Location:</span>  Malaysia 🇲🇾' },
+    { type: "response", html: '  <span class="text-muted">Focus:</span>    Web moden, automasi pintar, reka bentuk premium' },
+    { type: "response", html: '  <span class="text-muted">Passion:</span>  Pengalaman pengguna yang kemas & responsif' },
     { type: "response", text: "" },
   ],
   skills: () => [
     { type: "response", text: "" },
-    {
-      type: "response",
-      html: '<span class="text-cyan">Frontend</span>  → HTML5 · CSS3 · JavaScript · React · Next.js · Astro',
-    },
-    {
-      type: "response",
-      html: '<span class="text-green">Backend</span>   → Node.js · Express · Python · REST APIs',
-    },
-    {
-      type: "response",
-      html: '<span class="text-yellow">Database</span>  → PostgreSQL · SQLite · MongoDB',
-    },
-    {
-      type: "response",
-      html: '<span class="text-violet">DevOps</span>    → Git · GitHub Actions · Docker · Linux CLI',
-    },
+    { type: "response", html: '<span class="text-accent">◆</span> <span style="font-weight:600">Kemahiran Teknologi</span>' },
+    { type: "response", text: "" },
+    { type: "response", html: '  <span class="text-cyan">▸ Frontend</span>   HTML5 · CSS3 · JS · React · Next.js · Astro' },
+    { type: "response", html: '  <span class="text-green">▸ Backend</span>    Node.js · Express · Python · REST APIs' },
+    { type: "response", html: '  <span class="text-yellow">▸ Database</span>   PostgreSQL · SQLite · MongoDB' },
+    { type: "response", html: '  <span class="text-violet">▸ DevOps</span>     Git · GitHub Actions · Docker · Linux' },
+    { type: "response", html: '  <span class="text-rose">▸ Design</span>     Figma · Framer Motion · UI/UX' },
     { type: "response", text: "" },
   ],
   repos: () => [
     { type: "response", text: "" },
-    {
-      type: "response",
-      html: '  <span class="text-green">●</span> MoonWiRaja          — Portfolio console dashboard',
-    },
-    {
-      type: "response",
-      html: '  <span class="text-green">●</span> MemoryOfPlanet.core — AI agent management core',
-    },
-    {
-      type: "response",
-      html: '  <span class="text-green">●</span> myney.core          — Personal finance system',
-    },
+    { type: "response", html: '<span class="text-accent">◆</span> <span style="font-weight:600">Repositori Utama</span>' },
+    { type: "response", text: "" },
+    { type: "response", html: '  <span class="text-green">●</span> <span style="font-weight:500">MoonWiRaja</span>           Console portfolio dashboard' },
+    { type: "response", html: '  <span class="text-green">●</span> <span style="font-weight:500">MemoryOfPlanet.core</span>  AI agent management core' },
+    { type: "response", html: '  <span class="text-green">●</span> <span style="font-weight:500">myney.core</span>           Personal finance system' },
     { type: "response", text: "" },
   ],
   contact: () => [
     { type: "response", text: "" },
-    {
-      type: "response",
-      html: '  <span class="text-accent">✉</span>  Email   → hakimmikah191@gmail.com',
-    },
-    {
-      type: "response",
-      html: '  <span class="text-accent">⟐</span>  GitHub  → github.com/MoonWIRaja',
-    },
+    { type: "response", html: '<span class="text-accent">◆</span> <span style="font-weight:600">Hubungi Saya</span>' },
+    { type: "response", text: "" },
+    { type: "response", html: '  <span class="text-accent">✉</span>  Email    <span class="text-secondary">hakimmikah191@gmail.com</span>' },
+    { type: "response", html: '  <span class="text-accent">⟐</span>  GitHub   <span class="text-secondary">github.com/MoonWIRaja</span>' },
     { type: "response", text: "" },
   ],
+  neofetch: () => [
+    { type: "response", text: "" },
+    { type: "response", html: '<span class="text-accent">   __  __  ___   ___  _  _ </span>  <span class="text-secondary" style="font-weight:600">OS:</span> MemoryOfPlanet SoloCore v1.0' },
+    { type: "response", html: '<span class="text-accent">  |  \\/  |/ _ \\ / _ \\| \\| |</span>  <span class="text-secondary" style="font-weight:600">Host:</span> MoonWiRaja.dev Server' },
+    { type: "response", html: '<span class="text-accent">  | |\\/| | (_) | (_) | .  |</span>  <span class="text-secondary" style="font-weight:600">Kernel:</span> Next.js 16.2.9 / React 19' },
+    { type: "response", html: '<span class="text-accent">  |_|  |_|\\___/ \\___/|_|\\_|</span>  <span class="text-secondary" style="font-weight:600">Shell:</span> zsh / web-cli v3.0' },
+    { type: "response", html: '<span class="text-accent">   _ _ _ _ ___   _  _  _  </span>  <span class="text-secondary" style="font-weight:600">Uptime:</span> 99.9% stable' },
+    { type: "response", html: '<span class="text-accent">  | | | | | _ \\ / _ \\| | </span>  <span class="text-secondary" style="font-weight:600">Theme:</span> Cherry Dark (Burhan Accent)' },
+    { type: "response", html: '<span class="text-accent">  | | | | |   /| (_) | | </span>  <span class="text-secondary" style="font-weight:600">CPU:</span> Simulated Google Brain AI v4' },
+    { type: "response", html: '<span class="text-accent">   \\___/|_|_|_\\ \\___/|_| </span>  <span class="text-secondary" style="font-weight:600">Memory:</span> 4.12 GB / 8.00 GB' },
+    { type: "response", text: "" },
+  ]
 };
 
 export default function Console() {
   const [lines, setLines] = useState([
-    {
-      type: "welcome",
-      html: '<span class="text-accent">⟐</span> Selamat datang ke <span class="text-accent">MoonWiRaja Console</span> v2.0',
-    },
-    {
-      type: "hint",
-      text: '  Taip "help" untuk melihat senarai arahan yang disokong.',
-    },
+    { type: "welcome", html: '<span class="text-accent">◆</span> Selamat datang ke <span class="text-accent" style="font-weight:600">MoonWiRaja Console</span> <span class="text-muted">v3.0</span>' },
+    { type: "hint", text: '  Taip "help" atau "neofetch" untuk melihat sistem info.' },
     { type: "response", text: "" },
   ]);
   const [input, setInput] = useState("");
+  const [isMinimized, setIsMinimized] = useState(false);
+  const [isMaximized, setIsMaximized] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
+
   const outputRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -106,102 +89,159 @@ export default function Console() {
     }
   }, [lines]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const cmd = input.trim().toLowerCase();
-    if (!cmd) return;
-    setInput("");
-
+  const executeCommandDirectly = (cmd) => {
     if (cmd === "clear") {
       setLines([]);
       return;
     }
-
-    const cmdLine = { type: "cmd", text: cmd };
     const handler = COMMANDS[cmd];
-
     if (handler) {
-      setLines((prev) => [...prev, cmdLine, ...handler()]);
+      setLines((prev) => [...prev, { type: "cmd", text: cmd }, ...handler()]);
     } else {
       setLines((prev) => [
         ...prev,
-        cmdLine,
+        { type: "cmd", text: cmd },
         {
           type: "response",
-          html: `<span class="text-accent">✗</span> Perintah "${cmd}" tidak ditemui. Taip "help" untuk bantuan.`,
+          html: `<span class="text-accent">✗</span> <span class="text-muted">Perintah "${cmd}" tidak ditemui. Taip "help" untuk bantuan.</span>`,
         },
       ]);
     }
   };
 
-  const executeCommand = (cmd) => {
-    const handler = COMMANDS[cmd];
-    if (handler) {
-      setLines((prev) => [
-        ...prev,
-        { type: "cmd", text: cmd },
-        ...handler(),
-      ]);
-    }
+  const simulateTypingAndExecute = (cmd) => {
+    if (isTyping) return;
+    setIsTyping(true);
+    setInput("");
+    
+    let currentText = "";
+    let i = 0;
+    
+    const interval = setInterval(() => {
+      if (i < cmd.length) {
+        currentText += cmd.charAt(i);
+        setInput(currentText);
+        i++;
+      } else {
+        clearInterval(interval);
+        setTimeout(() => {
+          setInput("");
+          executeCommandDirectly(cmd);
+          setIsTyping(false);
+        }, 150);
+      }
+    }, 50);
   };
 
-  // Expose to global for quick command buttons
   useEffect(() => {
-    window.__consoleExec = executeCommand;
-    return () => { delete window.__consoleExec; };
-  });
+    window.__consoleExec = simulateTypingAndExecute;
+    return () => {
+      delete window.__consoleExec;
+    };
+  }, [isTyping]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isTyping) return;
+    const cmd = input.trim().toLowerCase();
+    if (!cmd) return;
+    setInput("");
+    executeCommandDirectly(cmd);
+  };
 
   return (
-    <div className="console-card glass-card">
+    <motion.div
+      className={`console-card crt-effect crt-screen-flicker`}
+      style={isMaximized ? {
+        position: "fixed",
+        inset: "12px",
+        zIndex: 999,
+        height: "calc(100vh - 24px)",
+        width: "calc(100vw - 24px)"
+      } : {}}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
+    >
+      {/* Title bar */}
       <div className="console-titlebar">
         <div className="titlebar-dots">
-          <span className="titlebar-dot red"></span>
-          <span className="titlebar-dot yellow"></span>
-          <span className="titlebar-dot green"></span>
-        </div>
-        <span className="titlebar-label">moon@wiraja ~ console</span>
-        <span className="titlebar-label">v2.0</span>
-      </div>
-
-      <div
-        className="console-body console-scroll"
-        onClick={() => inputRef.current?.focus()}
-      >
-        <div className="console-output" ref={outputRef}>
-          {lines.map((line, i) => (
-            <div key={i} className={`console-line ${line.type}`}>
-              {line.type === "cmd" ? (
-                <>
-                  <span className="prompt-symbol">❯</span>
-                  <span className="cmd-text">{line.text}</span>
-                </>
-              ) : line.html ? (
-                <span dangerouslySetInnerHTML={{ __html: line.html }} />
-              ) : (
-                <span>{line.text}</span>
-              )}
-            </div>
-          ))}
-        </div>
-
-        <form className="console-input-row" onSubmit={handleSubmit}>
-          <span className="prompt-symbol">❯</span>
-          <input
-            ref={inputRef}
-            type="text"
-            className="console-input"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="taip help..."
-            autoFocus
-            autoComplete="off"
-            spellCheck="false"
+          <button 
+            type="button"
+            className="titlebar-dot red" 
+            title="Clear output"
+            onClick={() => setLines([])}
+            aria-label="Clear Console"
           />
-        </form>
+          <button 
+            type="button"
+            className="titlebar-dot yellow" 
+            title="Collapse / Minimize"
+            onClick={() => setIsMinimized(!isMinimized)}
+            aria-label="Minimize Console"
+          />
+          <button 
+            type="button"
+            className="titlebar-dot green" 
+            title="Toggle Fullscreen"
+            onClick={() => setIsMaximized(!isMaximized)}
+            aria-label="Maximize Console"
+          />
+        </div>
+        <div className="titlebar-center">
+          <Terminal className="titlebar-icon" />
+          <span>moon@wiraja ~ console</span>
+        </div>
+        <span className="titlebar-center" style={{ color: "var(--text-ghost)" }}>v3.0</span>
       </div>
-    </div>
+
+      {/* Console Body */}
+      <AnimatePresence initial={false}>
+        {!isMinimized && (
+          <motion.div 
+            className="console-body console-scroll"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            onClick={() => inputRef.current?.focus()}
+            style={{ flex: 1, display: "flex", flexDirection: "column", minHeight: 0 }}
+          >
+            <div className="console-output" ref={outputRef}>
+              {lines.map((line, i) => (
+                <div key={i} className={`console-line ${line.type}`}>
+                  {line.type === "cmd" ? (
+                    <>
+                      <span className="prompt-symbol">❯</span>
+                      <span className="cmd-text">{line.text}</span>
+                    </>
+                  ) : line.html ? (
+                    <span dangerouslySetInnerHTML={{ __html: line.html }} />
+                  ) : (
+                    <span>{line.text}</span>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <form className="console-input-row" onSubmit={handleSubmit}>
+              <span className="prompt-symbol">❯</span>
+              <input
+                ref={inputRef}
+                type="text"
+                className="console-input"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder={isTyping ? "" : "taip help..."}
+                disabled={isTyping}
+                autoFocus
+                autoComplete="off"
+                spellCheck="false"
+              />
+            </form>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 }
-
-// Export for quick commands from outside
-export { COMMANDS };
