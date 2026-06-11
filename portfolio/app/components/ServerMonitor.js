@@ -47,7 +47,7 @@ export default function ServerMonitor() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
     >
-      <div className="server-stats-card .widget-header" style={{ padding: "0 0 6px 0", fontSize: "0.6rem", fontFamily: "var(--font-mono)", fontWeight: 700, textTransform: "uppercase", display: "flex", alignItems: "center", gap: 6, color: "var(--text-secondary)", borderBottom: "1px solid var(--border-subtle)", marginBottom: 8 }}>
+      <div className="widget-header" style={{ padding: "0 0 6px 0", borderBottom: "1px solid var(--border-subtle)", marginBottom: 8, width: "100%" }}>
         <span className="header-dot" style={{ width: 4, height: 4, borderRadius: "50%", background: "var(--accent-green)" }} />
         SERVER STATISTICS
       </div>

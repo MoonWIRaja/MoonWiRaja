@@ -133,6 +133,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Apply Burhan Console themed layout: sand background, dark-green left sidebar, cherry-red top bar, neobrutalism cards, and horizontal server stats panel"
+    },
+    {
+      "at": "2026-06-11T05:42:04.814Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Roll back layout to light glassmorphism beige theme and restore 3-column grid layout with horizontal server statistics"
     }
   ]
 }
