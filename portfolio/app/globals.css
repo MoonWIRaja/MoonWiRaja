@@ -6,14 +6,14 @@
 
 /* ── Design Tokens ── */
 :root {
-  /* BurhanDev-inspired warm light beige color system with premium olive accents */
+  /* BurhanDev-inspired warm light beige color system with premium forest green borders */
   --bg-base: #ede6db;
-  --bg-surface: rgba(245, 248, 238, 0.45); /* Soft Olive-Cream blend */
-  --bg-elevated: rgba(245, 248, 238, 0.65);
-  --bg-card: rgba(245, 248, 238, 0.55);
-  --bg-glass: rgba(245, 248, 238, 0.45);
-  --bg-glass-hover: rgba(245, 248, 238, 0.65);
-  --bg-input: rgba(167, 201, 87, 0.04); /* Soft green input overlay */
+  --bg-surface: rgba(243, 247, 235, 0.45); /* Subtle Olive-Cream blend background */
+  --bg-elevated: rgba(243, 247, 235, 0.65);
+  --bg-card: rgba(243, 247, 235, 0.55);
+  --bg-glass: rgba(243, 247, 235, 0.45);
+  --bg-glass-hover: rgba(243, 247, 235, 0.65);
+  --bg-input: rgba(29, 48, 44, 0.03); /* Soft forest green overlay */
 
   /* Headers / Dark Accents */
   --bg-statusbar: #7a2021; /* Dark Cherry Red */
@@ -22,8 +22,9 @@
   --accent-red: #7a2021;
   --accent-cherry: #7a2021;
   --accent-cherry-glow: rgba(122, 32, 33, 0.12);
-  --accent-green: #a7c957; /* Sage/Olive Green */
-  --accent-green-glow: rgba(167, 201, 87, 0.15);
+  --accent-green: #1d302c; /* Strong Forest Green */
+  --accent-green-glow: rgba(29, 48, 44, 0.15);
+  --terminal-green: #a7c957; /* Bright Sage Green for terminal contrast */
   --accent-amber: #f4a261;
   --accent-cyan: #2dd4bf;
   --accent-violet: #a78bfa;
@@ -45,10 +46,10 @@
   --text-light: #fff8f7;
   --text-light-secondary: rgba(255, 248, 247, 0.75);
 
-  /* Borders (Using Olive Green for cards and containers) */
-  --border-subtle: rgba(167, 201, 87, 0.18);
-  --border-default: rgba(167, 201, 87, 0.3);
-  --border-hover: rgba(167, 201, 87, 0.55);
+  /* Borders (Using Strong Forest Green for solid layout boundaries) */
+  --border-subtle: rgba(29, 48, 44, 0.22);
+  --border-default: #1d302c; /* Deep Forest Green */
+  --border-hover: #7a2021; /* Cherry Red Accent on hover */
   --border-accent: rgba(122, 32, 33, 0.2);
 
   /* Spacing */
@@ -150,7 +151,7 @@ ul, ol { list-style: none; }
   background: var(--bg-glass);
   backdrop-filter: blur(24px) saturate(1.2);
   -webkit-backdrop-filter: blur(24px) saturate(1.2);
-  border: 1px solid var(--border-subtle);
+  border: 2px solid var(--border-default); /* Bold 2px Forest Green border */
   border-radius: var(--r-lg);
   box-shadow: var(--shadow-inset), var(--shadow-sm);
   transition: all var(--duration-normal) var(--ease-out-expo);
@@ -592,10 +593,10 @@ ul, ol { list-style: none; }
 
 .console-line { margin-bottom: 2px; }
 .console-line.cmd { color: #ffffff; }
-.console-line .prompt-symbol { color: var(--accent-green); margin-right: 8px; font-weight: 700; }
+.console-line .prompt-symbol { color: var(--terminal-green); margin-right: 8px; font-weight: 700; }
 .console-line .cmd-text { color: #ffffff; }
 .console-line.response { color: #eae5de; padding-left: 20px; }
-.console-line.welcome { color: var(--accent-green); font-weight: 500; }
+.console-line.welcome { color: var(--terminal-green); font-weight: 500; }
 .console-line.hint { color: rgba(255, 255, 255, 0.4); font-size: 0.7rem; }
 
 .console-input-row {
@@ -608,7 +609,7 @@ ul, ol { list-style: none; }
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.prompt-symbol { color: var(--accent-green); font-weight: 700; white-space: nowrap; }
+.prompt-symbol { color: var(--terminal-green); font-weight: 700; white-space: nowrap; }
 
 .console-input {
   flex: 1;
@@ -618,7 +619,7 @@ ul, ol { list-style: none; }
   color: #ffffff;
   font-family: var(--font-mono);
   font-size: 0.78rem;
-  caret-color: var(--accent-green);
+  caret-color: var(--terminal-green);
 }
 
 .console-input::placeholder { color: rgba(255, 255, 255, 0.2); }
