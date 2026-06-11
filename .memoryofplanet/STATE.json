@@ -187,6 +187,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Betulkan paparan statistik & komit terakhir pada kad repositori (bukan kad profil), padam stats grid dari ProfileCard"
+    },
+    {
+      "at": "2026-06-11T06:20:09.956Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Matikan cache API (cache: no-store) bagi membolehkan data original stars, forks, dan watchers diisi secara langsung dari GitHub"
     }
   ]
 }

@@ -7,13 +7,13 @@ export async function GET() {
     const [profileRes, reposRes] = await Promise.all([
       fetch(`https://api.github.com/users/${GITHUB_USERNAME}`, {
         headers: { Accept: "application/vnd.github+json" },
-        next: { revalidate: 300 }, // Cache for 5 minutes
+        cache: "no-store",
       }),
       fetch(
         `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=100`,
         {
           headers: { Accept: "application/vnd.github+json" },
-          next: { revalidate: 300 },
+          cache: "no-store",
         }
       ),
     ]);
@@ -38,7 +38,7 @@ export async function GET() {
             `https://api.github.com/repos/${GITHUB_USERNAME}/${repo.name}/commits?per_page=1`,
             {
               headers: { Accept: "application/vnd.github+json" },
-              next: { revalidate: 300 }, // Cache for 5 minutes
+              cache: "no-store",
             }
           );
           if (commitsRes.ok) {
