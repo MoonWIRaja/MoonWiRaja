@@ -211,6 +211,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Kemaskini walkthrough untuk menerangkan pembuangan statistik palsu"
+    },
+    {
+      "at": "2026-06-11T06:43:12.645Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Betulkan fallback komit static supaya kesemua kad repositori sentiasa memaparkan bahagian komit, bintang, fork dan watch walaupun nilai 0"
     }
   ]
 }
