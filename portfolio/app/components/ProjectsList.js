@@ -11,6 +11,16 @@ const LANG_CLASS = {
   CSS: "lang-css",
 };
 
+const formatDate = (dateStr) => {
+  if (!dateStr) return "";
+  const date = new Date(dateStr);
+  return date.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric"
+  }); // e.g. "11 Jun 2026"
+};
+
 function ProjectCard({ repo, index }) {
   const langClass = LANG_CLASS[repo.language] || "lang-default";
 
@@ -25,26 +35,39 @@ function ProjectCard({ repo, index }) {
       transition={{ duration: 0.5, delay: 0.15 + index * 0.05, ease: [0.16, 1, 0.3, 1] }}
     >
       <div className="project-name">
-        <span style={{ display: "flex", alignItems: "center", gap: 5 }}>
-          <BookMarked size={11} className="text-secondary" />
+        <span className="project-title-text">
+          <BookMarked size={13} className="project-icon" />
           {repo.name}
         </span>
-        <ArrowUpRight className="arrow-icon" />
+        <ArrowUpRight className="arrow-icon" size={13} />
       </div>
-      <p className="project-desc">
-        {repo.description || "Tiada penerangan disediakan."}
-      </p>
+      
+      {repo.description ? (
+        <p className="project-desc">{repo.description}</p>
+      ) : (
+        <p className="project-desc no-desc">Tiada penerangan disediakan.</p>
+      )}
+      
       <div className="project-meta">
-        <span className="lang-indicator">
-          <span className={`lang-dot ${langClass}`} />
-          <span>{repo.language || "Web"}</span>
-        </span>
-        <span style={{ display: "flex", alignItems: "center", gap: 3 }} className="mono">
-          <Star size={9} className="text-yellow" /> {repo.stargazers_count}
-        </span>
-        <span style={{ display: "flex", alignItems: "center", gap: 3 }} className="mono">
-          <GitFork size={9} className="text-cyan" /> {repo.forks_count}
-        </span>
+        <div className="meta-left">
+          <span className="lang-indicator">
+            <span className={`lang-dot ${langClass}`} />
+            <span className="lang-text">{repo.language || "Web"}</span>
+          </span>
+          <span className="meta-stat">
+            <Star size={11} className="stat-icon star-icon" />
+            <span className="stat-value">{repo.stargazers_count}</span>
+          </span>
+          <span className="meta-stat">
+            <GitFork size={11} className="stat-icon fork-icon" />
+            <span className="stat-value">{repo.forks_count}</span>
+          </span>
+        </div>
+        <div className="meta-right">
+          <span className="update-date">
+            UP: {formatDate(repo.updated_at)}
+          </span>
+        </div>
       </div>
     </motion.a>
   );
@@ -61,6 +84,11 @@ function SkeletonCard() {
 }
 
 export default function ProjectsList({ repos, loading }) {
+  // Sort repositories by updated_at descending (latest update first)
+  const sortedRepos = repos 
+    ? [...repos].sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
+    : [];
+
   return (
     <motion.div
       className="right-panel glass-card"
@@ -86,8 +114,8 @@ export default function ProjectsList({ repos, loading }) {
             <SkeletonCard />
             <SkeletonCard />
           </>
-        ) : repos && repos.length > 0 ? (
-          repos.map((repo, i) => <ProjectCard key={repo.name} repo={repo} index={i} />)
+        ) : sortedRepos && sortedRepos.length > 0 ? (
+          sortedRepos.map((repo, i) => <ProjectCard key={repo.name} repo={repo} index={i} />)
         ) : (
           <p className="text-muted mono" style={{ fontSize: "0.7rem", padding: 16 }}>
             Tiada repositori ditemui.
