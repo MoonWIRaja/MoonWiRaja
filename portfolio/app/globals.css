@@ -1115,15 +1115,28 @@ ul, ol { list-style: none; }
   gap: 8px;
 }
 
-.glass-card .project-meta-date {
+.glass-card .project-date-box {
   display: flex;
-  justify-content: flex-end;
-  font-family: var(--font-mono) !important;
-  font-size: 0.6rem !important;
-  color: var(--text-light-secondary) !important;
-  opacity: 0.8 !important;
-  margin-top: 2px;
-  margin-bottom: 2px;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 248, 247, 0.04);
+  border: 1px dashed rgba(255, 248, 247, 0.1);
+  padding: 4px 8px;
+  border-radius: var(--r-xs);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  margin-bottom: 4px;
+  width: fit-content;
+}
+
+.glass-card .date-prefix {
+  color: var(--accent-cyan);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.glass-card .date-text {
+  color: var(--text-light-secondary);
 }
 
 .glass-card .meta-stat {

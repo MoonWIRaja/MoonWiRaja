@@ -42,10 +42,8 @@ function ProjectCard({ repo, index }) {
         <ArrowUpRight className="arrow-icon" size={13} />
       </div>
       
-      {repo.description ? (
+      {repo.description && (
         <p className="project-desc">{repo.description}</p>
-      ) : (
-        <p className="project-desc no-desc">Tiada penerangan disediakan.</p>
       )}
 
       {repo.latest_commit_message && (
@@ -60,10 +58,9 @@ function ProjectCard({ repo, index }) {
         </div>
       )}
       
-      <div className="project-meta-date">
-        <span className="update-date" title="Tarikh push/komit terakhir">
-          UP: {formatDate(repo.pushed_at || repo.updated_at)}
-        </span>
+      <div className="project-date-box">
+        <span className="date-prefix">≫ updated:</span>
+        <span className="date-text">{formatDate(repo.pushed_at || repo.updated_at)}</span>
       </div>
       
       <div className="project-meta">
