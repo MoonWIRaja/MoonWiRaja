@@ -101,19 +101,21 @@ export async function GET() {
         latestUpdate: latestUpdate ? new Date(latestUpdate).toISOString() : null,
         latestRepo: latestRepoName,
       },
-      repos: allReposWithCommits.map((repo) => ({
-        name: repo.name,
-        description: repo.description,
-        html_url: repo.html_url,
-        language: repo.language,
-        stargazers_count: repo.stargazers_count || 0,
-        forks_count: repo.forks_count || 0,
-        watchers_count: repo.watchers_count || 0,
-        updated_at: repo.updated_at,
-        pushed_at: repo.pushed_at,
-        latest_commit_message: repo.latestCommitMessage,
-        latest_commit_sha: repo.latestCommitSha,
-      })),
+      repos: allReposWithCommits.map((repo) => {
+        return {
+          name: repo.name,
+          description: repo.description,
+          html_url: repo.html_url,
+          language: repo.language,
+          stargazers_count: repo.stargazers_count || 0,
+          forks_count: repo.forks_count || 0,
+          watchers_count: repo.watchers_count || 0,
+          updated_at: repo.updated_at,
+          pushed_at: repo.pushed_at,
+          latest_commit_message: repo.latestCommitMessage,
+          latest_commit_sha: repo.latestCommitSha,
+        };
+      }),
     });
   } catch (error) {
     console.error("GitHub API error:", error);

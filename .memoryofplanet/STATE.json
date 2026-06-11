@@ -199,6 +199,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Kembangkan senarai fallback offline route.js untuk menyertai kesemua 20 repositori awam bagi membendung had kadar API (rate limit)"
+    },
+    {
+      "at": "2026-06-11T06:31:46.972Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Buang simulated/faked stats dan paparkan original stats (0 stars/forks/watchers)"
     }
   ]
 }
