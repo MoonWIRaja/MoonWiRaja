@@ -1,13 +1,13 @@
 {
   "schemaVersion": "0.1.0",
   "initialized": true,
-  "projectName": "Test",
+  "projectName": "MoonWiRaja",
   "projectNameDefault": ".MemoryOfPlanet.core",
   "ownerCodename": "moon",
   "activeMember": "moon",
   "mode": "solo",
   "joinMode": "owner-approved",
-  "githubUrl": "true",
+  "githubUrl": "https://github.com/MoonWIRaja/MoonWiRaja.git",
   "autosync": {
     "enabled": true,
     "targetMainBranch": "main",
@@ -97,6 +97,12 @@
       "actor": "moon",
       "kind": "autosycn-init",
       "summary": "Initialized autosycn remote true."
+    },
+    {
+      "at": "2026-06-11T04:41:15.562Z",
+      "actor": "moon",
+      "kind": "autosycn-init",
+      "summary": "Initialized autosycn remote https://github.com/MoonWIRaja/MoonWiRaja.git."
     }
   ]
 }
