@@ -205,6 +205,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Buang simulated/faked stats dan paparkan original stats (0 stars/forks/watchers)"
+    },
+    {
+      "at": "2026-06-11T06:32:05.784Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Kemaskini walkthrough untuk menerangkan pembuangan statistik palsu"
     }
   ]
 }
