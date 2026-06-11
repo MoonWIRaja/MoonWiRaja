@@ -1149,6 +1149,10 @@ ul, ol { list-style: none; }
   color: var(--accent-cyan);
 }
 
+.glass-card .stat-icon.watch-icon {
+  color: var(--terminal-green);
+}
+
 .glass-card .stat-value {
   font-weight: 700;
   color: var(--text-light);

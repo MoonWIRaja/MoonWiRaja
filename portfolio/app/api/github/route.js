@@ -70,7 +70,9 @@ export async function GET() {
         language: repo.language,
         stargazers_count: repo.stargazers_count || 0,
         forks_count: repo.forks_count || 0,
+        watchers_count: repo.watchers_count || 0,
         updated_at: repo.updated_at,
+        pushed_at: repo.pushed_at,
       })),
     });
   } catch (error) {
@@ -102,7 +104,9 @@ export async function GET() {
             language: "JavaScript",
             stargazers_count: 3,
             forks_count: 1,
+            watchers_count: 2,
             updated_at: new Date().toISOString(),
+            pushed_at: new Date().toISOString(),
           },
           {
             name: ".MemoryOfPlanet.core",
@@ -111,7 +115,9 @@ export async function GET() {
             language: "JavaScript",
             stargazers_count: 5,
             forks_count: 2,
+            watchers_count: 3,
             updated_at: new Date().toISOString(),
+            pushed_at: new Date().toISOString(),
           },
           {
             name: "myney.core",
@@ -120,7 +126,9 @@ export async function GET() {
             language: "TypeScript",
             stargazers_count: 4,
             forks_count: 1,
+            watchers_count: 1,
             updated_at: new Date().toISOString(),
+            pushed_at: new Date().toISOString(),
           },
         ],
       },

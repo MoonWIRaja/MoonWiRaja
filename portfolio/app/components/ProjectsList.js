@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUpRight, Star, GitFork, BookMarked } from "lucide-react";
+import { ArrowUpRight, Star, GitFork, BookMarked, Eye } from "lucide-react";
 
 const LANG_CLASS = {
   JavaScript: "lang-js", 
@@ -54,18 +54,22 @@ function ProjectCard({ repo, index }) {
             <span className={`lang-dot ${langClass}`} />
             <span className="lang-text">{repo.language || "Web"}</span>
           </span>
-          <span className="meta-stat">
+          <span className="meta-stat" title="Stars">
             <Star size={11} className="stat-icon star-icon" />
             <span className="stat-value">{repo.stargazers_count}</span>
           </span>
-          <span className="meta-stat">
+          <span className="meta-stat" title="Forks">
             <GitFork size={11} className="stat-icon fork-icon" />
             <span className="stat-value">{repo.forks_count}</span>
           </span>
+          <span className="meta-stat" title="Watching">
+            <Eye size={11} className="stat-icon watch-icon" />
+            <span className="stat-value">{repo.watchers_count ?? 0}</span>
+          </span>
         </div>
         <div className="meta-right">
-          <span className="update-date">
-            UP: {formatDate(repo.updated_at)}
+          <span className="update-date" title="Tarikh push/komit terakhir">
+            UP: {formatDate(repo.pushed_at || repo.updated_at)}
           </span>
         </div>
       </div>
@@ -84,9 +88,13 @@ function SkeletonCard() {
 }
 
 export default function ProjectsList({ repos, loading }) {
-  // Sort repositories by updated_at descending (latest update first)
+  // Sort repositories by pushed_at or updated_at descending (latest commit push first)
   const sortedRepos = repos 
-    ? [...repos].sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
+    ? [...repos].sort((a, b) => {
+        const timeA = new Date(a.pushed_at || a.updated_at).getTime();
+        const timeB = new Date(b.pushed_at || b.updated_at).getTime();
+        return timeB - timeA;
+      })
     : [];
 
   return (
