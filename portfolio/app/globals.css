@@ -267,17 +267,18 @@ ul, ol { list-style: none; }
   .dashboard-grid {
     grid-template-columns: 240px 1fr;
   }
-  .right-panel { display: none; }
+  .right-panel { display: none !important; }
 }
 
-/* On desktop, override any mobile-tab-panel hiding — panels must stay visible */
+/* Desktop: restore exact display values — mobile-tab-panel class must not break flex panels */
 @media (min-width: 769px) {
-  .mobile-tab-panel {
-    display: unset !important;
-  }
-  .right-panel {
-    display: flex !important;
-  }
+  .left-panel.mobile-tab-panel   { display: flex !important; }
+  .center-panel.mobile-tab-panel { display: flex !important; }
+  .right-panel.mobile-tab-panel  { display: flex !important; }
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+  .right-panel.mobile-tab-panel { display: none !important; }
 }
 
 /* ═══════════════════════════════════════
