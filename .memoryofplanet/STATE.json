@@ -361,6 +361,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Fix ActivityLog overflow and ensure contributions HTML is always parsed"
+    },
+    {
+      "at": "2026-06-12T02:02:17.229Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Revert left panel overflow and set strict height: 0 on nested ActivityLog widgets"
     }
   ]
 }
