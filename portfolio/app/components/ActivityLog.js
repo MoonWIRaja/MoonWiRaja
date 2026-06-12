@@ -192,155 +192,132 @@ export default function ActivityLog({ repos, contributions, selectedDate, setSel
         ACTIVITY_LOG
       </div>
 
-      <div className="activity-widget-body" style={{ display: "flex", gap: 10, flexGrow: 1, minHeight: 0 }}>
-        {/* Left Scrollable Timeline */}
-        <div className="activity-timeline-container" style={{ flexGrow: 1, minHeight: 0, display: "flex", flexDirection: "column" }}>
-          {!hasActivity ? (
-            <div className="activity-empty text-muted mono">
-              Tiada aktiviti dicatatkan untuk tahun {selectedYear}.
-            </div>
-          ) : (
-            <div className="activity-scroll">
-              {monthlyTimeline.map((monthData) => (
-                <div key={monthData.monthName} className="activity-month-section" style={{ marginBottom: 20 }}>
-                  {/* Month Marker Header */}
-                  <div className="activity-month-header" style={{ marginBottom: 8 }}>
-                    <span className="month-bullet" />
-                    <span className="month-text">{monthData.monthName}</span>
-                    <span className="month-line" />
-                  </div>
-
-                  <div className="activity-timeline-track">
-                    {/* 1. Commit Activity Node */}
-                    {monthData.commitActivities.length > 0 && (
-                      <div className="activity-item">
-                        <div className="activity-node">
-                          <div className="node-icon-bg">
-                            <GitCommit size={12} className="text-green" />
-                          </div>
-                        </div>
-                        <div className="activity-content">
-                          <div className="activity-title">
-                            Created {monthData.totalCommits} {monthData.totalCommits > 1 ? "commits" : "commit"} in {monthData.commitActivities.length} {monthData.commitActivities.length > 1 ? "repositories" : "repository"}
-                          </div>
-                          <div className="activity-repos-list">
-                            {monthData.commitActivities.map((act) => (
-                              <div key={act.name} className="activity-repo-row">
-                                <div className="activity-repo-link-wrap">
-                                  <a
-                                    href={act.htmlUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="activity-repo-link"
-                                  >
-                                    {act.name}
-                                    <ArrowUpRight size={10} className="arrow-icon" />
-                                  </a>
-                                  <span className="activity-repo-commits-count">
-                                    {act.commitsCount} {act.commitsCount > 1 ? "commits" : "commit"}
-                                  </span>
-                                </div>
-                                
-                                {/* Commits Visual Progress Bar */}
-                                <div className="activity-progress-track">
-                                  <div
-                                    className="activity-progress-fill"
-                                    style={{ width: `${act.percentage}%` }}
-                                  />
-                                </div>
-
-                                {/* Live Commit Messages Feed */}
-                                {act.commitsList && act.commitsList.length > 0 && (
-                                  <div className="activity-commits-feed" style={{ marginTop: 6, display: "flex", flexDirection: "column", gap: 3 }}>
-                                    {act.commitsList.slice(0, 3).map((c, cIdx) => (
-                                      <div key={c.sha + "-" + cIdx} className="activity-commit-detail">
-                                        <span className="activity-commit-sha">{c.sha}</span>
-                                        <span className="activity-commit-msg" title={c.message}>{c.message.split("\n")[0]}</span>
-                                      </div>
-                                    ))}
-                                    {act.commitsList.length > 3 && (
-                                      <span className="activity-commits-more text-muted mono" style={{ fontSize: "0.5rem", paddingLeft: 8, opacity: 0.7 }}>
-                                        + {act.commitsList.length - 3} more commits...
-                                      </span>
-                                    )}
-                                  </div>
-                                )}
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* 2. Repository Creation Node */}
-                    {monthData.createdRepos.length > 0 && (
-                      <div className="activity-item">
-                        <div className="activity-node">
-                          <div className="node-icon-bg">
-                            <BookMarked size={12} className="text-yellow" />
-                          </div>
-                        </div>
-                        <div className="activity-content">
-                          <div className="activity-title">
-                            Created {monthData.createdRepos.length} {monthData.createdRepos.length > 1 ? "repositories" : "repository"}
-                          </div>
-                          <div className="activity-created-list">
-                            {monthData.createdRepos.map((repo) => {
-                              const langClass = LANG_CLASS[repo.language] || "lang-default";
-                              return (
-                                <div key={repo.name} className="activity-created-row">
-                                  <a
-                                    href={repo.htmlUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="activity-repo-link"
-                                  >
-                                    {repo.name}
-                                    <ArrowUpRight size={10} className="arrow-icon" />
-                                  </a>
-                                  <div className="activity-created-meta">
-                                    <span className="lang-indicator" style={{ display: "inline-flex" }}>
-                                      <span className={`lang-dot ${langClass}`} />
-                                      <span className="lang-text" style={{ fontSize: "0.55rem" }}>
-                                        {repo.language}
-                                      </span>
-                                    </span>
-                                    <span className="activity-created-date">{repo.createdDate}</span>
-                                  </div>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
+      {!hasActivity ? (
+        <div className="activity-empty text-muted mono">
+          Tiada aktiviti dicatatkan untuk tahun {selectedYear}.
+        </div>
+      ) : (
+        <div className="activity-timeline-container">
+          <div className="activity-scroll">
+            {monthlyTimeline.map((monthData) => (
+              <div key={monthData.monthName} className="activity-month-section" style={{ marginBottom: 20 }}>
+                {/* Month Marker Header */}
+                <div className="activity-month-header" style={{ marginBottom: 8 }}>
+                  <span className="month-bullet" />
+                  <span className="month-text">{monthData.monthName}</span>
+                  <span className="month-line" />
                 </div>
-              ))}
-            </div>
-          )}
-        </div>
 
-        {/* Right Vertical Year Selector */}
-        <div className="activity-year-selector" style={{ display: "flex", flexDirection: "column", gap: 6, flexShrink: 0 }}>
-          {years.map((y) => {
-            const isSelected = y === selectedYear;
-            return (
-              <button
-                key={y}
-                className={`activity-year-btn ${isSelected ? "selected" : ""}`}
-                onClick={() => {
-                  const today = new Date();
-                  const targetMonth = (y === today.getFullYear()) ? today.getMonth() : 11; // December or current month
-                  setSelectedDate(new Date(y, targetMonth, 1));
-                }}
-              >
-                {y}
-              </button>
-            );
-          })}
+                <div className="activity-timeline-track">
+                  {/* 1. Commit Activity Node */}
+                  {monthData.commitActivities.length > 0 && (
+                    <div className="activity-item">
+                      <div className="activity-node">
+                        <div className="node-icon-bg">
+                          <GitCommit size={12} className="text-green" />
+                        </div>
+                      </div>
+                      <div className="activity-content">
+                        <div className="activity-title">
+                          Created {monthData.totalCommits} {monthData.totalCommits > 1 ? "commits" : "commit"} in {monthData.commitActivities.length} {monthData.commitActivities.length > 1 ? "repositories" : "repository"}
+                        </div>
+                        <div className="activity-repos-list">
+                          {monthData.commitActivities.map((act) => (
+                            <div key={act.name} className="activity-repo-row">
+                              <div className="activity-repo-link-wrap">
+                                <a
+                                  href={act.htmlUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="activity-repo-link"
+                                >
+                                  {act.name}
+                                  <ArrowUpRight size={10} className="arrow-icon" />
+                                </a>
+                                <span className="activity-repo-commits-count">
+                                  {act.commitsCount} {act.commitsCount > 1 ? "commits" : "commit"}
+                                </span>
+                              </div>
+                              
+                              {/* Commits Visual Progress Bar */}
+                              <div className="activity-progress-track">
+                                <div
+                                  className="activity-progress-fill"
+                                  style={{ width: `${act.percentage}%` }}
+                                />
+                              </div>
+
+                              {/* Live Commit Messages Feed */}
+                              {act.commitsList && act.commitsList.length > 0 && (
+                                <div className="activity-commits-feed" style={{ marginTop: 6, display: "flex", flexDirection: "column", gap: 3 }}>
+                                  {act.commitsList.slice(0, 3).map((c, cIdx) => (
+                                    <div key={c.sha + "-" + cIdx} className="activity-commit-detail">
+                                      <span className="activity-commit-sha">{c.sha}</span>
+                                      <span className="activity-commit-msg" title={c.message}>{c.message.split("\n")[0]}</span>
+                                    </div>
+                                  ))}
+                                  {act.commitsList.length > 3 && (
+                                    <span className="activity-commits-more text-muted mono" style={{ fontSize: "0.5rem", paddingLeft: 8, opacity: 0.7 }}>
+                                      + {act.commitsList.length - 3} more commits...
+                                    </span>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* 2. Repository Creation Node */}
+                  {monthData.createdRepos.length > 0 && (
+                    <div className="activity-item">
+                      <div className="activity-node">
+                        <div className="node-icon-bg">
+                          <BookMarked size={12} className="text-yellow" />
+                        </div>
+                      </div>
+                      <div className="activity-content">
+                        <div className="activity-title">
+                          Created {monthData.createdRepos.length} {monthData.createdRepos.length > 1 ? "repositories" : "repository"}
+                        </div>
+                        <div className="activity-created-list">
+                          {monthData.createdRepos.map((repo) => {
+                            const langClass = LANG_CLASS[repo.language] || "lang-default";
+                            return (
+                              <div key={repo.name} className="activity-created-row">
+                                <a
+                                  href={repo.htmlUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="activity-repo-link"
+                                >
+                                  {repo.name}
+                                  <ArrowUpRight size={10} className="arrow-icon" />
+                                </a>
+                                <div className="activity-created-meta">
+                                  <span className="lang-indicator" style={{ display: "inline-flex" }}>
+                                    <span className={`lang-dot ${langClass}`} />
+                                    <span className="lang-text" style={{ fontSize: "0.55rem" }}>
+                                      {repo.language}
+                                    </span>
+                                  </span>
+                                  <span className="activity-created-date">{repo.createdDate}</span>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </motion.div>
   );
 }

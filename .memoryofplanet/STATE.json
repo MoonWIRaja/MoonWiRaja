@@ -337,6 +337,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Implement yearly grouped ActivityLog and vertical year switcher"
+    },
+    {
+      "at": "2026-06-12T01:44:40.113Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Restore ActivityLog compact card size and remove horizontal squishing year switcher"
     }
   ]
 }
