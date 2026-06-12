@@ -27,6 +27,9 @@ export default function Home() {
       .then((d) => {
         setData(d);
         setLoading(false);
+        if (d.events) {
+          setEvents(d.events);
+        }
         
         // Fetch live GitHub events client-side to capture org and recent commits
         fetch("https://api.github.com/users/MoonWIRaja/events")

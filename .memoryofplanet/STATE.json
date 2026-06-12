@@ -325,6 +325,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Stretch ActivityLog CSS and fetch live events client-side"
+    },
+    {
+      "at": "2026-06-12T01:36:05.846Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Fix left panel overflow hidden and enable visible scrollbar on ActivityLog"
     }
   ]
 }

@@ -239,6 +239,89 @@ async function main() {
       })
     ];
 
+    // Fetch live public events to get recent external commits and creations at build-time
+    let events = [];
+    try {
+      console.log("Fetching actual user events...");
+      const eventsRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/events`, { headers });
+      if (eventsRes.ok) {
+        events = await eventsRes.json();
+        console.log(`Successfully fetched ${events.length} user public events.`);
+      } else {
+        console.warn(`Failed to fetch user events, status: ${eventsRes.status}`);
+      }
+    } catch (e) {
+      console.error("Error fetching events:", e.message);
+    }
+
+    // Merge events repositories dynamically to include external/org repos at build-time
+    const eventReposMap = {};
+    if (Array.isArray(events)) {
+      events.forEach((ev) => {
+        if (!ev.repo || !ev.repo.name) return;
+        const repoName = ev.repo.name;
+        const evTime = new Date(ev.created_at).getTime();
+        if (!eventReposMap[repoName] || evTime > eventReposMap[repoName].time) {
+          eventReposMap[repoName] = {
+            time: evTime,
+            createdAt: ev.created_at,
+            event: ev
+          };
+        }
+      });
+
+      Object.keys(eventReposMap).forEach((repoName) => {
+        const evInfo = eventReposMap[repoName];
+        const existingIndex = allReposWithCommits.findIndex(
+          (r) => r.name.toLowerCase() === repoName.toLowerCase() || 
+                 r.name.toLowerCase() === repoName.split("/")[1]?.toLowerCase()
+        );
+
+        let commitMsg = null;
+        let commitSha = null;
+        if (evInfo.event.type === "PushEvent") {
+          const commits = evInfo.event.payload?.commits;
+          if (commits && commits.length > 0) {
+            commitMsg = commits[0].message;
+            commitSha = commits[0].sha ? commits[0].sha.substring(0, 7) : null;
+          }
+        }
+
+        if (existingIndex !== -1) {
+          const existingRepo = allReposWithCommits[existingIndex];
+          const existingTime = new Date(existingRepo.pushed_at || existingRepo.updated_at).getTime();
+          if (evInfo.time > existingTime) {
+            allReposWithCommits[existingIndex] = {
+              ...existingRepo,
+              pushed_at: evInfo.createdAt,
+              updated_at: evInfo.createdAt,
+              latestCommitMessage: commitMsg || existingRepo.latestCommitMessage,
+              latestCommitSha: commitSha || existingRepo.latestCommitSha
+            };
+          }
+        } else {
+          const isOrg = repoName.includes("/");
+          const newRepo = {
+            name: repoName,
+            description: isOrg ? `Contribution to organization repository` : `Public repository`,
+            html_url: `https://github.com/${repoName}`,
+            language: repoName.toLowerCase().includes("web") ? "TypeScript" : "JavaScript",
+            stargazers_count: 0,
+            forks_count: 0,
+            watchers_count: 0,
+            created_at: evInfo.event.type === "CreateEvent" && evInfo.event.payload.ref_type === "repository" 
+              ? evInfo.createdAt 
+              : null,
+            updated_at: evInfo.createdAt,
+            pushed_at: evInfo.createdAt,
+            latestCommitMessage: commitMsg || "Pushed commits to repository",
+            latestCommitSha: commitSha || "0000000"
+          };
+          allReposWithCommits.push(newRepo);
+        }
+      });
+    }
+
     // Calculate totals across all repositories
     let totalStars = 0;
     let totalForks = 0;
@@ -302,12 +385,12 @@ async function main() {
         stars: totalStars,
         forks: totalForks,
         watching: totalWatching,
-        repos: profile.public_repos || 0,
+        repos: allReposWithCommits.length,
         followers: profile.followers || 0,
         latestUpdate: latestUpdate ? new Date(latestUpdate).toISOString() : null,
         latestRepo: latestRepoName,
       },
-      repos: reposWithCommits.map((repo) => {
+      repos: allReposWithCommits.map((repo) => {
         return {
           name: repo.name,
           description: repo.description,
@@ -324,6 +407,7 @@ async function main() {
         };
       }),
       contributions: contributions,
+      events: events,
     };
 
     // Ensure output directory exists
