@@ -194,6 +194,7 @@ export default function Home() {
               repos={data?.repos}
               contributions={data?.contributions}
               selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
               events={events}
             />
           </div>

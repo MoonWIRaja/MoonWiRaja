@@ -1734,5 +1734,35 @@ ul, ol { list-style: none; }
   text-overflow: ellipsis;
 }
 
+.activity-year-selector {
+  border-left: 1px solid rgba(255, 248, 247, 0.08);
+  padding-left: 8px;
+}
+
+.activity-year-btn {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: var(--r-xs);
+  text-align: center;
+  color: var(--text-light-secondary);
+  background: transparent;
+  transition: all var(--duration-fast);
+  border: 1px solid transparent;
+}
+
+.activity-year-btn:hover {
+  color: var(--text-light);
+  background: rgba(255, 248, 247, 0.05);
+}
+
+.activity-year-btn.selected {
+  color: #fff8f7;
+  background: #2563eb !important;
+  border-color: #2563eb;
+  box-shadow: 0 0 8px rgba(37, 99, 235, 0.4);
+}
+
 
 

@@ -331,6 +331,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Fix left panel overflow hidden and enable visible scrollbar on ActivityLog"
+    },
+    {
+      "at": "2026-06-12T01:40:03.681Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Implement yearly grouped ActivityLog and vertical year switcher"
     }
   ]
 }
