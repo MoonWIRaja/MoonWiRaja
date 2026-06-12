@@ -529,6 +529,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Fix mobile tab panels scrolling — use fixed positioning with top/bottom offsets and height:auto to resolve height conflict"
+    },
+    {
+      "at": "2026-06-12T04:13:05.286Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Fix mobile Profile card clipping — removed overflow:hidden from .profile-card so content displays fully on mobile"
     }
   ]
 }
