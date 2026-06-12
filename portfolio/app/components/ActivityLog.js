@@ -65,6 +65,7 @@ export default function ActivityLog({ repos, contributions, selectedDate, setSel
       let createdRepos = [];
       let totalCommitsCount = monthCommits;
 
+      // 1. Process public events first (if available)
       if (monthEvents.length > 0) {
         const pushes = monthEvents.filter((ev) => ev.type === "PushEvent");
         const creates = monthEvents.filter((ev) => ev.type === "CreateEvent" && ev.payload?.ref_type === "repository");
@@ -109,15 +110,17 @@ export default function ActivityLog({ repos, contributions, selectedDate, setSel
         });
 
         totalCommitsCount = tCommits;
-      } else {
-        // Fallback simulation
+      }
+
+      // 2. Fallback to simulation if events did not capture any pushes but we have calendar commits
+      if (commitActivities.length === 0 && monthCommits > 0) {
         const activeRepos = repos ? repos.filter((repo) => {
           if (!repo.pushed_at) return false;
           const d = new Date(repo.pushed_at);
           return d.getFullYear() === selectedYear && d.getMonth() === m;
         }).sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at)) : [];
         
-        if (monthCommits > 0 && activeRepos.length > 0) {
+        if (activeRepos.length > 0) {
           const counts = new Array(activeRepos.length).fill(0);
           let remaining = monthCommits;
           for (let i = 0; i < activeRepos.length && remaining > 0; i++) {
@@ -150,8 +153,12 @@ export default function ActivityLog({ repos, contributions, selectedDate, setSel
             commitsCount: counts[idx],
             percentage: (counts[idx] / monthCommits) * 100
           }));
+          totalCommitsCount = monthCommits;
         }
+      }
 
+      // 3. Fallback to simulation if events did not capture repository creations but we have them in the repos list
+      if (createdRepos.length === 0) {
         createdRepos = repos ? repos.filter((repo) => {
           if (!repo.created_at) return false;
           const d = new Date(repo.created_at);

@@ -367,6 +367,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Revert left panel overflow and set strict height: 0 on nested ActivityLog widgets"
+    },
+    {
+      "at": "2026-06-12T02:04:48.516Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Fix ActivityLog timeline month filtering logic and events fallback to ensure June 2026 data shows up"
     }
   ]
 }
