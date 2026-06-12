@@ -52,9 +52,7 @@ export default function StatusBar() {
       <div className="status-left">
         <span className="ping-dot" />
         <span style={{ color: "var(--text-secondary)" }}>CONSOLE ACTIVE</span>
-        <span className="status-separator" />
-        <Activity size={10} style={{ color: "var(--accent-green)" }} />
-        <span>MOONWIRAJA.DEV</span>
+      
       </div>
       <div className="status-right">
         <div className="status-badge">

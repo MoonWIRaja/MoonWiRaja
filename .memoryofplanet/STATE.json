@@ -469,6 +469,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Shrink server stats text on mobile and disable framer-motion animation to fix jank on live updates"
+    },
+    {
+      "at": "2026-06-12T03:10:44.364Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Remove MOONWIRAJA.DEV text from status bar"
     }
   ]
 }
