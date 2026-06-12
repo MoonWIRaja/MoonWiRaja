@@ -235,17 +235,25 @@ export default function Console() {
       setLines((prev) => [...prev, { type: "cmd", text: cmd }, { type: "response", html: '<span class="text-accent">Opening classified file (Membuka fail sulit)...</span>' }]);
       
       const secretLines = [
-        "=============================================================",
-        "  🔓 ACCESS GRANTED: MEMORYOFPLANET PROJECT",
-        "=============================================================",
-        "  Active member: moon (Verified Creator)",
-        "  Core Status:   initialized = true",
-        "  Swarm Mode:    solo / active-agent-running",
-        "  Secret Message (Mesej Tersembunyi):",
-        "  \"Berusaha Sedaya Upaya, Setiap Usaha Yang kita lAKUKAN",
-        "   WALUPUN GAGAL ADALAH KUNCI MENUJU KEJAYAAN JANGAN SESEKALI",
-        "   MENYERAH KERANA DUNIA TAK MENUNGGU KITA UNTUK BANGKIT\" 🌍✨",
-        "=============================================================",
+        "═══════════════════════════════════════════════════════════",
+        "  🔓  ACCESS GRANTED  ·  AKSES DIBERIKAN",
+        "═══════════════════════════════════════════════════════════",
+        "  Member  : moon  (Verified Creator)",
+        "  Status  : initialized = true  ·  Agent running",
+        "───────────────────────────────────────────────────────────",
+        "  📜  MESSAGE FROM THE CREATOR  ·  PESAN DARI PENCIPTA",
+        "───────────────────────────────────────────────────────────",
+        "  Give your absolute best — Berusaha sedaya upaya.",
+        "  Every effort counts, even when you fail.",
+        "  Setiap usaha yang kita lakukan, walau pun gagal,",
+        "  is the very key that unlocks success.",
+        "  adalah kunci yang membuka pintu kejayaan.",
+        "  Never give up — Jangan sesekali menyerah.",
+        "  The world will not pause and wait for you to rise.",
+        "  Dunia tidak menunggu kita untuk bangkit. 🌍✨",
+        "───────────────────────────────────────────────────────────",
+        "  Keep going. Teruskan. You are closer than you think.",
+        "═══════════════════════════════════════════════════════════",
       ];
       
       secretLines.forEach((sLine, index) => {
