@@ -511,6 +511,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Fix ActivityLog leaking into Profile tab on mobile — made .desktop-activity hide rule more specific with .left-panel.mobile-tab-active selector"
+    },
+    {
+      "at": "2026-06-12T04:02:08.311Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Fix mobile Profile tab — hide ActivityLog widget in left panel with simpler CSS rule"
     }
   ]
 }
