@@ -307,6 +307,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Add cache buster to API fetch calls to prevent browser caching"
+    },
+    {
+      "at": "2026-06-12T01:23:34.457Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Remove QUICK_CMDS widget from the left panel layout"
     }
   ]
 }

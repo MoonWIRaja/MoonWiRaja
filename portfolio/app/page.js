@@ -76,29 +76,6 @@ export default function Home() {
               </div>
             </motion.div>
 
-            {/* Quick Commands */}
-            <motion.div
-              className="cmd-section glass-card"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <div className="widget-header" style={{ padding: "12px 14px 0" }}>
-                <span className="header-dot" />
-                QUICK_CMDS
-              </div>
-              <div className="cmd-grid">
-                {["about", "repos", "skills", "contact", "neofetch"].map((cmd) => (
-                  <button
-                    key={cmd}
-                    className="cmd-chip"
-                    onClick={() => window.__consoleExec?.(cmd)}
-                  >
-                    {cmd}
-                  </button>
-                ))}
-              </div>
-            </motion.div>
 
             {/* Contributions Graph */}
             <Contributions repos={data?.repos} contributions={data?.contributions} />
