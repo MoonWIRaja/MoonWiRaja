@@ -294,7 +294,7 @@ ul, ol { list-style: none; }
   display: flex;
   flex-direction: column;
   gap: 10px;
-  overflow-y: auto;
+  overflow: hidden;
   scrollbar-width: none;
   height: 100%;
   min-height: 0;
@@ -1506,7 +1506,7 @@ ul, ol { list-style: none; }
 .activity-widget {
   padding: 14px;
   flex-grow: 1;
-  min-height: 240px;
+  min-height: 0;
   display: flex;
   flex-direction: column;
 }
@@ -1562,7 +1562,7 @@ ul, ol { list-style: none; }
 
 .activity-scroll {
   flex-grow: 1;
-  min-height: 120px;
+  min-height: 0;
   overflow-y: auto;
   scrollbar-width: thin; /* Firefox */
   scrollbar-color: rgba(255, 248, 247, 0.15) transparent;

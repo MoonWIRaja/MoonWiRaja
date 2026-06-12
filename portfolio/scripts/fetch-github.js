@@ -170,17 +170,33 @@ async function main() {
     console.warn("GITHUB_TOKEN not provided, using unauthenticated requests (rate limit may apply).");
   }
 
+  let profile = DEFAULT_FALLBACK.profile;
+  let repos = DEFAULT_FALLBACK.repos;
+  let stats = DEFAULT_FALLBACK.stats;
+  let events = [];
+  let contributions = [];
+  let isApiSuccessful = false;
+
+  // 1. Try to fetch profile and repos from GitHub API
   try {
     const profileRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}`, { headers });
     const reposRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=100`, { headers });
 
-    if (!profileRes.ok || !reposRes.ok) {
-      throw new Error(`GitHub API request failed. Profile status: ${profileRes.status}, Repos status: ${reposRes.status}`);
+    if (profileRes.ok && reposRes.ok) {
+      profile = await profileRes.json();
+      repos = await reposRes.json();
+      isApiSuccessful = true;
+      console.log("Successfully fetched profile and repos from GitHub API.");
+    } else {
+      console.warn(`GitHub API rate limited or failed. Profile status: ${profileRes.status}, Repos status: ${reposRes.status}. Using fallback profile and repos.`);
     }
+  } catch (error) {
+    console.warn("Failed to fetch profile/repos from GitHub API:", error.message);
+  }
 
-    const profile = await profileRes.json();
-    const repos = await reposRes.json();
-
+  // 2. Fetch commits & populate repos
+  let allReposWithCommits = [];
+  if (isApiSuccessful) {
     // Sort all repos by push time (latest push first)
     repos.sort((a, b) => {
       const timeA = new Date(a.pushed_at || a.updated_at).getTime();
@@ -227,7 +243,7 @@ async function main() {
       })
     );
 
-    const allReposWithCommits = [
+    allReposWithCommits = [
       ...reposWithCommits,
       ...otherRepos.map(r => {
         const sc = STATIC_COMMITS[r.name] || { message: "No recent commits", sha: "0000000" };
@@ -238,91 +254,102 @@ async function main() {
         };
       })
     ];
+  } else {
+    // Fallback: Populate static commits for the default fallback repos
+    allReposWithCommits = repos.map(r => {
+      const sc = STATIC_COMMITS[r.name] || { message: "No recent commits", sha: "0000000" };
+      return {
+        ...r,
+        latestCommitMessage: sc.message,
+        latestCommitSha: sc.sha
+      };
+    });
+  }
 
-    // Fetch live public events to get recent external commits and creations at build-time
-    let events = [];
-    try {
-      console.log("Fetching actual user events...");
-      const eventsRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/events`, { headers });
-      if (eventsRes.ok) {
-        events = await eventsRes.json();
-        console.log(`Successfully fetched ${events.length} user public events.`);
-      } else {
-        console.warn(`Failed to fetch user events, status: ${eventsRes.status}`);
+  // 3. Fetch live public events to get recent external commits and creations
+  try {
+    console.log("Fetching actual user events...");
+    const eventsRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/events`, { headers });
+    if (eventsRes.ok) {
+      events = await eventsRes.json();
+      console.log(`Successfully fetched ${events.length} user public events.`);
+    } else {
+      console.warn(`Failed to fetch user events, status: ${eventsRes.status}`);
+    }
+  } catch (e) {
+    console.error("Error fetching events:", e.message);
+  }
+
+  // Merge events repositories dynamically to include external/org repos
+  const eventReposMap = {};
+  if (Array.isArray(events) && events.length > 0) {
+    events.forEach((ev) => {
+      if (!ev.repo || !ev.repo.name) return;
+      const repoName = ev.repo.name;
+      const evTime = new Date(ev.created_at).getTime();
+      if (!eventReposMap[repoName] || evTime > eventReposMap[repoName].time) {
+        eventReposMap[repoName] = {
+          time: evTime,
+          createdAt: ev.created_at,
+          event: ev
+        };
       }
-    } catch (e) {
-      console.error("Error fetching events:", e.message);
-    }
+    });
 
-    // Merge events repositories dynamically to include external/org repos at build-time
-    const eventReposMap = {};
-    if (Array.isArray(events)) {
-      events.forEach((ev) => {
-        if (!ev.repo || !ev.repo.name) return;
-        const repoName = ev.repo.name;
-        const evTime = new Date(ev.created_at).getTime();
-        if (!eventReposMap[repoName] || evTime > eventReposMap[repoName].time) {
-          eventReposMap[repoName] = {
-            time: evTime,
-            createdAt: ev.created_at,
-            event: ev
-          };
+    Object.keys(eventReposMap).forEach((repoName) => {
+      const evInfo = eventReposMap[repoName];
+      const existingIndex = allReposWithCommits.findIndex(
+        (r) => r.name.toLowerCase() === repoName.toLowerCase() || 
+               r.name.toLowerCase() === repoName.split("/")[1]?.toLowerCase()
+      );
+
+      let commitMsg = null;
+      let commitSha = null;
+      if (evInfo.event.type === "PushEvent") {
+        const commits = evInfo.event.payload?.commits;
+        if (commits && commits.length > 0) {
+          commitMsg = commits[0].message;
+          commitSha = commits[0].sha ? commits[0].sha.substring(0, 7) : null;
         }
-      });
+      }
 
-      Object.keys(eventReposMap).forEach((repoName) => {
-        const evInfo = eventReposMap[repoName];
-        const existingIndex = allReposWithCommits.findIndex(
-          (r) => r.name.toLowerCase() === repoName.toLowerCase() || 
-                 r.name.toLowerCase() === repoName.split("/")[1]?.toLowerCase()
-        );
-
-        let commitMsg = null;
-        let commitSha = null;
-        if (evInfo.event.type === "PushEvent") {
-          const commits = evInfo.event.payload?.commits;
-          if (commits && commits.length > 0) {
-            commitMsg = commits[0].message;
-            commitSha = commits[0].sha ? commits[0].sha.substring(0, 7) : null;
-          }
-        }
-
-        if (existingIndex !== -1) {
-          const existingRepo = allReposWithCommits[existingIndex];
-          const existingTime = new Date(existingRepo.pushed_at || existingRepo.updated_at).getTime();
-          if (evInfo.time > existingTime) {
-            allReposWithCommits[existingIndex] = {
-              ...existingRepo,
-              pushed_at: evInfo.createdAt,
-              updated_at: evInfo.createdAt,
-              latestCommitMessage: commitMsg || existingRepo.latestCommitMessage,
-              latestCommitSha: commitSha || existingRepo.latestCommitSha
-            };
-          }
-        } else {
-          const isOrg = repoName.includes("/");
-          const newRepo = {
-            name: repoName,
-            description: isOrg ? `Contribution to organization repository` : `Public repository`,
-            html_url: `https://github.com/${repoName}`,
-            language: repoName.toLowerCase().includes("web") ? "TypeScript" : "JavaScript",
-            stargazers_count: 0,
-            forks_count: 0,
-            watchers_count: 0,
-            created_at: evInfo.event.type === "CreateEvent" && evInfo.event.payload.ref_type === "repository" 
-              ? evInfo.createdAt 
-              : null,
-            updated_at: evInfo.createdAt,
+      if (existingIndex !== -1) {
+        const existingRepo = allReposWithCommits[existingIndex];
+        const existingTime = new Date(existingRepo.pushed_at || existingRepo.updated_at).getTime();
+        if (evInfo.time > existingTime) {
+          allReposWithCommits[existingIndex] = {
+            ...existingRepo,
             pushed_at: evInfo.createdAt,
-            latestCommitMessage: commitMsg || "Pushed commits to repository",
-            latestCommitSha: commitSha || "0000000"
+            updated_at: evInfo.createdAt,
+            latestCommitMessage: commitMsg || existingRepo.latestCommitMessage || existingRepo.latest_commit_message,
+            latestCommitSha: commitSha || existingRepo.latestCommitSha || existingRepo.latest_commit_sha
           };
-          allReposWithCommits.push(newRepo);
         }
-      });
-    }
+      } else {
+        const isOrg = repoName.includes("/");
+        const newRepo = {
+          name: repoName,
+          description: isOrg ? `Contribution to organization repository` : `Public repository`,
+          html_url: `https://github.com/${repoName}`,
+          language: repoName.toLowerCase().includes("web") ? "TypeScript" : "JavaScript",
+          stargazers_count: 0,
+          forks_count: 0,
+          watchers_count: 0,
+          created_at: evInfo.event.type === "CreateEvent" && evInfo.event.payload.ref_type === "repository" 
+            ? evInfo.createdAt 
+            : null,
+          updated_at: evInfo.createdAt,
+          pushed_at: evInfo.createdAt,
+          latestCommitMessage: commitMsg || "Pushed commits to repository",
+          latestCommitSha: commitSha || "0000000"
+        };
+        allReposWithCommits.push(newRepo);
+      }
+    });
+  }
 
-    // Calculate totals across all repositories
+  // 4. Calculate stats
+  if (isApiSuccessful) {
     let totalStars = 0;
     let totalForks = 0;
     let totalWatching = 0;
@@ -341,37 +368,54 @@ async function main() {
       }
     });
 
-    // Fetch and parse contributions calendar from public HTML
-    let contributions = [];
-    try {
-      console.log("Fetching actual user contributions calendar...");
-      const contribRes = await fetch(`https://github.com/users/${GITHUB_USERNAME}/contributions`);
-      if (contribRes.ok) {
-        const html = await contribRes.text();
-        const regex = /<td[^>]*data-date="(\d{4}-\d{2}-\d{2})"[^>]*data-level="(\d)"[^>]*><\/td>\s*<tool-tip[^>]*>([^<]+)<\/tool-tip>/g;
-        let match;
-        while ((match = regex.exec(html)) !== null) {
-          const date = match[1];
-          const level = parseInt(match[2], 10);
-          const tooltipText = match[3].trim();
-          
-          let count = 0;
-          if (!tooltipText.startsWith("No ")) {
-            const numMatch = tooltipText.match(/^([\d,]+)/);
-            if (numMatch) {
-              count = parseInt(numMatch[1].replace(/,/g, ""), 10);
-            }
-          }
-          contributions.push({ date, level, count });
-        }
-        console.log(`Successfully parsed ${contributions.length} actual contribution days.`);
-      } else {
-        console.warn(`Failed to fetch contributions HTML, status: ${contribRes.status}`);
-      }
-    } catch (e) {
-      console.error("Error fetching/parsing contributions:", e.message);
-    }
+    stats = {
+      stars: totalStars,
+      forks: totalForks,
+      watching: totalWatching,
+      repos: allReposWithCommits.length,
+      followers: profile.followers || 0,
+      latestUpdate: latestUpdate ? new Date(latestUpdate).toISOString() : null,
+      latestRepo: latestRepoName,
+    };
+  } else {
+    stats = {
+      ...DEFAULT_FALLBACK.stats,
+      latestUpdate: new Date().toISOString()
+    };
+  }
 
+  // 5. Fetch and parse contributions calendar from public HTML (always run, bypasses API rate limits)
+  try {
+    console.log("Fetching actual user contributions calendar...");
+    const contribRes = await fetch(`https://github.com/users/${GITHUB_USERNAME}/contributions`);
+    if (contribRes.ok) {
+      const html = await contribRes.text();
+      const regex = /<td[^>]*data-date="(\d{4}-\d{2}-\d{2})"[^>]*data-level="(\d)"[^>]*><\/td>\s*<tool-tip[^>]*>([^<]+)<\/tool-tip>/g;
+      let match;
+      while ((match = regex.exec(html)) !== null) {
+        const date = match[1];
+        const level = parseInt(match[2], 10);
+        const tooltipText = match[3].trim();
+        
+        let count = 0;
+        if (!tooltipText.startsWith("No ")) {
+          const numMatch = tooltipText.match(/^([\d,]+)/);
+          if (numMatch) {
+            count = parseInt(numMatch[1].replace(/,/g, ""), 10);
+          }
+        }
+        contributions.push({ date, level, count });
+      }
+      console.log(`Successfully parsed ${contributions.length} actual contribution days.`);
+    } else {
+      console.warn(`Failed to fetch contributions HTML, status: ${contribRes.status}`);
+    }
+  } catch (e) {
+    console.error("Error fetching/parsing contributions:", e.message);
+  }
+
+  // 6. Write to public API file
+  try {
     const result = {
       profile: {
         name: profile.name || GITHUB_USERNAME,
@@ -381,15 +425,7 @@ async function main() {
         public_repos: profile.public_repos || 0,
         followers: profile.followers || 0,
       },
-      stats: {
-        stars: totalStars,
-        forks: totalForks,
-        watching: totalWatching,
-        repos: allReposWithCommits.length,
-        followers: profile.followers || 0,
-        latestUpdate: latestUpdate ? new Date(latestUpdate).toISOString() : null,
-        latestRepo: latestRepoName,
-      },
+      stats: stats,
       repos: allReposWithCommits.map((repo) => {
         return {
           name: repo.name,
@@ -402,26 +438,19 @@ async function main() {
           created_at: repo.created_at,
           updated_at: repo.updated_at,
           pushed_at: repo.pushed_at,
-          latest_commit_message: repo.latestCommitMessage,
-          latest_commit_sha: repo.latestCommitSha,
+          latest_commit_message: repo.latestCommitMessage || repo.latest_commit_message || "No recent commits",
+          latest_commit_sha: repo.latestCommitSha || repo.latest_commit_sha || "0000000",
         };
       }),
       contributions: contributions,
       events: events,
     };
 
-    // Ensure output directory exists
     fs.mkdirSync(OUTPUT_DIR, { recursive: true });
     fs.writeFileSync(OUTPUT_FILE, JSON.stringify(result, null, 2), "utf8");
     console.log(`Successfully wrote GitHub stats to ${OUTPUT_FILE}`);
-
   } catch (error) {
-    console.error("Failed to fetch live GitHub stats, writing fallback data.", error.message);
-    
-    // Ensure output directory exists and write fallback data
-    fs.mkdirSync(OUTPUT_DIR, { recursive: true });
-    fs.writeFileSync(OUTPUT_FILE, JSON.stringify(DEFAULT_FALLBACK, null, 2), "utf8");
-    console.log(`Successfully wrote fallback GitHub stats to ${OUTPUT_FILE}`);
+    console.error("Error saving stats payload:", error.message);
   }
 }
 

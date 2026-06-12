@@ -355,6 +355,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Fix left panel top card cutoff on short viewports"
+    },
+    {
+      "at": "2026-06-12T01:56:07.836Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Fix ActivityLog overflow and ensure contributions HTML is always parsed"
     }
   ]
 }
