@@ -517,6 +517,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Fix mobile Profile tab — hide ActivityLog widget in left panel with simpler CSS rule"
+    },
+    {
+      "at": "2026-06-12T04:08:24.251Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Fix mobile Profile tab scrolling — make tab panels fixed-positioned with overflow-y:auto so content can scroll properly"
     }
   ]
 }

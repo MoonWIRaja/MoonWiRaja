@@ -416,12 +416,19 @@ ol {
     gap: 10px;
   }
 
-  /* Left panel stacks vertically on mobile (not horizontal) */
+  /* Left panel fills screen on mobile and scrolls */
   .left-panel.mobile-tab-panel.mobile-tab-active {
+    position: fixed !important;
+    top: 38px !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 58px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
     flex-direction: column !important;
-    overflow-x: unset !important;
-    height: 100% !important;
     gap: 10px !important;
+    z-index: 40;
+    padding: 8px;
   }
 
   .left-panel>* {
@@ -432,6 +439,24 @@ ol {
   /* Right panel visible when active — must override .mobile-tab-panel default */
   .right-panel {
     display: none !important;
+  }
+
+  .center-panel.mobile-tab-panel.mobile-tab-active,
+  .right-panel.mobile-tab-active {
+    position: fixed !important;
+    top: 38px !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 58px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    z-index: 40;
+    padding: 8px;
+  }
+
+  .center-panel.mobile-tab-panel.mobile-tab-active {
+    display: flex !important;
+    flex-direction: column !important;
   }
 
   .right-panel.mobile-tab-active {
