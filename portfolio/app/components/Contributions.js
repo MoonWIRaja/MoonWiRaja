@@ -3,14 +3,8 @@
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 
-export default function Contributions({ repos, contributions }) {
+export default function Contributions({ repos, contributions, selectedDate, setSelectedDate }) {
   const [hoveredCell, setHoveredCell] = useState(null);
-  
-  // Set default view to the first day of the current month and year
-  const [selectedDate, setSelectedDate] = useState(() => {
-    const today = new Date();
-    return new Date(today.getFullYear(), today.getMonth(), 1);
-  });
 
   const year = selectedDate.getFullYear();
   const month = selectedDate.getMonth();

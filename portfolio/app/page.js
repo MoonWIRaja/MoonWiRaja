@@ -9,10 +9,15 @@ import ServerMonitor from "./components/ServerMonitor";
 import Console from "./components/Console";
 import ProjectsList from "./components/ProjectsList";
 import Contributions from "./components/Contributions";
+import ActivityLog from "./components/ActivityLog";
 
 export default function Home() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [selectedDate, setSelectedDate] = useState(() => {
+    const today = new Date();
+    return new Date(today.getFullYear(), today.getMonth(), 1);
+  });
 
   useEffect(() => {
     const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
@@ -78,7 +83,19 @@ export default function Home() {
 
 
             {/* Contributions Graph */}
-            <Contributions repos={data?.repos} contributions={data?.contributions} />
+            <Contributions
+              repos={data?.repos}
+              contributions={data?.contributions}
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+            />
+
+            {/* Activity Log */}
+            <ActivityLog
+              repos={data?.repos}
+              contributions={data?.contributions}
+              selectedDate={selectedDate}
+            />
           </div>
 
           {/* ═══ CENTER PANEL ═══ */}
