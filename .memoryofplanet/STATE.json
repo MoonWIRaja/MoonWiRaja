@@ -535,6 +535,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Fix mobile Profile card clipping — removed overflow:hidden from .profile-card so content displays fully on mobile"
+    },
+    {
+      "at": "2026-06-12T04:15:13.085Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Add Profile Stats Grid rendering to ProfileCard.js — profile stats now display on mobile"
     }
   ]
 }

@@ -87,6 +87,26 @@ export default function ProfileCard({ profile, stats }) {
         {profile?.location || "Malaysia"}
       </p>
 
+      {/* Profile Stats Grid */}
+      {stats && (
+        <div className="profile-stats-grid" style={{ marginTop: 12, marginBottom: 8 }}>
+          {stats.map((stat, i) => (
+            <div
+              key={i}
+              className={`profile-stat-tile ${stat.fullWidth ? "full-width" : ""}`}
+            >
+              <div className="profile-stat-label">
+                {stat.icon && <span style={{ marginRight: 4 }}>{stat.icon}</span>}
+                {stat.label}
+              </div>
+              <div className={`profile-stat-val ${stat.small ? "profile-stat-val-small" : ""}`}>
+                {stat.value}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
       {/* Integrated Social Links */}
       <div className="social-row" style={{ padding: 0, marginTop: 10, display: "flex", gap: 6 }}>
         <a href="https://github.com/MoonWIRaja" target="_blank" rel="noopener noreferrer" className="social-btn" title="GitHub" style={{ padding: "6px 8px" }}>
