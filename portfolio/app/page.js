@@ -14,6 +14,7 @@ import ActivityLog from "./components/ActivityLog";
 export default function Home() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [events, setEvents] = useState([]);
   const [selectedDate, setSelectedDate] = useState(() => {
     const today = new Date();
     return new Date(today.getFullYear(), today.getMonth(), 1);
@@ -26,6 +27,101 @@ export default function Home() {
       .then((d) => {
         setData(d);
         setLoading(false);
+        
+        // Fetch live GitHub events client-side to capture org and recent commits
+        fetch("https://api.github.com/users/MoonWIRaja/events")
+          .then((res) => {
+            if (res.ok) return res.json();
+            throw new Error("Events API failed with status " + res.status);
+          })
+          .then((eventsList) => {
+            if (!Array.isArray(eventsList)) return;
+            setEvents(eventsList);
+
+            // Group events by repo
+            const eventReposMap = {};
+            eventsList.forEach((ev) => {
+              if (!ev.repo || !ev.repo.name) return;
+              const repoName = ev.repo.name;
+              const evTime = new Date(ev.created_at).getTime();
+              if (!eventReposMap[repoName] || evTime > eventReposMap[repoName].time) {
+                eventReposMap[repoName] = {
+                  time: evTime,
+                  createdAt: ev.created_at,
+                  event: ev
+                };
+              }
+            });
+
+            // Merge events data into repos list dynamically
+            setData((currentData) => {
+              if (!currentData) return currentData;
+              const updatedRepos = [...(currentData.repos || [])];
+
+              Object.keys(eventReposMap).forEach((repoName) => {
+                const evInfo = eventReposMap[repoName];
+                const existingIndex = updatedRepos.findIndex(
+                  (r) => r.name.toLowerCase() === repoName.toLowerCase() || 
+                         r.name.toLowerCase() === repoName.split("/")[1]?.toLowerCase()
+                );
+
+                let commitMsg = null;
+                let commitSha = null;
+                if (evInfo.event.type === "PushEvent") {
+                  const commits = evInfo.event.payload?.commits;
+                  if (commits && commits.length > 0) {
+                    commitMsg = commits[0].message;
+                    commitSha = commits[0].sha ? commits[0].sha.substring(0, 7) : null;
+                  }
+                }
+
+                if (existingIndex !== -1) {
+                  const existingRepo = updatedRepos[existingIndex];
+                  const existingTime = new Date(existingRepo.pushed_at || existingRepo.updated_at).getTime();
+                  if (evInfo.time > existingTime) {
+                    updatedRepos[existingIndex] = {
+                      ...existingRepo,
+                      pushed_at: evInfo.createdAt,
+                      updated_at: evInfo.createdAt,
+                      latest_commit_message: commitMsg || existingRepo.latest_commit_message,
+                      latest_commit_sha: commitSha || existingRepo.latest_commit_sha
+                    };
+                  }
+                } else {
+                  const isOrg = repoName.includes("/");
+                  const newRepo = {
+                    name: repoName,
+                    description: isOrg ? `Contribution to organization repository` : `Public repository`,
+                    html_url: `https://github.com/${repoName}`,
+                    language: repoName.toLowerCase().includes("web") ? "TypeScript" : "JavaScript",
+                    stargazers_count: 0,
+                    forks_count: 0,
+                    watchers_count: 0,
+                    created_at: evInfo.event.type === "CreateEvent" && evInfo.event.payload.ref_type === "repository" 
+                      ? evInfo.createdAt 
+                      : null,
+                    updated_at: evInfo.createdAt,
+                    pushed_at: evInfo.createdAt,
+                    latest_commit_message: commitMsg || "Pushed commits to repository",
+                    latest_commit_sha: commitSha || "0000000"
+                  };
+                  updatedRepos.push(newRepo);
+                }
+              });
+
+              return {
+                ...currentData,
+                repos: updatedRepos,
+                stats: {
+                  ...currentData.stats,
+                  repos: updatedRepos.length
+                }
+              };
+            });
+          })
+          .catch((e) => {
+            console.warn("Could not load live GitHub events, using build-time fallback:", e.message);
+          });
       })
       .catch(() => setLoading(false));
   }, []);
@@ -95,6 +191,7 @@ export default function Home() {
               repos={data?.repos}
               contributions={data?.contributions}
               selectedDate={selectedDate}
+              events={events}
             />
           </div>
 

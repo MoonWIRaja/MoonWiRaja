@@ -159,7 +159,10 @@ const DEFAULT_FALLBACK = {
 async function main() {
   console.log("Fetching GitHub statistics...");
 
-  const headers = { Accept: "application/vnd.github+json" };
+  const headers = { 
+    Accept: "application/vnd.github+json",
+    "User-Agent": GITHUB_USERNAME
+  };
   if (process.env.GITHUB_TOKEN) {
     headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
     console.log("Using GITHUB_TOKEN environment variable.");

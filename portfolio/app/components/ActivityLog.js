@@ -12,7 +12,7 @@ const LANG_CLASS = {
   CSS: "lang-css",
 };
 
-export default function ActivityLog({ repos, contributions, selectedDate }) {
+export default function ActivityLog({ repos, contributions, selectedDate, events }) {
   const selectedYear = selectedDate.getFullYear();
   const selectedMonth = selectedDate.getMonth();
 
@@ -111,7 +111,77 @@ export default function ActivityLog({ repos, contributions, selectedDate }) {
       });
   }, [repos, selectedYear, selectedMonth]);
 
-  const hasActivity = commitActivities.length > 0 || createdRepos.length > 0;
+  // Extract actual live events for this month if available
+  const liveMonthEvents = useMemo(() => {
+    if (!events || events.length === 0) return null;
+    
+    const filtered = events.filter((ev) => {
+      if (!ev.created_at) return false;
+      const d = new Date(ev.created_at);
+      return d.getFullYear() === selectedYear && d.getMonth() === selectedMonth;
+    });
+
+    if (filtered.length === 0) return null;
+
+    const pushes = filtered.filter((ev) => ev.type === "PushEvent");
+    const creates = filtered.filter((ev) => ev.type === "CreateEvent" && ev.payload?.ref_type === "repository");
+
+    const commitsByRepo = {};
+    let totalCommits = 0;
+
+    pushes.forEach((p) => {
+      const repoName = p.repo.name;
+      const commits = p.payload?.commits || [];
+      if (commits.length === 0) return;
+
+      if (!commitsByRepo[repoName]) {
+        commitsByRepo[repoName] = {
+          name: repoName,
+          htmlUrl: `https://github.com/${repoName}`,
+          commitsList: [],
+          commitsCount: 0
+        };
+      }
+      
+      commits.forEach((c) => {
+        commitsByRepo[repoName].commitsList.push({
+          sha: c.sha ? c.sha.substring(0, 7) : "0000000",
+          message: c.message || "Pushed commits"
+        });
+        commitsByRepo[repoName].commitsCount++;
+        totalCommits++;
+      });
+    });
+
+    const repoCommitsArray = Object.values(commitsByRepo).map((repo) => ({
+      ...repo,
+      percentage: totalCommits > 0 ? (repo.commitsCount / totalCommits) * 100 : 0
+    }));
+
+    const createdReposList = creates.map((c) => {
+      const d = new Date(c.created_at);
+      const formattedDate = d.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+      return {
+        name: c.repo.name,
+        htmlUrl: `https://github.com/${c.repo.name}`,
+        language: c.repo.name.toLowerCase().includes("web") ? "TypeScript" : "JavaScript",
+        createdDate: formattedDate
+      };
+    });
+
+    if (repoCommitsArray.length === 0 && createdReposList.length === 0) return null;
+
+    return {
+      totalCommits,
+      commitActivities: repoCommitsArray,
+      createdRepos: createdReposList
+    };
+  }, [events, selectedYear, selectedMonth]);
+
+  const displayTotalCommits = liveMonthEvents ? liveMonthEvents.totalCommits : totalMonthCommits;
+  const displayCommitActivities = liveMonthEvents ? liveMonthEvents.commitActivities : commitActivities;
+  const displayCreatedRepos = liveMonthEvents ? liveMonthEvents.createdRepos : createdRepos;
+  const hasActivity = displayCommitActivities.length > 0 || displayCreatedRepos.length > 0;
 
   return (
     <motion.div
@@ -141,7 +211,7 @@ export default function ActivityLog({ repos, contributions, selectedDate }) {
           <div className="activity-scroll">
             <div className="activity-timeline-track">
               {/* 1. Commit Activity Node */}
-              {commitActivities.length > 0 && (
+              {displayCommitActivities.length > 0 && (
                 <div className="activity-item">
                   <div className="activity-node">
                     <div className="node-icon-bg">
@@ -150,10 +220,10 @@ export default function ActivityLog({ repos, contributions, selectedDate }) {
                   </div>
                   <div className="activity-content">
                     <div className="activity-title">
-                      Created {totalMonthCommits} {totalMonthCommits > 1 ? "commits" : "commit"} in {commitActivities.length} {commitActivities.length > 1 ? "repositories" : "repository"}
+                      Created {displayTotalCommits} {displayTotalCommits > 1 ? "commits" : "commit"} in {displayCommitActivities.length} {displayCommitActivities.length > 1 ? "repositories" : "repository"}
                     </div>
                     <div className="activity-repos-list">
-                      {commitActivities.map((act) => (
+                      {displayCommitActivities.map((act) => (
                         <div key={act.name} className="activity-repo-row">
                           <div className="activity-repo-link-wrap">
                             <a
@@ -169,6 +239,7 @@ export default function ActivityLog({ repos, contributions, selectedDate }) {
                               {act.commitsCount} {act.commitsCount > 1 ? "commits" : "commit"}
                             </span>
                           </div>
+                          
                           {/* Commits Visual Progress Bar */}
                           <div className="activity-progress-track">
                             <div
@@ -176,6 +247,23 @@ export default function ActivityLog({ repos, contributions, selectedDate }) {
                               style={{ width: `${act.percentage}%` }}
                             />
                           </div>
+
+                          {/* Live Commit Messages Feed */}
+                          {act.commitsList && act.commitsList.length > 0 && (
+                            <div className="activity-commits-feed" style={{ marginTop: 6, display: "flex", flexDirection: "column", gap: 3 }}>
+                              {act.commitsList.slice(0, 3).map((c, cIdx) => (
+                                <div key={c.sha + "-" + cIdx} className="activity-commit-detail">
+                                  <span className="activity-commit-sha">{c.sha}</span>
+                                  <span className="activity-commit-msg" title={c.message}>{c.message.split("\n")[0]}</span>
+                                </div>
+                              ))}
+                              {act.commitsList.length > 3 && (
+                                <span className="activity-commits-more text-muted mono" style={{ fontSize: "0.5rem", paddingLeft: 8, opacity: 0.7 }}>
+                                  + {act.commitsList.length - 3} more commits...
+                                </span>
+                              )}
+                            </div>
+                          )}
                         </div>
                       ))}
                     </div>
@@ -184,7 +272,7 @@ export default function ActivityLog({ repos, contributions, selectedDate }) {
               )}
 
               {/* 2. Repository Creation Node */}
-              {createdRepos.length > 0 && (
+              {displayCreatedRepos.length > 0 && (
                 <div className="activity-item">
                   <div className="activity-node">
                     <div className="node-icon-bg">
@@ -193,10 +281,10 @@ export default function ActivityLog({ repos, contributions, selectedDate }) {
                   </div>
                   <div className="activity-content">
                     <div className="activity-title">
-                      Created {createdRepos.length} {createdRepos.length > 1 ? "repositories" : "repository"}
+                      Created {displayCreatedRepos.length} {displayCreatedRepos.length > 1 ? "repositories" : "repository"}
                     </div>
                     <div className="activity-created-list">
-                      {createdRepos.map((repo) => {
+                      {displayCreatedRepos.map((repo) => {
                         const langClass = LANG_CLASS[repo.language] || "lang-default";
                         return (
                           <div key={repo.name} className="activity-created-row">
