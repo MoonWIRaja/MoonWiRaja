@@ -429,6 +429,8 @@ ol {
     gap: 10px !important;
     z-index: 40;
     padding: 8px;
+    height: auto !important;
+    min-height: 0 !important;
   }
 
   .left-panel>* {
@@ -452,6 +454,8 @@ ol {
     overflow-x: hidden !important;
     z-index: 40;
     padding: 8px;
+    height: auto !important;
+    min-height: 0 !important;
   }
 
   .center-panel.mobile-tab-panel.mobile-tab-active {
