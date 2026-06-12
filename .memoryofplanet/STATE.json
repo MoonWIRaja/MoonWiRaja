@@ -445,6 +445,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Hide console scrollbar and set GitHub avatar as site favicon"
+    },
+    {
+      "at": "2026-06-12T02:53:42.033Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Fix console scrollbar — hide on .console-body and .console-output which are the actual scroll containers"
     }
   ]
 }

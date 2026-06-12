@@ -653,6 +653,8 @@ ul, ol { list-style: none; }
   flex: 1;
   padding: 14px 16px;
   overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   font-family: var(--font-mono);
   font-size: 0.78rem;
   line-height: 1.7;
@@ -661,11 +663,15 @@ ul, ol { list-style: none; }
   min-height: 0;
   color: #ffffff;
 }
+.console-body::-webkit-scrollbar { display: none; width: 0; }
 
 .console-output {
   flex: 1;
   overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
+.console-output::-webkit-scrollbar { display: none; width: 0; }
 
 .console-line { margin-bottom: 2px; }
 .console-line.cmd { color: #ffffff; }
