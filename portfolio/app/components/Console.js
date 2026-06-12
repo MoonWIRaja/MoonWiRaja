@@ -7,35 +7,75 @@ import { Terminal } from "lucide-react";
 const COMMANDS = {
   help: () => [
     { type: "response", text: "" },
-    { type: "response", html: '<span class="text-accent">┌──────────────────────────────────────────┐</span>' },
-    { type: "response", html: '<span class="text-accent">│</span>  <span class="text-secondary">COMMAND</span>     <span class="text-muted">│</span>  <span class="text-secondary">DESCRIPTION</span>              <span class="text-accent">│</span>' },
-    { type: "response", html: '<span class="text-accent">├──────────────────────────────────────────┤</span>' },
-    { type: "response", html: '<span class="text-accent">│</span>  <span class="text-green">about</span>       <span class="text-muted">│</span>  Tentang saya              <span class="text-accent">│</span>' },
-    { type: "response", html: '<span class="text-accent">│</span>  <span class="text-green">skills</span>      <span class="text-muted">│</span>  Tech stack & kemahiran    <span class="text-accent">│</span>' },
-    { type: "response", html: '<span class="text-accent">│</span>  <span class="text-green">repos</span>       <span class="text-muted">│</span>  Senarai projek utama      <span class="text-accent">│</span>' },
-    { type: "response", html: '<span class="text-accent">│</span>  <span class="text-green">neofetch</span>    <span class="text-muted">│</span>  Sistem info & logo ASCII  <span class="text-accent">│</span>' },
-    { type: "response", html: '<span class="text-accent">│</span>  <span class="text-green">contact</span>     <span class="text-muted">│</span>  Cara menghubungi saya     <span class="text-accent">│</span>' },
-    { type: "response", html: '<span class="text-accent">│</span>  <span class="text-green">clear</span>       <span class="text-muted">│</span>  Bersihkan terminal        <span class="text-accent">│</span>' },
-    { type: "response", html: '<span class="text-accent">└──────────────────────────────────────────┘</span>' },
+    { type: "response", html: '<span class="text-accent" style="font-weight: 600;">⌨️ MoonWiRaja Console v3.0 - MENU BANTUAN INTERAKTIF</span>' },
+    { type: "response", html: '<span class="text-muted">============================================================</span>' },
+    { type: "response", html: '<span class="text-yellow" style="font-weight: 600;">🌟 TUGASAN UTAMA (CORE COMMANDS)</span>' },
+    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'about\')">about</span>       <span class="text-muted">·</span> Tentang saya & visi reka bentuk' },
+    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'skills\')">skills</span>      <span class="text-muted">·</span> Paparan visual teknologi stack & kemahiran' },
+    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'experience\')">experience</span>  <span class="text-muted">·</span> Pengalaman kerja & penglibatan projek' },
+    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'repos\')">repos</span>       <span class="text-muted">·</span> Senarai projek utama dari GitHub API' },
+    { type: "response", text: "" },
+    { type: "response", html: '<span class="text-cyan" style="font-weight: 600;">🎮 SIMULASI & HIBURAN (FUN & INTERACTIVE)</span>' },
+    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'status\')">status</span>      <span class="text-muted">·</span> Paparan status sistem server secara langsung' },
+    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'neofetch\')">neofetch</span>    <span class="text-muted">·</span> Sistem info & ASCII Art MoonWiRaja' },
+    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'matrix\')">matrix</span>      <span class="text-muted">·</span> Jalankan simulasi kod digital Matrix' },
+    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'secret\')">secret</span>      <span class="text-muted">·</span> Bongkar mesej rahsia & log masuk sulit' },
+    { type: "response", text: "" },
+    { type: "response", html: '<span class="text-rose" style="font-weight: 600;">🛠️ UTILITI & PENGHUBUNG</span>' },
+    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'contact\')">contact</span>     <span class="text-muted">·</span> Hubungi saya & profil media sosial' },
+    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'clear\')">clear</span>       <span class="text-muted">·</span> Bersihkan semua log paparan terminal' },
+    { type: "response", html: '<span class="text-muted">============================================================</span>' },
+    { type: "response", html: '<span class="text-muted" style="font-size:0.85rem">Tip: Anda boleh klik mana-mana perintah hijau di atas untuk menjalankannya.</span>' },
     { type: "response", text: "" },
   ],
   about: () => [
     { type: "response", text: "" },
     { type: "response", html: '<span class="text-accent">◆</span> <span style="font-weight:600">MoonWiRaja</span> — Full-Stack Creator' },
-    { type: "response", html: '  <span class="text-muted">Location:</span>  Malaysia 🇲🇾' },
-    { type: "response", html: '  <span class="text-muted">Focus:</span>    Web moden, automasi pintar, reka bentuk premium' },
-    { type: "response", html: '  <span class="text-muted">Passion:</span>  Pengalaman pengguna yang kemas & responsif' },
+    { type: "response", html: '  <span class="text-muted">Lokasi:</span>     Malaysia 🇲🇾' },
+    { type: "response", html: '  <span class="text-muted">Fokus:</span>      Web moden, automasi pintar, reka bentuk premium' },
+    { type: "response", html: '  <span class="text-muted">Matlamat:</span>   Membina UI/UX yang pantas, hidup & berestetika tinggi' },
     { type: "response", text: "" },
   ],
   skills: () => [
     { type: "response", text: "" },
-    { type: "response", html: '<span class="text-accent">◆</span> <span style="font-weight:600">Kemahiran Teknologi</span>' },
+    { type: "response", html: '<span class="text-accent" style="font-weight:600">📊 KEMAHIRAN TEKNOLOGI (TECH STACKS)</span>' },
+    { type: "response", html: '<span class="text-muted">──────────────────────────────────────────</span>' },
+    { type: "response", html: '  <span class="text-cyan" style="font-weight:500">Frontend</span>  <span class="text-green">■■■■■■■■■□</span> <span class="text-secondary">90%</span>' },
+    { type: "response", html: '            <span class="text-muted">HTML5 · CSS3 · React · Next.js · Astro</span>' },
+    { type: "response", html: '  <span class="text-green" style="font-weight:500">Backend</span>   <span class="text-green">■■■■■■■■□□</span> <span class="text-secondary">80%</span>' },
+    { type: "response", html: '            <span class="text-muted">Node.js · Express · Python · REST APIs</span>' },
+    { type: "response", html: '  <span class="text-yellow" style="font-weight:500">Database</span>  <span class="text-green">■■■■■■■□□□</span> <span class="text-secondary">70%</span>' },
+    { type: "response", html: '            <span class="text-muted">PostgreSQL · SQLite · MongoDB</span>' },
+    { type: "response", html: '  <span class="text-violet" style="font-weight:500">DevOps</span>    <span class="text-green">■■■■■■■■□□</span> <span class="text-secondary">80%</span>' },
+    { type: "response", html: '            <span class="text-muted">Git · GitHub Actions · Docker · Linux</span>' },
+    { type: "response", html: '  <span class="text-rose" style="font-weight:500">Design</span>    <span class="text-green">■■■■■■■■□□</span> <span class="text-secondary">80%</span>' },
+    { type: "response", html: '            <span class="text-muted">Figma · Framer Motion · UI/UX Design</span>' },
+    { type: "response", html: '<span class="text-muted">──────────────────────────────────────────</span>' },
     { type: "response", text: "" },
-    { type: "response", html: '  <span class="text-cyan">▸ Frontend</span>   HTML5 · CSS3 · JS · React · Next.js · Astro' },
-    { type: "response", html: '  <span class="text-green">▸ Backend</span>    Node.js · Express · Python · REST APIs' },
-    { type: "response", html: '  <span class="text-yellow">▸ Database</span>   PostgreSQL · SQLite · MongoDB' },
-    { type: "response", html: '  <span class="text-violet">▸ DevOps</span>     Git · GitHub Actions · Docker · Linux' },
-    { type: "response", html: '  <span class="text-rose">▸ Design</span>     Figma · Framer Motion · UI/UX' },
+  ],
+  experience: () => [
+    { type: "response", text: "" },
+    { type: "response", html: '<span class="text-accent" style="font-weight:600">💼 PENGALAMAN & SENARAI KERJAYA</span>' },
+    { type: "response", html: '<span class="text-muted">──────────────────────────────────────────</span>' },
+    { type: "response", html: '  <span class="text-cyan" style="font-weight:500">2024 - Kini</span>  <span class="text-secondary" style="font-weight:500">Lead Web Creator @ MoonWiRaja Digital</span>' },
+    { type: "response", html: '               <span class="text-muted">Membina sistem portfolio canggih dan integrasi ejen AI pintar.</span>' },
+    { type: "response", html: '  <span class="text-green" style="font-weight:500">2022 - 2024</span>  <span class="text-secondary" style="font-weight:500">Full-Stack Developer (Freelance)</span>' },
+    { type: "response", html: '               <span class="text-muted">Pembangunan sistem e-commerce, laman web korporat & automasi API.</span>' },
+    { type: "response", html: '  <span class="text-yellow" style="font-weight:500">2021 - 2022</span>  <span class="text-secondary" style="font-weight:500">Frontend Specialist</span>' },
+    { type: "response", html: '               <span class="text-muted">Fokus kepada UI/UX responsif menggunakan React dan Tailwind CSS.</span>' },
+    { type: "response", html: '<span class="text-muted">──────────────────────────────────────────</span>' },
+    { type: "response", text: "" },
+  ],
+  status: () => [
+    { type: "response", text: "" },
+    { type: "response", html: '<span class="text-accent" style="font-weight:600">🖥️ LIVE SERVER MONITOR SYSTEM</span>' },
+    { type: "response", html: '<span class="text-muted">──────────────────────────────────────────</span>' },
+    { type: "response", html: '  <span class="text-secondary">CPU Load:</span>  [<span class="text-green">■■■■■□□□□□</span>] <span class="text-green">52%</span> (Google Brain Core)' },
+    { type: "response", html: '  <span class="text-secondary">RAM Usage:</span> [<span class="text-green">■■■■■■■□□□</span>] <span class="text-yellow">71%</span> (5.68 GB / 8.00 GB)' },
+    { type: "response", html: '  <span class="text-secondary">Disk:</span>      [<span class="text-green">■■■□□□□□□□</span>] <span class="text-green">34%</span> (124 GB / 360 GB)' },
+    { type: "response", html: '  <span class="text-secondary">Database:</span>  [<span class="text-green">ONLINE</span>] 12ms latency' },
+    { type: "response", html: '  <span class="text-secondary">AI Swarm:</span>  [<span class="text-accent">ACTIVE</span>] Agent swarm fully functional' },
+    { type: "response", html: '<span class="text-muted">──────────────────────────────────────────</span>' },
     { type: "response", text: "" },
   ],
   repos: () => [
@@ -51,8 +91,8 @@ const COMMANDS = {
     { type: "response", text: "" },
     { type: "response", html: '<span class="text-accent">◆</span> <span style="font-weight:600">Hubungi Saya</span>' },
     { type: "response", text: "" },
-    { type: "response", html: '  <span class="text-accent">✉</span>  Email    <span class="text-secondary">hakimmikah191@gmail.com</span>' },
-    { type: "response", html: '  <span class="text-accent">⟐</span>  GitHub   <span class="text-secondary">github.com/MoonWIRaja</span>' },
+    { type: "response", html: '  <span class="text-accent">✉</span>  Email    <span class="text-secondary" style="text-decoration: underline; cursor: pointer;" onclick="window.location.href=\'mailto:hakimmikah191@gmail.com\'">hakimmikah191@gmail.com</span>' },
+    { type: "response", html: '  <span class="text-accent">⟐</span>  GitHub   <span class="text-secondary" style="text-decoration: underline; cursor: pointer;" onclick="window.open(\'https://github.com/MoonWIRaja\', \'_blank\')">github.com/MoonWIRaja</span>' },
     { type: "response", text: "" },
   ],
   neofetch: () => [
@@ -65,6 +105,7 @@ const COMMANDS = {
     { type: "response", html: '<span class="text-accent">  | | | | | _ \\ / _ \\| | </span>  <span class="text-secondary" style="font-weight:600">Theme:</span> Cherry Dark (Burhan Accent)' },
     { type: "response", html: '<span class="text-accent">  | | | | |   /| (_) | | </span>  <span class="text-secondary" style="font-weight:600">CPU:</span> Simulated Google Brain AI v4' },
     { type: "response", html: '<span class="text-accent">   \\___/|_|_|_\\ \\___/|_| </span>  <span class="text-secondary" style="font-weight:600">Memory:</span> 4.12 GB / 8.00 GB' },
+    { type: "response", html: '                            <span class="text-accent">■</span><span class="text-green">■</span><span class="text-cyan">■</span><span class="text-yellow">■</span><span class="text-violet">■</span><span class="text-rose">■</span>' },
     { type: "response", text: "" },
   ]
 };
@@ -92,6 +133,54 @@ export default function Console() {
   const executeCommandDirectly = (cmd) => {
     if (cmd === "clear") {
       setLines([]);
+      return;
+    }
+    if (cmd === "matrix") {
+      setLines((prev) => [...prev, { type: "cmd", text: cmd }, { type: "response", html: '<span class="text-green">Initializing Matrix digital rain...</span>' }]);
+      
+      const matrixLines = [
+        "01001101 01001111 01001111 01001110 01010111 01001001 01001010 01000001",
+        "10110100 11010110 01101100 10101011 11001101 00011011 01010101 10101010",
+        "  [DECRYPTING MEMORYOFPLANET SWARM PROTOCOLS...]",
+        ">> ACCESS GRANTED: moon.core.system.active = true",
+        "01010010 01000001 01001010 01000001 01000011 01001111 01010010 01000101",
+        "■■■■■ MATRIX DECRYPTION COMPLETE. SYSTEM SAFE. ■■■■■"
+      ];
+      
+      matrixLines.forEach((mLine, index) => {
+        setTimeout(() => {
+          setLines((prev) => [
+            ...prev,
+            { type: "response", html: `<span class="text-green" style="font-family: monospace; opacity: ${0.5 + (index * 0.1)}">${mLine}</span>` }
+          ]);
+        }, (index + 1) * 300);
+      });
+      return;
+    }
+    if (cmd === "secret") {
+      setLines((prev) => [...prev, { type: "cmd", text: cmd }, { type: "response", html: '<span class="text-accent">Membuka fail sulit/rahsia...</span>' }]);
+      
+      const secretLines = [
+        "==================================================",
+        "  🔓 AKSES DIBENARKAN: PROJEK MEMORYOFPLANET",
+        "==================================================",
+        "  Ahli aktif: moon (Verified Creator)",
+        "  Status Core: initialized = true",
+        "  Mod Swarm: solo / active-agent-running",
+        "  Mesej Tersembunyi:",
+        "  \"Masa depan dibina dengan satu baris kod pada satu masa.",
+        "   Teruskan usaha, dunia sedang memerhati.\" 🌍✨",
+        "=================================================="
+      ];
+      
+      secretLines.forEach((sLine, index) => {
+        setTimeout(() => {
+          setLines((prev) => [
+            ...prev,
+            { type: "response", html: `<span class="text-accent" style="font-family: monospace; font-weight: 500;">${sLine}</span>` }
+          ]);
+        }, (index + 1) * 200);
+      });
       return;
     }
     const handler = COMMANDS[cmd];

@@ -385,6 +385,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Fix mailto link click behavior and define missing copied state in ProfileCard"
+    },
+    {
+      "at": "2026-06-12T02:21:47.491Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Enhance terminal command list layout, add status, experience, matrix and secret commands"
     }
   ]
 }
