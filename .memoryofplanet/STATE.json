@@ -541,6 +541,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Add Profile Stats Grid rendering to ProfileCard.js — profile stats now display on mobile"
+    },
+    {
+      "at": "2026-06-12T04:20:14.397Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Fix profile stats render error — ProfileCard now handles stats as object (data?.stats format) instead of only array format"
     }
   ]
 }

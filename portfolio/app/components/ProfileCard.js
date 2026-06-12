@@ -90,7 +90,7 @@ export default function ProfileCard({ profile, stats }) {
       {/* Profile Stats Grid */}
       {stats && (
         <div className="profile-stats-grid" style={{ marginTop: 12, marginBottom: 8 }}>
-          {stats.map((stat, i) => (
+          {Array.isArray(stats) ? stats.map((stat, i) => (
             <div
               key={i}
               className={`profile-stat-tile ${stat.fullWidth ? "full-width" : ""}`}
@@ -103,7 +103,34 @@ export default function ProfileCard({ profile, stats }) {
                 {stat.value}
               </div>
             </div>
-          ))}
+          )) : (
+            <>
+              <div className="profile-stat-tile">
+                <div className="profile-stat-label">Repos</div>
+                <div className="profile-stat-val">{stats.repos ?? 0}</div>
+              </div>
+              <div className="profile-stat-tile">
+                <div className="profile-stat-label">Followers</div>
+                <div className="profile-stat-val">{stats.followers ?? 0}</div>
+              </div>
+              <div className="profile-stat-tile">
+                <div className="profile-stat-label">Following</div>
+                <div className="profile-stat-val">{stats.following ?? 0}</div>
+              </div>
+              <div className="profile-stat-tile">
+                <div className="profile-stat-label">Stars</div>
+                <div className="profile-stat-val">{stats.stargazers ?? 0}</div>
+              </div>
+              <div className="profile-stat-tile">
+                <div className="profile-stat-label">Forks</div>
+                <div className="profile-stat-val">{stats.forks ?? 0}</div>
+              </div>
+              <div className="profile-stat-tile">
+                <div className="profile-stat-label">Watchers</div>
+                <div className="profile-stat-val">{stats.watchers ?? 0}</div>
+              </div>
+            </>
+          )}
         </div>
       )}
 
