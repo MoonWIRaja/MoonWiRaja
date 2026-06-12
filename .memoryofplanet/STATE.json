@@ -343,6 +343,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Restore ActivityLog compact card size and remove horizontal squishing year switcher"
+    },
+    {
+      "at": "2026-06-12T01:47:11.477Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Align ActivityLog card height to grid columns bottom using flex-grow"
     }
   ]
 }
