@@ -101,7 +101,7 @@ export default function Home() {
             </motion.div>
 
             {/* Contributions Graph */}
-            <Contributions repos={data?.repos} />
+            <Contributions repos={data?.repos} contributions={data?.contributions} />
           </div>
 
           {/* ═══ CENTER PANEL ═══ */}

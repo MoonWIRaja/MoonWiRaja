@@ -295,6 +295,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Fix contributions tooltip layout to prevent boundary truncation"
+    },
+    {
+      "at": "2026-06-12T01:16:22.668Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Integrate real GitHub contributions calendar scrap data into calendar view"
     }
   ]
 }

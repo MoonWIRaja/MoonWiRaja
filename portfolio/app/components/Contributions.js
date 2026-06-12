@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 
-export default function Contributions({ repos }) {
+export default function Contributions({ repos, contributions }) {
   const [hoveredCell, setHoveredCell] = useState(null);
   
   // Set default view to the first day of the current month and year
@@ -38,7 +38,15 @@ export default function Contributions({ repos }) {
     const firstDayIndex = new Date(year, month, 1).getDay(); // 0 (Sun) to 6 (Sat)
     const totalDaysInMonth = new Date(year, month + 1, 0).getDate();
 
-    // Map actual GitHub pushes/commits
+    // Map actual GitHub scraped contributions
+    const parsedContribsMap = new Map();
+    if (contributions) {
+      contributions.forEach((c) => {
+        parsedContribsMap.set(c.date, { level: c.level, count: c.count });
+      });
+    }
+
+    // Map actual GitHub pushes/commits as fallback
     const activeDates = new Map();
     if (repos) {
       repos.forEach((repo) => {
@@ -69,25 +77,37 @@ export default function Contributions({ repos }) {
       let level = 0;
 
       if (!isFuture) {
-        // Deterministic pseudo-random generator seeded with date components
-        const seed = year + (month + 1) * 31 + d;
-        const hash = Math.abs(Math.sin(seed + 99) * 1000) % 1;
+        if (parsedContribsMap.size > 0) {
+          // Use real public scraping data
+          if (parsedContribsMap.has(dateStr)) {
+            const entry = parsedContribsMap.get(dateStr);
+            count = entry.count;
+            level = entry.level;
+          } else {
+            count = 0;
+            level = 0;
+          }
+        } else {
+          // Fallback to simulated data if HTML scrape failed or is empty
+          const seed = year + (month + 1) * 31 + d;
+          const hash = Math.abs(Math.sin(seed + 99) * 1000) % 1;
 
-        if (hash > 0.82) {
-          count = Math.floor(hash * 3) + 1; // 1 to 3 commits
+          if (hash > 0.82) {
+            count = Math.floor(hash * 3) + 1; // 1 to 3 commits
+          }
+
+          // Overlay actual repository activity
+          if (activeDates.has(dateStr)) {
+            const actualCommits = activeDates.get(dateStr);
+            count = Math.max(count, actualCommits + 2); // Boost rating on active push days
+          }
+
+          if (count >= 5) level = 4;
+          else if (count >= 3) level = 3;
+          else if (count >= 2) level = 2;
+          else if (count > 0) level = 1;
+          else level = 0;
         }
-
-        // Overlay actual repository activities
-        if (activeDates.has(dateStr)) {
-          const actualCommits = activeDates.get(dateStr);
-          count = Math.max(count, actualCommits + 2); // Boost rating on active push days
-        }
-
-        if (count >= 5) level = 4;
-        else if (count >= 3) level = 3;
-        else if (count >= 2) level = 2;
-        else if (count > 0) level = 1;
-        else level = 0;
       }
 
       cells.push({
@@ -109,7 +129,7 @@ export default function Contributions({ repos }) {
     }
 
     return cells;
-  }, [year, month, repos, today]);
+  }, [year, month, repos, contributions, today]);
 
   // Calculate monthly contributions sum
   const totalMonthContributions = useMemo(() => {

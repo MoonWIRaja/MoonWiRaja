@@ -151,7 +151,8 @@ const DEFAULT_FALLBACK = {
       latest_commit_message: "Add landing page details",
       latest_commit_sha: "9a8b7c6",
     }
-  ]
+  ],
+  contributions: []
 };
 
 async function main() {
@@ -253,6 +254,37 @@ async function main() {
       }
     });
 
+    // Fetch and parse contributions calendar from public HTML
+    let contributions = [];
+    try {
+      console.log("Fetching actual user contributions calendar...");
+      const contribRes = await fetch(`https://github.com/users/${GITHUB_USERNAME}/contributions`);
+      if (contribRes.ok) {
+        const html = await contribRes.text();
+        const regex = /<td[^>]*data-date="(\d{4}-\d{2}-\d{2})"[^>]*data-level="(\d)"[^>]*><\/td>\s*<tool-tip[^>]*>([^<]+)<\/tool-tip>/g;
+        let match;
+        while ((match = regex.exec(html)) !== null) {
+          const date = match[1];
+          const level = parseInt(match[2], 10);
+          const tooltipText = match[3].trim();
+          
+          let count = 0;
+          if (!tooltipText.startsWith("No ")) {
+            const numMatch = tooltipText.match(/^([\d,]+)/);
+            if (numMatch) {
+              count = parseInt(numMatch[1].replace(/,/g, ""), 10);
+            }
+          }
+          contributions.push({ date, level, count });
+        }
+        console.log(`Successfully parsed ${contributions.length} actual contribution days.`);
+      } else {
+        console.warn(`Failed to fetch contributions HTML, status: ${contribRes.status}`);
+      }
+    } catch (e) {
+      console.error("Error fetching/parsing contributions:", e.message);
+    }
+
     const result = {
       profile: {
         name: profile.name || GITHUB_USERNAME,
@@ -286,6 +318,7 @@ async function main() {
           latest_commit_sha: repo.latestCommitSha,
         };
       }),
+      contributions: contributions,
     };
 
     // Ensure output directory exists
