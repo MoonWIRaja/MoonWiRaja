@@ -505,6 +505,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Fix mobile Projects tab visibility — changed ProjectsList inner wrapper class from right-panel to projects-inner to prevent CSS display:none conflict on mobile"
+    },
+    {
+      "at": "2026-06-12T03:49:43.341Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Fix ActivityLog leaking into Profile tab on mobile — made .desktop-activity hide rule more specific with .left-panel.mobile-tab-active selector"
     }
   ]
 }

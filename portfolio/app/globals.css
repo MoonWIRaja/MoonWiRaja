@@ -457,8 +457,8 @@ ol {
   }
 
   /* Activity Log in left panel hidden on mobile — use Activity tab instead */
-  .desktop-activity {
-    display: none;
+  .left-panel.mobile-tab-active .desktop-activity {
+    display: none !important;
   }
 }
 
