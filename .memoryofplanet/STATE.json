@@ -349,6 +349,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Align ActivityLog card height to grid columns bottom using flex-grow"
+    },
+    {
+      "at": "2026-06-12T01:51:27.806Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Fix left panel top card cutoff on short viewports"
     }
   ]
 }
