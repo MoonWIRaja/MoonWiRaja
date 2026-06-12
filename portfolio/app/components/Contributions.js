@@ -191,7 +191,7 @@ export default function Contributions({ repos }) {
               >
                 {!cell.isEmpty && cell.day}
                 {hoveredCell && hoveredCell.idx === idx && (
-                  <div className="contrib-tooltip">
+                  <div className={`contrib-tooltip ${hoveredCell.idx % 7 <= 1 ? "align-left" : hoveredCell.idx % 7 >= 5 ? "align-right" : "align-center"}`}>
                     <strong>{hoveredCell.count} commits</strong> on {formatDateLabel(hoveredCell.date)}
                   </div>
                 )}

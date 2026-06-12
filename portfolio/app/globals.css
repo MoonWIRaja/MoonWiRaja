@@ -1472,8 +1472,6 @@ ul, ol { list-style: none; }
 .contrib-tooltip {
   position: absolute;
   bottom: calc(100% + 6px);
-  left: 50%;
-  transform: translateX(-50%);
   background: rgba(19, 32, 29, 0.98);
   border: 1px solid var(--border-default);
   color: var(--text-light);
@@ -1485,7 +1483,22 @@ ul, ol { list-style: none; }
   pointer-events: none;
   z-index: 100;
   box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.contrib-tooltip.align-left {
+  left: 0;
+  transform: translateY(-2px);
+}
+
+.contrib-tooltip.align-right {
+  left: auto;
+  right: 0;
+  transform: translateY(-2px);
+}
+
+.contrib-tooltip.align-center {
+  left: 50%;
+  transform: translateX(-50%) translateY(-2px);
 }
 
 
