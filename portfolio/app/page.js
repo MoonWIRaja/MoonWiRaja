@@ -8,6 +8,7 @@ import ProfileCard from "./components/ProfileCard";
 import ServerMonitor from "./components/ServerMonitor";
 import Console from "./components/Console";
 import ProjectsList from "./components/ProjectsList";
+import Contributions from "./components/Contributions";
 
 export default function Home() {
   const [data, setData] = useState(null);
@@ -98,6 +99,9 @@ export default function Home() {
                 ))}
               </div>
             </motion.div>
+
+            {/* Contributions Graph */}
+            <Contributions repos={data?.repos} />
           </div>
 
           {/* ═══ CENTER PANEL ═══ */}
