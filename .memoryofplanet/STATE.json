@@ -499,6 +499,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Fix ActivityLog on desktop — desktop-activity wrapper now flex:1 to fill remaining left panel height"
+    },
+    {
+      "at": "2026-06-12T03:44:50.782Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Fix mobile Projects tab visibility — changed ProjectsList inner wrapper class from right-panel to projects-inner to prevent CSS display:none conflict on mobile"
     }
   ]
 }

@@ -4,10 +4,10 @@ import { motion } from "framer-motion";
 import { ArrowUpRight, Star, GitFork, BookMarked, Eye } from "lucide-react";
 
 const LANG_CLASS = {
-  JavaScript: "lang-js", 
-  TypeScript: "lang-ts", 
+  JavaScript: "lang-js",
+  TypeScript: "lang-ts",
   Python: "lang-py",
-  HTML: "lang-html", 
+  HTML: "lang-html",
   CSS: "lang-css",
 };
 
@@ -41,7 +41,7 @@ function ProjectCard({ repo, index }) {
         </span>
         <ArrowUpRight className="arrow-icon" size={13} />
       </div>
-      
+
       {repo.description && (
         <p className="project-desc">{repo.description}</p>
       )}
@@ -57,12 +57,12 @@ function ProjectCard({ repo, index }) {
           )}
         </div>
       )}
-      
+
       <div className="project-date-box">
         <span className="date-prefix">≫ updated:</span>
         <span className="date-text">{formatDate(repo.pushed_at || repo.updated_at)}</span>
       </div>
-      
+
       <div className="project-meta">
         <div className="meta-left">
           <span className="lang-indicator">
@@ -99,17 +99,17 @@ function SkeletonCard() {
 
 export default function ProjectsList({ repos, loading }) {
   // Sort repositories by pushed_at or updated_at descending (latest commit push first)
-  const sortedRepos = repos 
+  const sortedRepos = repos
     ? [...repos].sort((a, b) => {
-        const timeA = new Date(a.pushed_at || a.updated_at).getTime();
-        const timeB = new Date(b.pushed_at || b.updated_at).getTime();
-        return timeB - timeA;
-      })
+      const timeA = new Date(a.pushed_at || a.updated_at).getTime();
+      const timeB = new Date(b.pushed_at || b.updated_at).getTime();
+      return timeB - timeA;
+    })
     : [];
 
   return (
     <motion.div
-      className="right-panel glass-card"
+      className="glass-card projects-inner"
       initial={{ opacity: 0, x: 30 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
@@ -123,7 +123,7 @@ export default function ProjectsList({ repos, loading }) {
           <span className="projects-count">{repos.length}</span>
         )}
       </div>
-      
+
       <div className="projects-list">
         {loading ? (
           <>
