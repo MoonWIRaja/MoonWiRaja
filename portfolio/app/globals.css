@@ -598,9 +598,13 @@ ul, ol { list-style: none; }
   border-radius: var(--r-lg);
   box-shadow: var(--shadow-md);
   /* Light text overrides for dark console background */
-  --text-ghost: rgba(255, 255, 255, 0.25);
-  --text-muted: rgba(255, 255, 255, 0.45);
-  --text-secondary: rgba(255, 255, 255, 0.75);
+  --text-ghost: #b3b3b3;
+  --text-muted: #eaeaea;
+  --text-secondary: #ffffff;
+  --accent-green: #4ade80;
+  --terminal-green: #4ade80;
+  --accent-red: #f87171;
+  --accent-cherry: #f87171;
 }
 
 .console-titlebar {
@@ -669,9 +673,9 @@ ul, ol { list-style: none; }
 .console-line.cmd { color: #ffffff; }
 .console-line .prompt-symbol { color: var(--terminal-green); margin-right: 8px; font-weight: 700; }
 .console-line .cmd-text { color: #ffffff; }
-.console-line.response { color: #eae5de; padding-left: 20px; }
+.console-line.response { color: #ffffff; padding-left: 20px; }
 .console-line.welcome { color: var(--terminal-green); font-weight: 500; }
-.console-line.hint { color: rgba(255, 255, 255, 0.4); font-size: 0.7rem; }
+.console-line.hint { color: rgba(255, 255, 255, 0.75); font-size: 0.7rem; }
 
 .console-input-row {
   display: flex;

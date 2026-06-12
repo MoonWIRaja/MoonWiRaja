@@ -403,6 +403,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Fix console text color visibility by overriding text color variables on dark card theme"
+    },
+    {
+      "at": "2026-06-12T02:27:16.440Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Brighten green, red, gray, and white console text elements for maximum visibility on black background"
     }
   ]
 }
