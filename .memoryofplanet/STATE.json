@@ -301,6 +301,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Integrate real GitHub contributions calendar scrap data into calendar view"
+    },
+    {
+      "at": "2026-06-12T01:19:47.100Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Add cache buster to API fetch calls to prevent browser caching"
     }
   ]
 }

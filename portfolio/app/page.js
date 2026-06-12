@@ -16,7 +16,7 @@ export default function Home() {
 
   useEffect(() => {
     const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
-    fetch(basePath + "/api/github")
+    fetch(basePath + "/api/github?v=" + Date.now())
       .then((r) => r.json())
       .then((d) => {
         setData(d);
