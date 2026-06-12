@@ -482,6 +482,19 @@ ul, ol { list-style: none; }
   display: none;
 }
 
+/* Desktop Activity wrapper — fills remaining left panel height */
+.desktop-activity {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.desktop-activity > * {
+  flex: 1;
+  min-height: 0;
+}
+
 /* Profile Card */
 .profile-card {
   padding: 20px 16px;

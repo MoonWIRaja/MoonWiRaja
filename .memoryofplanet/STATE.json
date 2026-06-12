@@ -493,6 +493,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Restore ActivityLog in desktop left panel — hidden on mobile, accessible via Activity tab overlay"
+    },
+    {
+      "at": "2026-06-12T03:21:40.866Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Fix ActivityLog on desktop — desktop-activity wrapper now flex:1 to fill remaining left panel height"
     }
   ]
 }
