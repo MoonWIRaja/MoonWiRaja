@@ -346,7 +346,11 @@ ul, ol { list-style: none; }
 
   /* micro footer hide on mobile */
   .micro-footer { display: none; }
+
+  /* Activity Log in left panel hidden on mobile — use Activity tab instead */
+  .desktop-activity { display: none; }
 }
+
 
 /* Bottom Tab Bar */
 .mobile-tab-bar {

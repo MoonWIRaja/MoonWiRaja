@@ -181,7 +181,6 @@ export default function Home() {
               </div>
             </motion.div>
 
-
             {/* Contributions Graph */}
             <Contributions
               repos={data?.repos}
@@ -189,6 +188,17 @@ export default function Home() {
               selectedDate={selectedDate}
               setSelectedDate={setSelectedDate}
             />
+
+            {/* Activity Log — desktop only, mobile uses the tab overlay */}
+            <div className="desktop-activity">
+              <ActivityLog
+                repos={data?.repos}
+                contributions={data?.contributions}
+                selectedDate={selectedDate}
+                setSelectedDate={setSelectedDate}
+                events={events}
+              />
+            </div>
           </div>
 
           {/* ═══ CENTER PANEL ═══ */}
