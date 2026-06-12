@@ -8,52 +8,52 @@ import { SnakeGame, RocketGame } from "./TerminalGames";
 const COMMANDS = {
   help: () => [
     { type: "response", text: "" },
-    { type: "response", html: '<span class="text-accent" style="font-weight: 600;">⌨️ MoonWiRaja Console v3.0 - MENU BANTUAN INTERAKTIF</span>' },
+    { type: "response", html: '<span class="text-accent" style="font-weight: 600;">⌨️ MoonWiRaja Console v3.0 - INTERACTIVE HELP MENU</span>' },
     { type: "response", html: '<span class="text-muted">============================================================</span>' },
-    { type: "response", html: '<span class="text-yellow" style="font-weight: 600;">🌟 TUGASAN UTAMA (CORE COMMANDS)</span>' },
-    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'about\')">about</span>       <span class="text-muted">·</span> Tentang saya & visi reka bentuk' },
-    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'skills\')">skills</span>      <span class="text-muted">·</span> Paparan visual teknologi stack & kemahiran' },
-    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'experience\')">experience</span>  <span class="text-muted">·</span> Pengalaman kerja & penglibatan projek' },
-    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'repos\')">repos</span>       <span class="text-muted">·</span> Senarai projek utama dari GitHub API' },
+    { type: "response", html: '<span class="text-yellow" style="font-weight: 600;">🌟 CORE COMMANDS (TUGASAN UTAMA)</span>' },
+    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'about\')">about</span>       <span class="text-muted">·</span> Get to know me & my design vision (Tentang saya)' },
+    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'skills\')">skills</span>      <span class="text-muted">·</span> Visual tech stack & core expertise (Kemahiran)' },
+    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'experience\')">experience</span>  <span class="text-muted">·</span> Professional timeline & projects (Pengalaman kerjaya)' },
+    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'repos\')">repos</span>       <span class="text-muted">·</span> Main open-source repositories from GitHub API' },
     { type: "response", text: "" },
-    { type: "response", html: '<span class="text-cyan" style="font-weight: 600;">🎮 SIMULASI & HIBURAN (FUN & INTERACTIVE)</span>' },
-    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'status\')">status</span>      <span class="text-muted">·</span> Paparan status sistem server secara langsung' },
-    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'neofetch\')">neofetch</span>    <span class="text-muted">·</span> Sistem info & ASCII Art MoonWiRaja' },
-    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'matrix\')">matrix</span>      <span class="text-muted">·</span> Jalankan simulasi kod digital Matrix' },
-    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'secret\')">secret</span>      <span class="text-muted">·</span> Bongkar mesej rahsia & log masuk sulit' },
-    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'game\')">game</span>        <span class="text-muted">·</span> Main game retro ular / roket angkasa 👾' },
+    { type: "response", html: '<span class="text-cyan" style="font-weight: 600;">🎮 FUN & INTERACTIVE (SIMULASI & GAME)</span>' },
+    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'status\')">status</span>      <span class="text-muted">·</span> Check live server & memory metrics (Status sistem)' },
+    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'neofetch\')">neofetch</span>    <span class="text-muted">·</span> System info & custom ASCII Art' },
+    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'matrix\')">matrix</span>      <span class="text-muted">·</span> Run digital binary rain simulation (Simulasi Matrix)' },
+    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'secret\')">secret</span>      <span class="text-muted">·</span> Decrypt classified core system message (Mesej sulit)' },
+    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'game\')">game</span>        <span class="text-muted">·</span> Launch retro terminal games (Snake & Space Shooter)' },
     { type: "response", text: "" },
-    { type: "response", html: '<span class="text-rose" style="font-weight: 600;">🛠️ UTILITI & PENGHUBUNG</span>' },
-    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'contact\')">contact</span>     <span class="text-muted">·</span> Hubungi saya & profil media sosial' },
-    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'clear\')">clear</span>       <span class="text-muted">·</span> Bersihkan semua log paparan terminal' },
+    { type: "response", html: '<span class="text-rose" style="font-weight: 600;">🛠️ UTILITIES & LINKS (PENGHUBUNG)</span>' },
+    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'contact\')">contact</span>     <span class="text-muted">·</span> Social profiles & email link (Hubungi saya)' },
+    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'clear\')">clear</span>       <span class="text-muted">·</span> Clear the terminal logs (Bersihkan skrin)' },
     { type: "response", html: '<span class="text-muted">============================================================</span>' },
-    { type: "response", html: '<span class="text-muted" style="font-size:0.85rem">Tip: Anda boleh klik mana-mana perintah hijau di atas untuk menjalankannya.</span>' },
+    { type: "response", html: '<span class="text-muted" style="font-size:0.85rem">Tip: You can directly click any green command above to run it.</span>' },
     { type: "response", text: "" },
   ],
   game: () => [
     { type: "response", text: "" },
-    { type: "response", html: '<span class="text-accent" style="font-weight: 600;">🎮 RETRO GAME CENTER - MAIN DALAM TERMINAL</span>' },
+    { type: "response", html: '<span class="text-accent" style="font-weight: 600;">🎮 RETRO GAME CENTER - PLAY IN TERMINAL</span>' },
     { type: "response", html: '<span class="text-muted">──────────────────────────────────────────</span>' },
-    { type: "response", html: '  Taip atau klik arahan di bawah untuk mula bermain:' },
+    { type: "response", html: '  Type or click command below to start playing (Pilih game):' },
     { type: "response", text: "" },
-    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'game snake\')">game snake</span>   <span class="text-muted">·</span> Main Permainan Ular Retro 🐍' },
-    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'game rocket\')">game rocket</span>  <span class="text-muted">·</span> Main Roket Angkasa / Space Shooter 🚀' },
+    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'game snake\')">game snake</span>   <span class="text-muted">·</span> Play Classic Snake Game 🐍 (Game Ular)' },
+    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'game rocket\')">game rocket</span>  <span class="text-muted">·</span> Play Space Shooter 🚀 (Game Roket Angkasa)' },
     { type: "response", text: "" },
-    { type: "response", html: '  Gunakan W/A/S/D atau kekunci Arah untuk kawalan.' },
+    { type: "response", html: '  Control using keyboard W/A/S/D or Arrow Keys.' },
     { type: "response", html: '<span class="text-muted">──────────────────────────────────────────</span>' },
     { type: "response", text: "" },
   ],
   about: () => [
     { type: "response", text: "" },
-    { type: "response", html: '<span class="text-accent">◆</span> <span style="font-weight:600">MoonWiRaja</span> — Full-Stack Creator' },
-    { type: "response", html: '  <span class="text-muted">Lokasi:</span>     Malaysia 🇲🇾' },
-    { type: "response", html: '  <span class="text-muted">Fokus:</span>      Web moden, automasi pintar, reka bentuk premium' },
-    { type: "response", html: '  <span class="text-muted">Matlamat:</span>   Membina UI/UX yang pantas, hidup & berestetika tinggi' },
+    { type: "response", html: '<span class="text-accent">◆</span> <span style="font-weight:600">MoonWiRaja</span> — Full-Stack Web Creator' },
+    { type: "response", html: '  <span class="text-muted">Location:</span>   Malaysia 🇲🇾' },
+    { type: "response", html: '  <span class="text-muted">Focus:</span>      Modern web tech, smart automation, & premium design' },
+    { type: "response", html: '  <span class="text-muted">Vision:</span>     Build fast, reactive & aesthetically outstanding UI/UX' },
     { type: "response", text: "" },
   ],
   skills: () => [
     { type: "response", text: "" },
-    { type: "response", html: '<span class="text-accent" style="font-weight:600">📊 KEMAHIRAN TEKNOLOGI (TECH STACKS)</span>' },
+    { type: "response", html: '<span class="text-accent" style="font-weight:600">📊 TECH STACKS & EXPERTISE</span>' },
     { type: "response", html: '<span class="text-muted">──────────────────────────────────────────</span>' },
     { type: "response", html: '  <span class="text-cyan" style="font-weight:500">Frontend</span>  <span class="text-green">■■■■■■■■■□</span> <span class="text-secondary">90%</span>' },
     { type: "response", html: '            <span class="text-muted">HTML5 · CSS3 · React · Next.js · Astro</span>' },
@@ -70,14 +70,14 @@ const COMMANDS = {
   ],
   experience: () => [
     { type: "response", text: "" },
-    { type: "response", html: '<span class="text-accent" style="font-weight:600">💼 PENGALAMAN & SENARAI KERJAYA</span>' },
+    { type: "response", html: '<span class="text-accent" style="font-weight:600">💼 CAREER TIMELINE (PENGALAMAN)</span>' },
     { type: "response", html: '<span class="text-muted">──────────────────────────────────────────</span>' },
-    { type: "response", html: '  <span class="text-cyan" style="font-weight:500">2024 - Kini</span>  <span class="text-secondary" style="font-weight:500">Lead Web Creator @ MoonWiRaja Digital</span>' },
-    { type: "response", html: '               <span class="text-muted">Membina sistem portfolio canggih dan integrasi ejen AI pintar.</span>' },
-    { type: "response", html: '  <span class="text-green" style="font-weight:500">2022 - 2024</span>  <span class="text-secondary" style="font-weight:500">Full-Stack Developer (Freelance)</span>' },
-    { type: "response", html: '               <span class="text-muted">Pembangunan sistem e-commerce, laman web korporat & automasi API.</span>' },
-    { type: "response", html: '  <span class="text-yellow" style="font-weight:500">2021 - 2022</span>  <span class="text-secondary" style="font-weight:500">Frontend Specialist</span>' },
-    { type: "response", html: '               <span class="text-muted">Fokus kepada UI/UX responsif menggunakan React dan Tailwind CSS.</span>' },
+    { type: "response", html: '  <span class="text-cyan" style="font-weight:500">2024 - Present</span>  <span class="text-secondary" style="font-weight:500">Lead Web Creator @ MoonWiRaja Digital</span>' },
+    { type: "response", html: '                  <span class="text-muted">Build advanced portfolio systems & smart AI integrations.</span>' },
+    { type: "response", html: '  <span class="text-green" style="font-weight:500">2022 - 2024</span>     <span class="text-secondary" style="font-weight:500">Full-Stack Developer (Freelance)</span>' },
+    { type: "response", html: '                  <span class="text-muted">Develop e-commerce systems, company profiles & API automation.</span>' },
+    { type: "response", html: '  <span class="text-yellow" style="font-weight:500">2021 - 2022</span>     <span class="text-secondary" style="font-weight:500">Frontend UI Specialist</span>' },
+    { type: "response", html: '                  <span class="text-muted">Focus on clean, responsive designs using React & Tailwind CSS.</span>' },
     { type: "response", html: '<span class="text-muted">──────────────────────────────────────────</span>' },
     { type: "response", text: "" },
   ],
@@ -95,16 +95,16 @@ const COMMANDS = {
   ],
   repos: () => [
     { type: "response", text: "" },
-    { type: "response", html: '<span class="text-accent">◆</span> <span style="font-weight:600">Repositori Utama</span>' },
+    { type: "response", html: '<span class="text-accent">◆</span> <span style="font-weight:600">MAIN REPOSITORIES (PROJEK UTAMA)</span>' },
     { type: "response", text: "" },
-    { type: "response", html: '  <span class="text-green">●</span> <span style="font-weight:500">MoonWiRaja</span>           Console portfolio dashboard' },
-    { type: "response", html: '  <span class="text-green">●</span> <span style="font-weight:500">MemoryOfPlanet.core</span>  AI agent management core' },
-    { type: "response", html: '  <span class="text-green">●</span> <span style="font-weight:500">myney.core</span>           Personal finance system' },
+    { type: "response", html: '  <span class="text-green">●</span> <span style="font-weight:500">MoonWiRaja</span>           Console portfolio dashboard app' },
+    { type: "response", html: '  <span class="text-green">●</span> <span style="font-weight:500">MemoryOfPlanet.core</span>  AI agent management core runtime' },
+    { type: "response", html: '  <span class="text-green">●</span> <span style="font-weight:500">myney.core</span>           Personal finance accounting system' },
     { type: "response", text: "" },
   ],
   contact: () => [
     { type: "response", text: "" },
-    { type: "response", html: '<span class="text-accent">◆</span> <span style="font-weight:600">Hubungi Saya</span>' },
+    { type: "response", html: '<span class="text-accent">◆</span> <span style="font-weight:600">CONTACT & SOCIALS (HUBUNGI SAYA)</span>' },
     { type: "response", text: "" },
     { type: "response", html: '  <span class="text-accent">✉</span>  Email    <span class="text-secondary" style="text-decoration: underline; cursor: pointer;" onclick="window.location.href=\'mailto:hakimmikah191@gmail.com\'">hakimmikah191@gmail.com</span>' },
     { type: "response", html: '  <span class="text-accent">⟐</span>  GitHub   <span class="text-secondary" style="text-decoration: underline; cursor: pointer;" onclick="window.open(\'https://github.com/MoonWIRaja\', \'_blank\')">github.com/MoonWIRaja</span>' },
@@ -127,8 +127,8 @@ const COMMANDS = {
 
 export default function Console() {
   const [lines, setLines] = useState([
-    { type: "welcome", html: '<span class="text-accent">◆</span> Selamat datang ke <span class="text-accent" style="font-weight:600">MoonWiRaja Console</span> <span class="text-muted">v3.0</span>' },
-    { type: "hint", text: '  Taip "help" atau "neofetch" untuk melihat sistem info.' },
+    { type: "welcome", html: '<span class="text-accent">◆</span> Welcome to <span class="text-accent" style="font-weight:600">MoonWiRaja Console</span> <span class="text-muted">v3.0</span>' },
+    { type: "hint", text: '  Type "help" or "neofetch" to display system info. (Taip "help" untuk bantuan)' },
     { type: "response", text: "" },
   ]);
   const [input, setInput] = useState("");
@@ -176,7 +176,7 @@ export default function Console() {
                   setActiveGame(null);
                   setLines((l) => [
                     ...l,
-                    { type: "response", html: '<span class="text-accent">Game Ular ditamatkan. Kembali ke terminal...</span>' }
+                    { type: "response", html: '<span class="text-accent">Snake game exited. Returning to terminal (Game Ular ditamatkan)...</span>' }
                   ]);
                 }}
               />
@@ -199,7 +199,7 @@ export default function Console() {
                   setActiveGame(null);
                   setLines((l) => [
                     ...l,
-                    { type: "response", html: '<span class="text-accent">Game Roket ditamatkan. Kembali ke terminal...</span>' }
+                    { type: "response", html: '<span class="text-accent">Rocket game exited. Returning to terminal (Game Roket ditamatkan)...</span>' }
                   ]);
                 }}
               />
@@ -210,7 +210,7 @@ export default function Console() {
       }
     }
     if (cmd === "matrix") {
-      setLines((prev) => [...prev, { type: "cmd", text: cmd }, { type: "response", html: '<span class="text-green">Initializing Matrix digital rain...</span>' }]);
+      setLines((prev) => [...prev, { type: "cmd", text: cmd }, { type: "response", html: '<span class="text-green">Initializing Matrix digital rain (Simulasi Matrix)...</span>' }]);
       
       const matrixLines = [
         "01001101 01001111 01001111 01001110 01010111 01001001 01001010 01000001",
@@ -232,20 +232,20 @@ export default function Console() {
       return;
     }
     if (cmd === "secret") {
-      setLines((prev) => [...prev, { type: "cmd", text: cmd }, { type: "response", html: '<span class="text-accent">Membuka fail sulit/rahsia...</span>' }]);
+      setLines((prev) => [...prev, { type: "cmd", text: cmd }, { type: "response", html: '<span class="text-accent">Opening classified file (Membuka fail sulit)...</span>' }]);
       
       const secretLines = [
         "=============================================================",
-        "  🔓 AKSES DIBENARKAN: PROJEK MEMORYOFPLANET",
+        "  🔓 ACCESS GRANTED: MEMORYOFPLANET PROJECT",
         "=============================================================",
-        "  Ahli aktif: moon (Verified Creator)",
-        "  Status Core: initialized = true",
-        "  Mod Swarm: solo / active-agent-running",
-        "  Mesej Tersembunyi:",
+        "  Active member: moon (Verified Creator)",
+        "  Core Status:   initialized = true",
+        "  Swarm Mode:    solo / active-agent-running",
+        "  Secret Message (Mesej Tersembunyi):",
         "  \"Berusaha Sedaya Upaya, Setiap Usaha Yang kita lAKUKAN",
         "   WALUPUN GAGAL ADALAH KUNCI MENUJU KEJAYAAN JANGAN SESEKALI",
         "   MENYERAH KERANA DUNIA TAK MENUNGGU KITA UNTUK BANGKIT\" 🌍✨",
-        "============================================================="
+        "=============================================================",
       ];
       
       secretLines.forEach((sLine, index) => {
@@ -267,7 +267,7 @@ export default function Console() {
         { type: "cmd", text: cmd },
         {
           type: "response",
-          html: `<span class="text-accent">✗</span> <span class="text-muted">Perintah "${cmd}" tidak ditemui. Taip "help" untuk bantuan.</span>`,
+          html: `<span class="text-accent">✗</span> <span class="text-muted">Command "${cmd}" not found. Type "help" for assistance. (Perintah tidak ditemui)</span>`,
         },
       ]);
     }
