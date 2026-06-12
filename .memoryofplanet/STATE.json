@@ -397,6 +397,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Implement retro terminal games: game snake and game rocket space shooter with D-Pad controls"
+    },
+    {
+      "at": "2026-06-12T02:25:38.124Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Fix console text color visibility by overriding text color variables on dark card theme"
     }
   ]
 }
