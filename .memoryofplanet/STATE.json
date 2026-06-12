@@ -451,6 +451,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Fix console scrollbar — hide on .console-body and .console-output which are the actual scroll containers"
+    },
+    {
+      "at": "2026-06-12T02:58:08.488Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Complete mobile redesign — tab-based navigation with bottom tab bar for Profile, Terminal, Projects panels"
     }
   ]
 }

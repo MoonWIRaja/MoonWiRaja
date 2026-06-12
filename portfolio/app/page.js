@@ -15,6 +15,7 @@ export default function Home() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [events, setEvents] = useState([]);
+  const [mobileTab, setMobileTab] = useState("profile");
   const [selectedDate, setSelectedDate] = useState(() => {
     const today = new Date();
     return new Date(today.getFullYear(), today.getMonth(), 1);
@@ -140,7 +141,7 @@ export default function Home() {
 
         <div className="dashboard-grid">
           {/* ═══ LEFT PANEL ═══ */}
-          <div className="left-panel">
+          <div className={`left-panel mobile-tab-panel ${mobileTab === "profile" ? "mobile-tab-active" : ""}`}>
             <ProfileCard profile={data?.profile} stats={data?.stats} />
 
             {/* SysInfo Widget */}
@@ -200,14 +201,32 @@ export default function Home() {
           </div>
 
           {/* ═══ CENTER PANEL ═══ */}
-          <div className="center-panel">
+          <div className={`center-panel mobile-tab-panel ${mobileTab === "terminal" ? "mobile-tab-active" : ""}`}>
             <Console />
             <ServerMonitor />
           </div>
 
           {/* ═══ RIGHT PANEL ═══ */}
-          <ProjectsList repos={data?.repos} loading={loading} />
+          <div className={`right-panel mobile-tab-panel ${mobileTab === "projects" ? "mobile-tab-active" : ""}`}>
+            <ProjectsList repos={data?.repos} loading={loading} />
+          </div>
         </div>
+
+        {/* ═══ MOBILE BOTTOM TAB BAR ═══ */}
+        <nav className="mobile-tab-bar" aria-label="Mobile navigation">
+          <button id="tab-profile" className={`mobile-tab-btn ${mobileTab === "profile" ? "active" : ""}`} onClick={() => setMobileTab("profile")} aria-label="Profile">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            <span>Profile</span>
+          </button>
+          <button id="tab-terminal" className={`mobile-tab-btn ${mobileTab === "terminal" ? "active" : ""}`} onClick={() => setMobileTab("terminal")} aria-label="Terminal">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+            <span>Terminal</span>
+          </button>
+          <button id="tab-projects" className={`mobile-tab-btn ${mobileTab === "projects" ? "active" : ""}`} onClick={() => setMobileTab("projects")} aria-label="Projects">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>
+            <span>Projects</span>
+          </button>
+        </nav>
 
         <span className="micro-footer">
           © 2026 MOONWIRAJA — POWERED BY MEMORYOFPLANET
