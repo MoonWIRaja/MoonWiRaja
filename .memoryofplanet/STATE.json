@@ -547,6 +547,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Fix profile stats render error — ProfileCard now handles stats as object (data?.stats format) instead of only array format"
+    },
+    {
+      "at": "2026-06-12T04:24:38.899Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Remove profile stats grid from ProfileCard — user requested to remove the stats display"
     }
   ]
 }

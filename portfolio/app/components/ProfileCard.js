@@ -23,7 +23,7 @@ const GithubIcon = ({ size = 13, className = "" }) => (
   </svg>
 );
 
-export default function ProfileCard({ profile, stats }) {
+export default function ProfileCard({ profile }) {
   const [copied, setCopied] = useState(false);
 
   const formatDate = (dateStr) => {
@@ -86,53 +86,6 @@ export default function ProfileCard({ profile, stats }) {
         <MapPin size={11} style={{ display: "inline", verticalAlign: "-1px", marginRight: 4 }} />
         {profile?.location || "Malaysia"}
       </p>
-
-      {/* Profile Stats Grid */}
-      {stats && (
-        <div className="profile-stats-grid" style={{ marginTop: 12, marginBottom: 8 }}>
-          {Array.isArray(stats) ? stats.map((stat, i) => (
-            <div
-              key={i}
-              className={`profile-stat-tile ${stat.fullWidth ? "full-width" : ""}`}
-            >
-              <div className="profile-stat-label">
-                {stat.icon && <span style={{ marginRight: 4 }}>{stat.icon}</span>}
-                {stat.label}
-              </div>
-              <div className={`profile-stat-val ${stat.small ? "profile-stat-val-small" : ""}`}>
-                {stat.value}
-              </div>
-            </div>
-          )) : (
-            <>
-              <div className="profile-stat-tile">
-                <div className="profile-stat-label">Repos</div>
-                <div className="profile-stat-val">{stats.repos ?? 0}</div>
-              </div>
-              <div className="profile-stat-tile">
-                <div className="profile-stat-label">Followers</div>
-                <div className="profile-stat-val">{stats.followers ?? 0}</div>
-              </div>
-              <div className="profile-stat-tile">
-                <div className="profile-stat-label">Following</div>
-                <div className="profile-stat-val">{stats.following ?? 0}</div>
-              </div>
-              <div className="profile-stat-tile">
-                <div className="profile-stat-label">Stars</div>
-                <div className="profile-stat-val">{stats.stargazers ?? 0}</div>
-              </div>
-              <div className="profile-stat-tile">
-                <div className="profile-stat-label">Forks</div>
-                <div className="profile-stat-val">{stats.forks ?? 0}</div>
-              </div>
-              <div className="profile-stat-tile">
-                <div className="profile-stat-label">Watchers</div>
-                <div className="profile-stat-val">{stats.watchers ?? 0}</div>
-              </div>
-            </>
-          )}
-        </div>
-      )}
 
       {/* Integrated Social Links */}
       <div className="social-row" style={{ padding: 0, marginTop: 10, display: "flex", gap: 6 }}>

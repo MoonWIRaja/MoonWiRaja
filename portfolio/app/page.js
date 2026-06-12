@@ -31,7 +31,7 @@ export default function Home() {
         if (d.events) {
           setEvents(d.events);
         }
-        
+
         // Fetch live GitHub events client-side to capture org and recent commits
         fetch("https://api.github.com/users/MoonWIRaja/events")
           .then((res) => {
@@ -65,8 +65,8 @@ export default function Home() {
               Object.keys(eventReposMap).forEach((repoName) => {
                 const evInfo = eventReposMap[repoName];
                 const existingIndex = updatedRepos.findIndex(
-                  (r) => r.name.toLowerCase() === repoName.toLowerCase() || 
-                         r.name.toLowerCase() === repoName.split("/")[1]?.toLowerCase()
+                  (r) => r.name.toLowerCase() === repoName.toLowerCase() ||
+                    r.name.toLowerCase() === repoName.split("/")[1]?.toLowerCase()
                 );
 
                 let commitMsg = null;
@@ -101,8 +101,8 @@ export default function Home() {
                     stargazers_count: 0,
                     forks_count: 0,
                     watchers_count: 0,
-                    created_at: evInfo.event.type === "CreateEvent" && evInfo.event.payload.ref_type === "repository" 
-                      ? evInfo.createdAt 
+                    created_at: evInfo.event.type === "CreateEvent" && evInfo.event.payload.ref_type === "repository"
+                      ? evInfo.createdAt
                       : null,
                     updated_at: evInfo.createdAt,
                     pushed_at: evInfo.createdAt,
@@ -142,7 +142,7 @@ export default function Home() {
         <div className="dashboard-grid">
           {/* ═══ LEFT PANEL ═══ */}
           <div className={`left-panel mobile-tab-panel ${mobileTab === "profile" ? "mobile-tab-active" : ""}`}>
-            <ProfileCard profile={data?.profile} stats={data?.stats} />
+            <ProfileCard profile={data?.profile} />
 
             {/* SysInfo Widget */}
             <motion.div
@@ -227,19 +227,19 @@ export default function Home() {
         {/* ═══ MOBILE BOTTOM TAB BAR ═══ */}
         <nav className="mobile-tab-bar" aria-label="Mobile navigation">
           <button id="tab-profile" className={`mobile-tab-btn ${mobileTab === "profile" ? "active" : ""}`} onClick={() => setMobileTab("profile")} aria-label="Profile">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" /></svg>
             <span>Profile</span>
           </button>
           <button id="tab-terminal" className={`mobile-tab-btn ${mobileTab === "terminal" ? "active" : ""}`} onClick={() => setMobileTab("terminal")} aria-label="Terminal">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="4 17 10 11 4 5" /><line x1="12" y1="19" x2="20" y2="19" /></svg>
             <span>Terminal</span>
           </button>
           <button id="tab-projects" className={`mobile-tab-btn ${mobileTab === "projects" ? "active" : ""}`} onClick={() => setMobileTab("projects")} aria-label="Projects">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="8" height="8" rx="1" /><rect x="13" y="3" width="8" height="8" rx="1" /><rect x="3" y="13" width="8" height="8" rx="1" /><rect x="13" y="13" width="8" height="8" rx="1" /></svg>
             <span>Projects</span>
           </button>
           <button id="tab-activity" className={`mobile-tab-btn ${mobileTab === "activity" ? "active" : ""}`} onClick={() => setMobileTab("activity")} aria-label="Activity">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></svg>
             <span>Activity</span>
           </button>
         </nav>
