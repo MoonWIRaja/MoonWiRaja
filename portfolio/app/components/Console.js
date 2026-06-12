@@ -235,16 +235,17 @@ export default function Console() {
       setLines((prev) => [...prev, { type: "cmd", text: cmd }, { type: "response", html: '<span class="text-accent">Membuka fail sulit/rahsia...</span>' }]);
       
       const secretLines = [
-        "==================================================",
+        "=============================================================",
         "  🔓 AKSES DIBENARKAN: PROJEK MEMORYOFPLANET",
-        "==================================================",
+        "=============================================================",
         "  Ahli aktif: moon (Verified Creator)",
         "  Status Core: initialized = true",
         "  Mod Swarm: solo / active-agent-running",
         "  Mesej Tersembunyi:",
-        "  \"Masa depan dibina dengan satu baris kod pada satu masa.",
-        "   Teruskan usaha, dunia sedang memerhati.\" 🌍✨",
-        "=================================================="
+        "  \"Berusaha Sedaya Upaya, Setiap Usaha Yang kita lAKUKAN",
+        "   WALUPUN GAGAL ADALAH KUNCI MENUJU KEJAYAAN JANGAN SESEKALI",
+        "   MENYERAH KERANA DUNIA TAK MENUNGGU KITA UNTUK BANGKIT\" 🌍✨",
+        "============================================================="
       ];
       
       secretLines.forEach((sLine, index) => {
