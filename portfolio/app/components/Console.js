@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Terminal } from "lucide-react";
+import { SnakeGame, RocketGame } from "./TerminalGames";
 
 const COMMANDS = {
   help: () => [
@@ -20,12 +21,26 @@ const COMMANDS = {
     { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'neofetch\')">neofetch</span>    <span class="text-muted">·</span> Sistem info & ASCII Art MoonWiRaja' },
     { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'matrix\')">matrix</span>      <span class="text-muted">·</span> Jalankan simulasi kod digital Matrix' },
     { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'secret\')">secret</span>      <span class="text-muted">·</span> Bongkar mesej rahsia & log masuk sulit' },
+    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'game\')">game</span>        <span class="text-muted">·</span> Main game retro ular / roket angkasa 👾' },
     { type: "response", text: "" },
     { type: "response", html: '<span class="text-rose" style="font-weight: 600;">🛠️ UTILITI & PENGHUBUNG</span>' },
     { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'contact\')">contact</span>     <span class="text-muted">·</span> Hubungi saya & profil media sosial' },
     { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'clear\')">clear</span>       <span class="text-muted">·</span> Bersihkan semua log paparan terminal' },
     { type: "response", html: '<span class="text-muted">============================================================</span>' },
     { type: "response", html: '<span class="text-muted" style="font-size:0.85rem">Tip: Anda boleh klik mana-mana perintah hijau di atas untuk menjalankannya.</span>' },
+    { type: "response", text: "" },
+  ],
+  game: () => [
+    { type: "response", text: "" },
+    { type: "response", html: '<span class="text-accent" style="font-weight: 600;">🎮 RETRO GAME CENTER - MAIN DALAM TERMINAL</span>' },
+    { type: "response", html: '<span class="text-muted">──────────────────────────────────────────</span>' },
+    { type: "response", html: '  Taip atau klik arahan di bawah untuk mula bermain:' },
+    { type: "response", text: "" },
+    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'game snake\')">game snake</span>   <span class="text-muted">·</span> Main Permainan Ular Retro 🐍' },
+    { type: "response", html: '  ▸ <span class="text-green" style="font-weight: 500; cursor: pointer; text-decoration: underline;" onclick="window.__consoleExec(\'game rocket\')">game rocket</span>  <span class="text-muted">·</span> Main Roket Angkasa / Space Shooter 🚀' },
+    { type: "response", text: "" },
+    { type: "response", html: '  Gunakan W/A/S/D atau kekunci Arah untuk kawalan.' },
+    { type: "response", html: '<span class="text-muted">──────────────────────────────────────────</span>' },
     { type: "response", text: "" },
   ],
   about: () => [
@@ -120,6 +135,7 @@ export default function Console() {
   const [isMinimized, setIsMinimized] = useState(false);
   const [isMaximized, setIsMaximized] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const [activeGame, setActiveGame] = useState(null);
 
   const outputRef = useRef(null);
   const inputRef = useRef(null);
@@ -134,6 +150,64 @@ export default function Console() {
     if (cmd === "clear") {
       setLines([]);
       return;
+    }
+
+    const normalizedCmd = cmd.trim().toLowerCase();
+    
+    if (normalizedCmd === "gama" || normalizedCmd === "games") {
+      executeCommandDirectly("game");
+      return;
+    }
+    
+    if (normalizedCmd.startsWith("game ") || normalizedCmd.startsWith("gama ") || normalizedCmd.startsWith("games ")) {
+      const parts = normalizedCmd.split(" ");
+      const gameType = parts[1];
+      
+      if (gameType === "snake" || gameType === "ular") {
+        setActiveGame("snake");
+        setLines((prev) => [
+          ...prev,
+          { type: "cmd", text: cmd },
+          {
+            type: "response",
+            component: (
+              <SnakeGame
+                onClose={() => {
+                  setActiveGame(null);
+                  setLines((l) => [
+                    ...l,
+                    { type: "response", html: '<span class="text-accent">Game Ular ditamatkan. Kembali ke terminal...</span>' }
+                  ]);
+                }}
+              />
+            )
+          }
+        ]);
+        return;
+      }
+      
+      if (gameType === "rocket" || gameType === "rokey" || gameType === "roket") {
+        setActiveGame("rocket");
+        setLines((prev) => [
+          ...prev,
+          { type: "cmd", text: cmd },
+          {
+            type: "response",
+            component: (
+              <RocketGame
+                onClose={() => {
+                  setActiveGame(null);
+                  setLines((l) => [
+                    ...l,
+                    { type: "response", html: '<span class="text-accent">Game Roket ditamatkan. Kembali ke terminal...</span>' }
+                  ]);
+                }}
+              />
+            )
+          }
+        ]);
+        return;
+      }
     }
     if (cmd === "matrix") {
       setLines((prev) => [...prev, { type: "cmd", text: cmd }, { type: "response", html: '<span class="text-green">Initializing Matrix digital rain...</span>' }]);
@@ -304,6 +378,8 @@ export default function Console() {
                       <span className="prompt-symbol">❯</span>
                       <span className="cmd-text">{line.text}</span>
                     </>
+                  ) : line.component ? (
+                    line.component
                   ) : line.html ? (
                     <span dangerouslySetInnerHTML={{ __html: line.html }} />
                   ) : (
@@ -321,9 +397,15 @@ export default function Console() {
                 className="console-input"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder={isTyping ? "" : "taip help..."}
-                disabled={isTyping}
-                autoFocus
+                placeholder={
+                  activeGame
+                    ? "[Game aktif - Gunakan papan kekunci / D-Pad]"
+                    : isTyping
+                    ? ""
+                    : "taip help..."
+                }
+                disabled={isTyping || !!activeGame}
+                autoFocus={!activeGame}
                 autoComplete="off"
                 spellCheck="false"
               />
