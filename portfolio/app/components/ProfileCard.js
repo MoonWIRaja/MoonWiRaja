@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, ShieldCheck, Mail } from "lucide-react";
 
@@ -23,6 +24,8 @@ const GithubIcon = ({ size = 13, className = "" }) => (
 );
 
 export default function ProfileCard({ profile, stats }) {
+  const [copied, setCopied] = useState(false);
+
   const formatDate = (dateStr) => {
     if (!dateStr) return "N/A";
     const date = new Date(dateStr);
@@ -85,13 +88,47 @@ export default function ProfileCard({ profile, stats }) {
       </p>
 
       {/* Integrated Social Links */}
-      <div className="social-row" style={{ padding: 0, marginTop: 10 }}>
+      <div className="social-row" style={{ padding: 0, marginTop: 10, display: "flex", gap: 6 }}>
         <a href="https://github.com/MoonWIRaja" target="_blank" rel="noopener noreferrer" className="social-btn" title="GitHub" style={{ padding: "6px 8px" }}>
           <GithubIcon size={13} />
         </a>
-        <a href="mailto:hakimmikah191@gmail.com" className="social-btn" title="Email" style={{ padding: "6px 8px" }}>
-          <Mail size={13} />
-        </a>
+        <div style={{ position: "relative", flex: 1, display: "flex" }}>
+          <a
+            href="mailto:hakimmikah191@gmail.com"
+            onClick={(e) => {
+              navigator.clipboard.writeText("hakimmikah191@gmail.com");
+              setCopied(true);
+              setTimeout(() => setCopied(false), 2000);
+            }}
+            className="social-btn"
+            title="Email: hakimmikah191@gmail.com (Salin ke papan klip)"
+            style={{ padding: "6px 8px", width: "100%" }}
+          >
+            <Mail size={13} />
+          </a>
+          {copied && (
+            <div
+              style={{
+                position: "absolute",
+                bottom: "calc(100% + 8px)",
+                left: "50%",
+                transform: "translateX(-50%)",
+                background: "rgba(29, 48, 44, 0.98)",
+                border: "1px solid var(--border-default)",
+                color: "var(--terminal-green)",
+                fontSize: "0.55rem",
+                fontFamily: "var(--font-mono)",
+                padding: "4px 8px",
+                borderRadius: "4px",
+                whiteSpace: "nowrap",
+                zIndex: 100,
+                boxShadow: "0 2px 8px rgba(0,0,0,0.5)",
+              }}
+            >
+              Email copied!
+            </div>
+          )}
+        </div>
       </div>
     </motion.div>
   );

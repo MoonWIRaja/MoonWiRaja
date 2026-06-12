@@ -379,6 +379,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Hide scrollbar on ActivityLog activity-scroll"
+    },
+    {
+      "at": "2026-06-12T02:10:52.479Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Fix mailto link click behavior and define missing copied state in ProfileCard"
     }
   ]
 }
