@@ -475,6 +475,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Remove MOONWIRAJA.DEV text from status bar"
+    },
+    {
+      "at": "2026-06-12T03:13:05.195Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Fix desktop layout broken by mobile tabs — activity panel moved outside grid, desktop panels always visible via min-width override"
     }
   ]
 }

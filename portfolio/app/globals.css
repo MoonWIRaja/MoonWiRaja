@@ -270,6 +270,16 @@ ul, ol { list-style: none; }
   .right-panel { display: none; }
 }
 
+/* On desktop, override any mobile-tab-panel hiding — panels must stay visible */
+@media (min-width: 769px) {
+  .mobile-tab-panel {
+    display: unset !important;
+  }
+  .right-panel {
+    display: flex !important;
+  }
+}
+
 /* ═══════════════════════════════════════
    MOBILE — TAB NAVIGATION SYSTEM
    ═══════════════════════════════════════ */
@@ -415,13 +425,24 @@ ul, ol { list-style: none; }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Activity tab panel — full height scrollable */
+/* Activity tab panel — hidden on desktop, mobile-only fullscreen overlay */
+.activity-tab-panel {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .activity-tab-panel.mobile-tab-active {
-    display: flex !important;
+    display: flex;
     flex-direction: column;
-    height: 100%;
+    position: fixed;
+    top: 38px; /* below status bar */
+    left: 0;
+    right: 0;
+    bottom: 58px; /* above tab bar */
+    z-index: 50;
     overflow: hidden;
+    padding: 8px;
+    animation: tabFadeIn 0.22s ease;
   }
 
   /* Give ActivityLog card full remaining height */

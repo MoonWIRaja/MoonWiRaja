@@ -191,17 +191,6 @@ export default function Home() {
             />
           </div>
 
-          {/* ═══ ACTIVITY PANEL (mobile tab 4) ═══ */}
-          <div className={`activity-tab-panel mobile-tab-panel ${mobileTab === "activity" ? "mobile-tab-active" : ""}`}>
-            <ActivityLog
-              repos={data?.repos}
-              contributions={data?.contributions}
-              selectedDate={selectedDate}
-              setSelectedDate={setSelectedDate}
-              events={events}
-            />
-          </div>
-
           {/* ═══ CENTER PANEL ═══ */}
           <div className={`center-panel mobile-tab-panel ${mobileTab === "terminal" ? "mobile-tab-active" : ""}`}>
             <Console />
@@ -212,6 +201,17 @@ export default function Home() {
           <div className={`right-panel mobile-tab-panel ${mobileTab === "projects" ? "mobile-tab-active" : ""}`}>
             <ProjectsList repos={data?.repos} loading={loading} />
           </div>
+        </div>
+
+        {/* ═══ ACTIVITY PANEL — outside grid, mobile-only overlay ═══ */}
+        <div className={`activity-tab-panel ${mobileTab === "activity" ? "mobile-tab-active" : ""}`}>
+          <ActivityLog
+            repos={data?.repos}
+            contributions={data?.contributions}
+            selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
+            events={events}
+          />
         </div>
 
         {/* ═══ MOBILE BOTTOM TAB BAR ═══ */}
