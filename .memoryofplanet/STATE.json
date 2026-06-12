@@ -463,6 +463,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Move ActivityLog to dedicated 4th mobile tab — Activity tab, Profile tab now cleaner"
+    },
+    {
+      "at": "2026-06-12T03:08:24.239Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Shrink server stats text on mobile and disable framer-motion animation to fix jank on live updates"
     }
   ]
 }

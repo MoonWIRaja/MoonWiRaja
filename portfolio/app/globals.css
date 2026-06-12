@@ -905,6 +905,37 @@ ul, ol { list-style: none; }
   color: var(--text-muted);
 }
 
+/* ── Mobile: shrink server stats ── */
+@media (max-width: 768px) {
+  .server-stats-card {
+    padding: 10px;
+    flex-shrink: 0;
+  }
+
+  .server-stats-grid {
+    gap: 6px;
+  }
+
+  .stat-monitor-tile {
+    padding: 7px 8px;
+    gap: 2px;
+  }
+
+  .stat-monitor-label {
+    font-size: 0.44rem;
+    letter-spacing: 0.03em;
+  }
+
+  .stat-monitor-val {
+    font-size: 0.78rem !important;
+    font-weight: 700;
+  }
+
+  .stat-monitor-sub {
+    font-size: 0.42rem;
+  }
+}
+
 /* ═══════════════════════════════════════
    RIGHT PANEL — Projects
    ═══════════════════════════════════════ */

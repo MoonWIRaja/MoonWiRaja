@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 
 export default function ServerMonitor() {
@@ -9,6 +9,15 @@ export default function ServerMonitor() {
   const [disk] = useState(26.44); // GB static mock
   const [network, setNetwork] = useState({ rx: 45.21, tx: 12.83 });
   const [temp, setTemp] = useState(47);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px)");
+    setIsMobile(mq.matches);
+    const handler = (e) => setIsMobile(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -43,9 +52,9 @@ export default function ServerMonitor() {
   return (
     <motion.div
       className="glass-card server-stats-card"
-      initial={{ opacity: 0, y: 15 }}
+      initial={isMobile ? false : { opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+      transition={isMobile ? { duration: 0 } : { duration: 0.5, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
     >
       <div className="widget-header" style={{ padding: "0 0 6px 0", borderBottom: "1px solid var(--border-subtle)", marginBottom: 8, width: "100%" }}>
         <span className="header-dot" style={{ width: 4, height: 4, borderRadius: "50%", background: "var(--accent-green)" }} />
