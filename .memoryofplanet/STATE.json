@@ -2,7 +2,7 @@
   "schemaVersion": "0.1.0",
   "initialized": true,
   "projectName": "MoonWiRaja",
-  "projectNameDefault": ".MemoryOfPlanet.core",
+  "projectNameDefault": "MoonWiRaja",
   "ownerCodename": "moon",
   "activeMember": "moon",
   "mode": "solo",
@@ -553,6 +553,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Remove profile stats grid from ProfileCard — user requested to remove the stats display"
+    },
+    {
+      "at": "2026-06-12T04:35:12.988Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Rename MemoryOfPlanet core folder to MoonWiRaja and update project default name"
     }
   ]
 }
