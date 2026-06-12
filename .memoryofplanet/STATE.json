@@ -4,7 +4,7 @@
   "projectName": "MoonWiRaja",
   "projectNameDefault": ".MemoryOfPlanet.core",
   "ownerCodename": "moon",
-  "activeMember": "",
+  "activeMember": "moon",
   "mode": "solo",
   "joinMode": "owner-approved",
   "githubUrl": "https://github.com/MoonWIRaja/MoonWiRaja.git",
@@ -259,6 +259,18 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Log keluar ahli moon"
+    },
+    {
+      "at": "2026-06-12T00:55:04.122Z",
+      "actor": "moon",
+      "kind": "login",
+      "summary": "Member authenticated."
+    },
+    {
+      "at": "2026-06-12T00:58:13.030Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Setup deploy.yml for GitHub Pages deployment and configure static export"
     }
   ]
 }
