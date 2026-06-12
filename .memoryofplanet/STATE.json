@@ -457,6 +457,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Complete mobile redesign — tab-based navigation with bottom tab bar for Profile, Terminal, Projects panels"
+    },
+    {
+      "at": "2026-06-12T03:05:04.263Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Move ActivityLog to dedicated 4th mobile tab — Activity tab, Profile tab now cleaner"
     }
   ]
 }

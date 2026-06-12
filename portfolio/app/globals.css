@@ -415,6 +415,28 @@ ul, ol { list-style: none; }
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* Activity tab panel — full height scrollable */
+@media (max-width: 768px) {
+  .activity-tab-panel.mobile-tab-active {
+    display: flex !important;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  /* Give ActivityLog card full remaining height */
+  .activity-tab-panel.mobile-tab-active > * {
+    flex: 1;
+    min-height: 0;
+  }
+
+  /* Tighten label font for 4 tabs */
+  .mobile-tab-btn span {
+    font-size: 0.52rem;
+    line-height: 1;
+  }
+}
+
 
 /* ═══════════════════════════════════════
    LEFT PANEL

@@ -189,8 +189,10 @@ export default function Home() {
               selectedDate={selectedDate}
               setSelectedDate={setSelectedDate}
             />
+          </div>
 
-            {/* Activity Log */}
+          {/* ═══ ACTIVITY PANEL (mobile tab 4) ═══ */}
+          <div className={`activity-tab-panel mobile-tab-panel ${mobileTab === "activity" ? "mobile-tab-active" : ""}`}>
             <ActivityLog
               repos={data?.repos}
               contributions={data?.contributions}
@@ -225,6 +227,10 @@ export default function Home() {
           <button id="tab-projects" className={`mobile-tab-btn ${mobileTab === "projects" ? "active" : ""}`} onClick={() => setMobileTab("projects")} aria-label="Projects">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>
             <span>Projects</span>
+          </button>
+          <button id="tab-activity" className={`mobile-tab-btn ${mobileTab === "activity" ? "active" : ""}`} onClick={() => setMobileTab("activity")} aria-label="Activity">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            <span>Activity</span>
           </button>
         </nav>
 
