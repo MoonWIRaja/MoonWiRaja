@@ -164,11 +164,9 @@ ul, ol { list-style: none; }
   box-shadow: var(--shadow-inset), var(--shadow-md);
 }
 
-/* ── Console Scrollbar ── */
-.console-scroll::-webkit-scrollbar { width: 3px; }
-.console-scroll::-webkit-scrollbar-track { background: transparent; }
-.console-scroll::-webkit-scrollbar-thumb { background: var(--border-default); border-radius: 2px; }
-.console-scroll::-webkit-scrollbar-thumb:hover { background: var(--border-hover); }
+/* ── Console Scrollbar — hidden ── */
+.console-scroll { scrollbar-width: none; -ms-overflow-style: none; }
+.console-scroll::-webkit-scrollbar { display: none; width: 0; }
 
 /* ═══════════════════════════════════════
    FULLSCREEN DASHBOARD LAYOUT
@@ -1202,26 +1200,9 @@ ul, ol { list-style: none; }
   opacity: 0.8;
 }
 
-/* Premium Visible Scrollbar for Right Panel */
-.glass-card .console-scroll::-webkit-scrollbar {
-  width: 6px; /* Slightly wider scrollbar */
-}
-
-.glass-card .console-scroll::-webkit-scrollbar-track {
-  background: rgba(255, 248, 247, 0.02);
-  border-radius: 3px;
-}
-
-.glass-card .console-scroll::-webkit-scrollbar-thumb {
-  background: rgba(255, 248, 247, 0.18);
-  border-radius: 3px;
-  border: 1px solid rgba(255, 248, 247, 0.05);
-}
-
-.glass-card .console-scroll::-webkit-scrollbar-thumb:hover {
-  background: var(--terminal-green);
-  box-shadow: 0 0 6px var(--terminal-green);
-}
+/* Console scrollbar hidden inside glass-card too */
+.glass-card .console-scroll { scrollbar-width: none; -ms-overflow-style: none; }
+.glass-card .console-scroll::-webkit-scrollbar { display: none; width: 0; }
 
 .glass-card .stat-monitor-tile {
   background: rgba(255, 248, 247, 0.04) !important;
