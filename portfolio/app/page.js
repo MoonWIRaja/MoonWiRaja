@@ -14,7 +14,8 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/github")
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+    fetch(basePath + "/api/github")
       .then((r) => r.json())
       .then((d) => {
         setData(d);

@@ -37,7 +37,8 @@ export default function StatusBar() {
     };
     tick();
     const id = setInterval(tick, 1000);
-    fetch("/api/github").then(r => setApiOk(r.ok)).catch(() => setApiOk(false));
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+    fetch(basePath + "/api/github").then(r => setApiOk(r.ok)).catch(() => setApiOk(false));
     return () => clearInterval(id);
   }, []);
 

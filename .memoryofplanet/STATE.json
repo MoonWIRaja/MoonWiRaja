@@ -271,6 +271,12 @@
       "actor": "moon",
       "kind": "memory",
       "summary": "Setup deploy.yml for GitHub Pages deployment and configure static export"
+    },
+    {
+      "at": "2026-06-12T01:00:46.450Z",
+      "actor": "moon",
+      "kind": "memory",
+      "summary": "Fix asset and api paths by setting conditional basePath and environment variable for GitHub Pages"
     }
   ]
 }
